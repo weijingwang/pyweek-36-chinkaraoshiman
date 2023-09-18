@@ -34,6 +34,12 @@ class BreederGame:
 
     def run(self):
         while not self.done:
+            if self.player.pos[0] > self.screen.get_width():
+                pygame.quit()
+                sys.exit()
+                self.done = True
+                #exit room and go to platformer
+
             self.timer += 1
             self.ratGrowth.update()
             print(self.ratGrowth.rat_count)
