@@ -1,4 +1,5 @@
 import utils
+from random import getrandbits
 
 class Crow:
     def __init__(self, game, pos=[100, 5]):
@@ -10,3 +11,8 @@ class Crow:
        pass
     def render(self):
         self.game.screen.blit(self.image, self.pos)
+    def eat_rat(self,rat_count):
+        #do once every rat spawn cylce only
+        if getrandbits:
+            rat_count -= 1
+
