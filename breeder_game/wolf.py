@@ -37,7 +37,12 @@ class Wolf:
         self.bouncing()
         #left 0, right 1
         frame_movement = (movement[0]*-1, movement[1])
+
         self.pos[0] += (frame_movement[0] + frame_movement[1])*self.velocity_scalar
+
+        if self.pos[0] < -100:
+            self.pos[0] = -100
+
         # print(self.velocity_scalar)
 
         if (frame_movement[0]+frame_movement[1]) == 1:
