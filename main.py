@@ -1,3 +1,5 @@
+import pygame
+
 #main game is platformer
 #player jumps and stands on walls
 #player can shoot gun really fast
@@ -6,27 +8,27 @@
 #player can talk to npcs
 #player moves to room/change level by going though a door
 
-import sys
+pygame.init()
 
-import pygame
+SCREEN_WIDTH = 800
+SCREEN_HEIGHT = int(SCREEN_WIDTH * 0.8)
 
-class Game:
-    def __init__(self):
-        pygame.init()
-        
-        pygame.display.set_caption('pyweek 36')
-        self.screen = pygame.display.set_mode((1280, 720))
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+pygame.display.set_caption("TEST")
 
-        self.clock = pygame.time.Clock()
-        
-    def run(self):
-        while True:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
-            
-            pygame.display.update()
-            self.clock.tick(60)
 
-Game().run()
+x = 200
+y = 200
+scale = 3
+# img = pygame.image.load(PATH TO IMG)
+# img = pygame.transform.scale(img, (int(img.get_width() * scale), int(img.get_height() * scale)))
+# rect = img.get_rect()
+# rect.center = (x,y)
+
+run = True
+while run:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            run = False
+
+pygame.quit()
