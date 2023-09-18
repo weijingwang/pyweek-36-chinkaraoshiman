@@ -1,11 +1,11 @@
 import pygame
 import sys
 import utils
-from wolf import Wolf
+from breeder.wolf import Wolf
 
-from crow import Crow
-from rats import Rat
-from calculate_rats import BreederCalculations
+from breeder.crow import Crow
+from breeder.rats import Rat
+from breeder.calculate_rats import BreederCalculations
 from displayText import counterText
 from button import Button
 
@@ -22,12 +22,12 @@ class BreederGame:
         self.done = False
         self.clock = pygame.time.Clock()
         self.timer = 0
-        self.close_button = utils.load_image("close_button.png")
+        self.close_button = utils.load_image("breeder/close_button.png")
 
         #MAIN-----------------------------
         self.movement = [False, False]
 
-        self.bg = utils.load_image("02-breeding-room.png")
+        self.bg = utils.load_image("breeder/02-breeding-room.png")
 
         self.player = Wolf(self)
 
@@ -44,22 +44,22 @@ class BreederGame:
 
 
         pygame.mouse.set_visible(False)
-        self.cursor_img = utils.load_image("cursor.png")
+        self.cursor_img = utils.load_image("breeder/cursor.png")
         self.cursor_img_rect = self.cursor_img.get_rect()
 
         #PLOT--------------------------------------
-        self.plot_img = utils.load_image("plot.png")
+        self.plot_img = utils.load_image("breeder/plot.png")
         self.plot_img_rect = self.plot_img.get_rect(center = self.screen.get_rect().center)
 
         self.mouse_pos = pygame.mouse.get_pos()
         self.mouse_pressed = pygame.mouse.get_pressed()
 
         #SHOP--------------------------------------
-        self.shop_img = utils.load_image("shop.png")
+        self.shop_img = utils.load_image("breeder/shop.png")
         self.shop_img_rect = self.shop_img.get_rect(center = self.screen.get_rect().center)
 
         #OPTS--------------------------------------
-        self.opts_img = utils.load_image("opts.png")
+        self.opts_img = utils.load_image("breeder/opts.png")
         self.opts_img_rect = self.opts_img.get_rect(center = self.screen.get_rect().center)
 
 

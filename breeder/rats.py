@@ -4,7 +4,7 @@ class Rat:
     def __init__(self, game, pos=[30, 300]):
         self.game = game
         self.pos = pos
-        self.image = utils.load_image("mouse.png")
+        self.image = utils.load_image("breeder/mouse.png")
 
     def update():
        pass

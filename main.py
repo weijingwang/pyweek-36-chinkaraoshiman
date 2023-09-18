@@ -1,5 +1,4 @@
-from scripts import utils
-
+from breeder_game import BreederGame
 #main game is platformer
 #player jumps and stands on walls
 #player can shoot gun really fast

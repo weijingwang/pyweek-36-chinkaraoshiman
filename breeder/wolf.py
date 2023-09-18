@@ -8,8 +8,8 @@ ACCELERATION_SCALAR = 0.1
 class Wolf:
     def __init__(self, game, pos=[826, 5]):
         self.game = game
-        self.image = utils.load_image("player_wolf.png")
-        self.image_shadow = utils.load_image("player_wolf_shadow.png")
+        self.image = utils.load_image("breeder/player_wolf.png")
+        self.image_shadow = utils.load_image("breeder/player_wolf_shadow.png")
 
         self.velocity_scalar = 0
         self.pos = pos
