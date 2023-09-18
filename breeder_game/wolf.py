@@ -30,7 +30,7 @@ class Wolf:
             if self.bounce_count >= 20:
                 self.direction = 'up'
                 self.bounce_count = 0
-        print(self.bounce_count, self.direction)
+        # print(self.bounce_count, self.direction)
         
     
     def update(self, movement):

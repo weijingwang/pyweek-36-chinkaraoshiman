@@ -5,6 +5,8 @@ from wolf import Wolf
 
 from crow import Crow
 from rats import Rat
+from calculate_rats import BreederCalculations
+from displayText import counterText
 
 class BreederGame:
     def __init__(self):
@@ -14,6 +16,7 @@ class BreederGame:
         self.screen = pygame.display.set_mode((1280, 720))
 
         self.clock = pygame.time.Clock()
+        self.timer = 0
         
         self.movement = [False, False]
 
@@ -26,9 +29,15 @@ class BreederGame:
         self.crow = Crow(self)
         self.rat = Rat(self)
 
+        self.ratGrowth = BreederCalculations()
+        self.rat_text = counterText()
 
     def run(self):
         while not self.done:
+            self.timer += 1
+            self.ratGrowth.update()
+            print(self.ratGrowth.rat_count)
+
             self.screen.fill((34, 30, 80))
             self.player.update(self.movement)
             self.player.render()
@@ -38,6 +47,9 @@ class BreederGame:
             self.rat.render()
 
             self.player.shadow()
+
+            self.rat_text.render(str(self.timer//60)+' '+str(int(self.ratGrowth.rat_count)), self.screen)
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
