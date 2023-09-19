@@ -7,7 +7,7 @@ from breeder.crow import Crow
 from breeder.rats import Rat
 from breeder.calculate_rats import BreederCalculations
 from displayText import counterText
-from button import Button
+from button import Button, itemButton
 
 class BreederGame:
     def __init__(self):
@@ -16,7 +16,7 @@ class BreederGame:
 
         pygame.init()
 
-        pygame.display.set_caption('pyweek36')
+        pygame.display.set_caption("pyweek36")
 
         self.screen = pygame.display.set_mode((1280, 720))
         self.done = False
@@ -43,7 +43,6 @@ class BreederGame:
         self.plot_button = Button(50, 440, 80, 80, 'white', 'black', 'PLOT')
         self.close_button = Button(1130, 90, 80, 50, 'white', 'red', 'X')
 
-
         pygame.mouse.set_visible(False)
         self.cursor_img = utils.load_image("breeder/cursor.png")
         self.cursor_img_rect = self.cursor_img.get_rect()
@@ -64,15 +63,26 @@ class BreederGame:
         self.opts_img = utils.load_image("breeder/opts.png")
         self.opts_img_rect = self.opts_img.get_rect(center = self.screen.get_rect().center)
 
-    def main_game(self):
+        self.items = [
+            {"name": "Food", "price": 5, "pos": (320,330), "owned": False, "description": "temporarily satiate rat hunger"},
+            {"name": "Auto-feeder", "price": 5, "pos": (320,400), "owned": False, "description": "rats never go hungry"},
+            {"name": "Medicine", "price": 5, "pos": (320,470), "owned": False, "description": "cure rats"},
+            {"name": "Doctor", "price": 5, "pos": (320,540), "owned": False, "description": "rats never sick"},
+            {"name": "Tempting hand", "price": 5, "pos": (620,330), "owned": False, "description": "slightly increase rat breeding chance when clicking on them"},
+            {"name": "Skillful hand", "price": 5, "pos": (620,400), "owned": False, "description": "greatly increase rat breeding chance when clicking on them"},
+            {"name": "Scarecrow", "price": 5, "pos": (620,470), "owned": False, "description": "decrease crow attack rate"},
+            {"name": "Crow destroyer", "price": 5, "pos": (620,540), "owned": False, "description": "crows do not kill rats"}
+        ]
+        self.button_grid = []
+        for x in self.items:
+            self.button_grid.append(itemButton(x["pos"][0], x["pos"][1], x["name"]))
 
-        pygame.display.set_caption("current FPS: "+str(self.clock.get_fps()))
+    def main_game(self):
         if self.player.pos[0] > self.screen.get_width():
             pygame.quit()
             sys.exit()
             self.done = True
             #exit room and go to platformer
-
 
         # print(self.ratGrowth.rat_count)
 
@@ -100,6 +110,11 @@ class BreederGame:
         if self.close_button.update(self.screen,self.mouse_pos,self.mouse_pressed):
             self.state = 'main'
 
+        for i in range(len(self.button_grid)): 
+            if self.button_grid[i].update(self.screen,self.mouse_pos,self.mouse_pressed, self.items[i]["owned"]):
+                self.items[i]["owned"] = True
+                # print(str(i)+" is owned "+str(self.items[i]["owned"])+" ")
+        # print(self.items)
     def options(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -120,6 +135,7 @@ class BreederGame:
 
     def run(self):
         while not self.done:
+            pygame.display.set_caption("current FPS: "+str(self.clock.get_fps()))
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
