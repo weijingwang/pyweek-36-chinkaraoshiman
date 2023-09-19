@@ -12,7 +12,7 @@ from button import Button, itemButton, textInput
 class BreederGame:
     def __init__(self):
 
-        self.state = 'shop'
+        self.state = 'main'
 
         pygame.init()
 
@@ -33,7 +33,11 @@ class BreederGame:
         self.player = Wolf(self)
 
         self.crow = Crow(self)
-        self.rat = Rat(self)
+
+
+        self.ratA = Rat(self)
+        self.ratB = Rat(self)
+
 
         self.ratGrowth = BreederCalculations()
         self.rat_text = counterText()
@@ -98,7 +102,12 @@ class BreederGame:
         self.screen.blit(self.bg, (0, 0))
 
         self.crow.render()
-        self.rat.render()
+
+        self.ratA.update()
+        self.ratB.update()
+        self.ratA.render()
+        self.ratB.render()
+
 
         self.player.shadow()
         
