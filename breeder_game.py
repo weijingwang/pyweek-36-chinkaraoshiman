@@ -194,7 +194,7 @@ class BreederGame:
             
 
             #custom cursor
-            self.cursor_img_rect = pygame.mouse.get_pos()  # update position 
+            self.cursor_img_rect.center = pygame.mouse.get_pos()  # update position 
             self.screen.blit(self.cursor_img, self.cursor_img_rect) # draw the cursor
 
 
