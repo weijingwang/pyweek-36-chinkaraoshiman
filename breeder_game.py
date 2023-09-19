@@ -7,7 +7,7 @@ from breeder.crow import Crow
 from breeder.rats import Rat
 from breeder.calculate_rats import BreederCalculations
 from displayText import counterText
-from button import Button, itemButton
+from button import Button, itemButton, textInput
 
 class BreederGame:
     def __init__(self):
@@ -58,6 +58,7 @@ class BreederGame:
         #SHOP--------------------------------------
         self.shop_img = utils.load_image("breeder/07-shop.png")
         self.shop_img_rect = self.shop_img.get_rect(center = self.screen.get_rect().center)
+        self.text_input = textInput()
 
         #OPTS--------------------------------------
         self.opts_img = utils.load_image("breeder/opts.png")
@@ -101,34 +102,25 @@ class BreederGame:
         
         # self.screen.blit(pygame.transform.scale(self.screen, self.screen.get_size()), (0, 0))
 
-    def shop(self):
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
+    def shop(self):            
         self.screen.blit(self.shop_img, self.shop_img_rect)
         if self.close_button.update(self.screen,self.mouse_pos,self.mouse_pressed):
             self.state = 'main'
+
+        self.text_input.update(self.screen, self.mouse_pos, self.mouse_pressed)
 
         for i in range(len(self.button_grid)): 
             if self.button_grid[i].update(self.screen,self.mouse_pos,self.mouse_pressed, self.items[i]["owned"]):
                 self.items[i]["owned"] = True
                 # print(str(i)+" is owned "+str(self.items[i]["owned"])+" ")
         # print(self.items)
+
     def options(self):
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
         self.screen.blit(self.opts_img, self.opts_img_rect)
         if self.close_button.update(self.screen,self.mouse_pos,self.mouse_pressed):
             self.state = 'main'
 
     def plot(self):
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
         self.screen.blit(self.plot_img, self.plot_img_rect)
         if self.close_button.update(self.screen,self.mouse_pos,self.mouse_pressed):
             self.state = 'main'
@@ -150,6 +142,9 @@ class BreederGame:
                     # print('yes')
                 else:
                     self.mouse_pressed = False
+
+                if self.state == 'shop':
+                    self.text_input.input_control(event)
 
                 if self.state == 'main':
                     if event.type == pygame.KEYDOWN:

@@ -81,4 +81,62 @@ class itemButton:
         # return False
 
 class textInput:
-    pass
+    def __init__(self):
+        # basic font for user typed
+        self.base_font = pygame.font.Font(None, 32)
+        self.user_text = ''
+        # create rectangle
+        self.input_rect = pygame.Rect(200, 200, 140, 32)
+        
+        # color_active stores color(lightskyblue3) which
+        # gets active when input box is clicked by user
+        self.color_active = pygame.Color('lightskyblue3')
+        
+        # color_passive store color(chartreuse4) which is
+        # color of input box.
+        self.color_passive = pygame.Color('chartreuse4')
+        self.color = self.color_passive
+  
+        self.active = False
+
+    def input_control(self, event):
+        if event.type == pygame.KEYDOWN:
+            # Check for backspace
+            if event.key == pygame.K_BACKSPACE:
+                # get text input from 0 to -1 i.e. end.
+                self.user_text = self.user_text[:-1]
+            # Unicode standard is used for string
+            # formation
+            else:
+                self.user_text += event.unicode
+      
+
+    def update(self, surface, pos, pressed):
+        if self.input_rect.collidepoint(pos):
+            if pressed:
+                self.active = True
+            else:
+                self.active = False
+        # if event.type == pygame.MOUSEBUTTONDOWN:
+        #     if input_rect.collidepoint(event.pos):
+        #         active = True
+        #     else:
+        #         active = False
+  
+        if self.active:
+            self.color = self.color_active
+        else:
+            self.color = self.color_passive
+            
+        # draw rectangle and argument passed which should
+        # be on screen
+        pygame.draw.rect(surface, self.color, self.input_rect)
+    
+        self.text_surface = self.base_font.render(self.user_text, True, (255, 255, 255))
+        
+        # render at position stated in arguments
+        surface.blit(self.text_surface, (self.input_rect.x+5, self.input_rect.y+5))
+        
+        # set width of textfield so that text cannot get
+        # outside of user's text input
+        self.input_rect.w = max(100, self.text_surface.get_width()+10)
