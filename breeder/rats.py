@@ -10,7 +10,7 @@ class Rat:
         self.pos=[randrange(100,700),randrange(300,700)]
         self.image = utils.load_image("breeder/mouse.png")
         self.timer = 0
-        print(self.pos)
+        # print(self.pos)
 
         #set new scalars and directions
         self.dx = uniform(-self.DX_val,self.DX_val) * choice((-1,1))

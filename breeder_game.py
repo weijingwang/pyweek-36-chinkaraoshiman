@@ -100,6 +100,7 @@ class BreederGame:
         self.player.render()
         self.screen.blit(self.bg, (0, 0))
 
+        self.crow.update()
         self.crow.render()
 
         for rat in range(len(self.rats)):
@@ -159,6 +160,7 @@ class BreederGame:
                     self.input_sell_rats.input_control(event)
 
                 if self.state == 'main':
+                    self.crow.mouse_inputs(self.mouse_pos, self.mouse_pressed)
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_LEFT:
                             self.movement[0] = True
