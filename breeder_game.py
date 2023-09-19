@@ -34,13 +34,12 @@ class BreederGame:
 
         self.crow = Crow(self)
 
-        self.rats = []
-        for x in range(100):
-            self.rats.append(Rat(self))
-
-
         self.ratGrowth = BreederCalculations()
         self.rat_text = counterText()
+
+        self.rats = []
+        for x in range(self.ratGrowth.rat_count):
+            self.rats.append(Rat(self))
 
         self.shop_button = Button(50, 200, 80, 80, 'white', 'black', 'SHOP')
         self.options_button = Button(50, 320, 80, 80, 'white', 'black', 'OPTS')
@@ -145,7 +144,6 @@ class BreederGame:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-                
                 # self.mouse_pressed = False
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.mouse_clicking = True
@@ -183,6 +181,13 @@ class BreederGame:
             self.mouse_pos = pygame.mouse.get_pos()
             self.timer += 1
             self.ratGrowth.update()
+            if int(self.ratGrowth.rat_count) > len(self.rats):
+                for x in range(int(self.ratGrowth.rat_count)-len(self.rats)):
+                    self.rats.append(Rat(self))
+            elif int(self.ratGrowth.rat_count) < len(self.rats):
+                for x in range(int(self.ratGrowth.rat_count)-len(self.rats)):
+                    del self.rats[-1]
+
 
             if self.state == 'main':
                 self.main_game()

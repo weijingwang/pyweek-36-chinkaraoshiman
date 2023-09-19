@@ -8,7 +8,7 @@ class BreederCalculations:
     def __init__(self):
         self.timer = 0
         self.rat_count = 3
-        self.upper_cap = 100
+        self.upper_cap = 500
         self.next_increase = 0
 
         self.spawn_crow = False
