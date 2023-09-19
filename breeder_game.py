@@ -143,6 +143,8 @@ class BreederGame:
                             self.movement[0] = False
                         if event.key == pygame.K_RIGHT:
                             self.movement[1] = False
+                else:
+                    self.movement = [0,0]
   
             # print(' ')
             self.mouse_pos = pygame.mouse.get_pos()
