@@ -34,9 +34,9 @@ class BreederGame:
 
         self.crow = Crow(self)
 
-
-        self.ratA = Rat(self)
-        self.ratB = Rat(self)
+        self.rats = []
+        for x in range(100):
+            self.rats.append(Rat(self))
 
 
         self.ratGrowth = BreederCalculations()
@@ -103,10 +103,11 @@ class BreederGame:
 
         self.crow.render()
 
-        self.ratA.update()
-        self.ratB.update()
-        self.ratA.render()
-        self.ratB.render()
+        for rat in range(len(self.rats)):
+            self.rats[rat].update()
+            self.rats[rat].render()
+
+
 
 
         self.player.shadow()

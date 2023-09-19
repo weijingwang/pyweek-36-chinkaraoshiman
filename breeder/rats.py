@@ -1,15 +1,16 @@
 import utils
-from random import uniform, getrandbits, choice
+from random import uniform, getrandbits, choice, randrange
 
 class Rat:
-    def __init__(self, game, pos=[30, 300]):
-
-        self.DX_val = 1
-        self.DY_val = 1
+    def __init__(self, game, pos=[randrange(100,700),randrange(300,700)]):
+        self.DX_val = 5
+        self.DY_val = 5
         self.game = game
         self.pos = pos
+        self.pos=[randrange(100,700),randrange(300,700)]
         self.image = utils.load_image("breeder/mouse.png")
         self.timer = 0
+        print(self.pos)
 
         #set new scalars and directions
         self.dx = uniform(-self.DX_val,self.DX_val) * choice((-1,1))
@@ -23,11 +24,12 @@ class Rat:
         else:
             self.moving = True
 
-        print(self.dx, self.dy, self.move_time, self.move)
+        # print(self.dx, self.dy, self.move_time, self.move)
     
 
 
     def update(self):
+        # print(self.move_time)
         if self.move and not self.moving:
             self.moving = True
         elif not self.move:
