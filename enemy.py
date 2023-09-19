@@ -9,7 +9,7 @@ from mob import Mob
 #if different types of enemy, better to create new file
 
 class Enemy(Mob):
-    def __init__():
+    def __init__(self):
         super().__init__(6,9,4)
         # image var is initialized in super init
         #image = #pygame.image.load(PATH TO IMG)
