@@ -144,6 +144,8 @@ class BreederGame:
                         if event.key == pygame.K_RIGHT:
                             self.movement[1] = False
                 else:
+                    self.screen.fill((34, 30, 80))
+                    self.screen.blit(self.bg,(0,0))
                     self.movement = [0,0]
   
             # print(' ')
