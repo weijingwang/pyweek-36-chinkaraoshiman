@@ -12,8 +12,6 @@ from button import Button
 class BreederGame:
     def __init__(self):
 
-        
-
         self.state = 'main'
 
         pygame.init()
@@ -55,6 +53,7 @@ class BreederGame:
 
         self.mouse_pos = pygame.mouse.get_pos()
         self.mouse_pressed = False
+        self.mouse_clicking = False
 
         #SHOP--------------------------------------
         self.shop_img = utils.load_image("breeder/shop.png")
@@ -125,8 +124,12 @@ class BreederGame:
                 
                 # self.mouse_pressed = False
                 if event.type == pygame.MOUSEBUTTONDOWN:
+                    self.mouse_clicking = True
+                if event.type == pygame.MOUSEBUTTONUP and self.mouse_clicking:
                     self.mouse_pressed = True
-                if event.type == pygame.MOUSEBUTTONUP:
+                    self.mouse_clicking = False
+                    # print('yes')
+                else:
                     self.mouse_pressed = False
 
                 if self.state == 'main':
@@ -141,7 +144,7 @@ class BreederGame:
                         if event.key == pygame.K_RIGHT:
                             self.movement[1] = False
   
-            print(self.mouse_pressed)
+            # print(' ')
             self.mouse_pos = pygame.mouse.get_pos()
             self.timer += 1
             self.ratGrowth.update()
