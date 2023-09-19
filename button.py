@@ -80,12 +80,5 @@ class itemButton:
         #     return False
         # return False
 
-# class itemButtonGrid():
-#     def __init__(self, dict_data):
-#         self.dict_data = dict_data
-#     def update(self, surface, pos, pressed):
-#         surface.blit(self.image, self.rect)
-#         if self.rect.collidepoint(pos):
-#             if pressed:
-#                 return True
-#         return False
+class textInput:
+    pass
