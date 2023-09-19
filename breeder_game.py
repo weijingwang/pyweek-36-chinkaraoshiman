@@ -12,7 +12,7 @@ from button import Button
 class BreederGame:
     def __init__(self):
 
-        self.state = 'main'
+        self.state = 'shop'
 
         pygame.init()
 
@@ -26,6 +26,7 @@ class BreederGame:
 
         #MAIN-----------------------------
         self.movement = [False, False]
+        self.wall = utils.load_image("breeder/wall.png")
 
         self.bg = utils.load_image("breeder/02-breeding-room.png")
 
@@ -37,10 +38,10 @@ class BreederGame:
         self.ratGrowth = BreederCalculations()
         self.rat_text = counterText()
 
-        self.shop_button = Button(70, 200, 80, 80, 'white', 'black', 'SHOP')
-        self.options_button = Button(70, 320, 80, 80, 'white', 'black', 'OPTS')
-        self.plot_button = Button(70, 440, 80, 80, 'white', 'black', 'PLOT')
-        self.close_button = Button(1000, 200, 80, 80, 'white', 'red', 'X')
+        self.shop_button = Button(50, 200, 80, 80, 'white', 'black', 'SHOP')
+        self.options_button = Button(50, 320, 80, 80, 'white', 'black', 'OPTS')
+        self.plot_button = Button(50, 440, 80, 80, 'white', 'black', 'PLOT')
+        self.close_button = Button(1130, 90, 80, 50, 'white', 'red', 'X')
 
 
         pygame.mouse.set_visible(False)
@@ -56,13 +57,12 @@ class BreederGame:
         self.mouse_clicking = False
 
         #SHOP--------------------------------------
-        self.shop_img = utils.load_image("breeder/shop.png")
+        self.shop_img = utils.load_image("breeder/07-shop.png")
         self.shop_img_rect = self.shop_img.get_rect(center = self.screen.get_rect().center)
 
         #OPTS--------------------------------------
         self.opts_img = utils.load_image("breeder/opts.png")
         self.opts_img_rect = self.opts_img.get_rect(center = self.screen.get_rect().center)
-
 
     def main_game(self):
 
@@ -77,6 +77,9 @@ class BreederGame:
         # print(self.ratGrowth.rat_count)
 
         self.screen.fill((34, 30, 80))
+        pygame.draw.circle(self.screen, (255,255,0), (1150,80), 50)
+        self.screen.blit(self.wall, (0, 0))
+
         self.player.update(self.movement)
         self.player.render()
         self.screen.blit(self.bg, (0, 0))
@@ -145,9 +148,12 @@ class BreederGame:
                             self.movement[1] = False
                 else:
                     self.screen.fill((34, 30, 80))
+                    self.screen.blit(self.wall, (0, 0))
+
+                    pygame.draw.circle(self.screen, (255,255,0), (1150,80), 50)
                     self.screen.blit(self.bg,(0,0))
                     self.movement = [0,0]
-  
+
             # print(' ')
             self.mouse_pos = pygame.mouse.get_pos()
             self.timer += 1
@@ -162,12 +168,15 @@ class BreederGame:
             elif self.state == 'plot':
                 self.plot()
 
+            #would like toggle button
             if self.shop_button.update(self.screen,self.mouse_pos,self.mouse_pressed):
                 self.state = 'shop'
             if self.options_button.update(self.screen,self.mouse_pos,self.mouse_pressed):
                 self.state = 'options'
             if self.plot_button.update(self.screen,self.mouse_pos,self.mouse_pressed):
                 self.state = 'plot'
+            
+
             #custom cursor
             self.cursor_img_rect = pygame.mouse.get_pos()  # update position 
             self.screen.blit(self.cursor_img, self.cursor_img_rect) # draw the cursor
