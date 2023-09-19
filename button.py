@@ -3,7 +3,7 @@ import pygame
 class Button:
     def __init__(self, x, y, width, height, fg, bg, content):
         """self, x, y, width, height, fg, bg, content)"""
-        self.font = pygame.font.SysFont(None, 100)
+        self.font = pygame.font.SysFont(None, 40)
         self.content = content
 
         self.x = x
