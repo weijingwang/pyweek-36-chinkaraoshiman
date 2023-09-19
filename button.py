@@ -100,23 +100,29 @@ class textInput:
         self.active = False
 
     def input_control(self, event):
-        if event.type == pygame.KEYDOWN:
-            # Check for backspace
-            if event.key == pygame.K_BACKSPACE:
-                # get text input from 0 to -1 i.e. end.
-                self.user_text = self.user_text[:-1]
-            # Unicode standard is used for string
-            # formation
-            else:
-                self.user_text += event.unicode
+        if self.active:
+            if event.type == pygame.KEYDOWN:
+                # Check for backspace
+                if event.key == pygame.K_BACKSPACE:
+                    # get text input from 0 to -1 i.e. end.
+                    self.user_text = self.user_text[:-1]
+                # Unicode standard is used for string
+                # formation
+                elif event.key == pygame.K_RETURN:
+                    print(self.user_text)
+                    self.user_text = ""
+                elif event.key == pygame.K_0 or event.key == pygame.K_1 or event.key == pygame.K_2 or event.key == pygame.K_3 or event.key == pygame.K_4 or event.key == pygame.K_5 or event.key == pygame.K_6 or event.key == pygame.K_7 or event.key == pygame.K_8 or event.key == pygame.K_9:
+                    self.user_text += event.unicode
       
 
     def update(self, surface, pos, pressed):
-        if self.input_rect.collidepoint(pos):
-            if pressed:
+        if pressed:
+            if self.input_rect.collidepoint(pos):
                 self.active = True
             else:
                 self.active = False
+            # else:
+            #     self.active = False
         # if event.type == pygame.MOUSEBUTTONDOWN:
         #     if input_rect.collidepoint(event.pos):
         #         active = True
