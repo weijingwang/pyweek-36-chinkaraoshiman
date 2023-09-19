@@ -100,13 +100,12 @@ class BreederGame:
         self.player.render()
         self.screen.blit(self.bg, (0, 0))
 
-        self.crow.update()
-        self.crow.render()
-
         for rat in range(len(self.rats)):
             self.rats[rat].update()
             self.rats[rat].render()
 
+        self.crow.update()
+        self.crow.render()
 
 
 
@@ -146,6 +145,13 @@ class BreederGame:
                     pygame.quit()
                     sys.exit()
                 # self.mouse_pressed = False
+
+                #33:50
+
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_BACKSPACE:
+                        self.ratGrowth.rat_count -=1
+
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.mouse_clicking = True
                 if event.type == pygame.MOUSEBUTTONUP and self.mouse_clicking:
@@ -183,12 +189,13 @@ class BreederGame:
             self.mouse_pos = pygame.mouse.get_pos()
             self.timer += 1
             self.ratGrowth.update()
-            if int(self.ratGrowth.rat_count) > len(self.rats):
-                for x in range(int(self.ratGrowth.rat_count)-len(self.rats)):
-                    self.rats.append(Rat(self))
-            elif int(self.ratGrowth.rat_count) < len(self.rats):
-                for x in range(int(self.ratGrowth.rat_count)-len(self.rats)):
-                    del self.rats[-1]
+            if int(self.ratGrowth.rat_count) < len(self.rats):
+                for x in range(-1*int(self.ratGrowth.rat_count)-len(self.rats)):
+                    self.rats.pop(-1)
+            # elif int(self.ratGrowth.rat_count) < len(self.rats):
+            #     for x in range(int(self.ratGrowth.rat_count)-len(self.rats)):
+            #         self.rats.pop(-1)
+
 
 
             if self.state == 'main':
@@ -215,7 +222,7 @@ class BreederGame:
 
 
 
-            self.rat_text.render(str(self.timer//60)+' '+str(int(self.ratGrowth.rat_count)), self.screen)
+            self.rat_text.render(str(self.timer//60)+' '+str(int(self.ratGrowth.rat_count))+' '+str(int(len(self.rats))), self.screen)
             pygame.display.update()
             self.clock.tick(60)
 
