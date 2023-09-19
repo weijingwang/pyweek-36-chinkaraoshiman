@@ -28,7 +28,7 @@ class Button:
     def update(self, surface, pos, pressed):
         surface.blit(self.image, self.rect)
         if self.rect.collidepoint(pos):
-            if pressed[0]:
+            if pressed:
                 return True
         return False
         #     return False

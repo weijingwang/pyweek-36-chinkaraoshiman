@@ -12,6 +12,8 @@ from button import Button
 class BreederGame:
     def __init__(self):
 
+        
+
         self.state = 'main'
 
         pygame.init()
@@ -52,7 +54,7 @@ class BreederGame:
         self.plot_img_rect = self.plot_img.get_rect(center = self.screen.get_rect().center)
 
         self.mouse_pos = pygame.mouse.get_pos()
-        self.mouse_pressed = pygame.mouse.get_pressed()
+        self.mouse_pressed = False
 
         #SHOP--------------------------------------
         self.shop_img = utils.load_image("breeder/shop.png")
@@ -84,22 +86,6 @@ class BreederGame:
         self.rat.render()
 
         self.player.shadow()
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
-                    self.movement[0] = True
-                if event.key == pygame.K_RIGHT:
-                    self.movement[1] = True
-
-            if event.type == pygame.KEYUP:
-                if event.key == pygame.K_LEFT:
-                    self.movement[0] = False
-                if event.key == pygame.K_RIGHT:
-                    self.movement[1] = False
         
         # self.screen.blit(pygame.transform.scale(self.screen, self.screen.get_size()), (0, 0))
 
@@ -132,9 +118,31 @@ class BreederGame:
 
     def run(self):
         while not self.done:
-            self.mouse_pos = pygame.mouse.get_pos()
-            self.mouse_pressed = pygame.mouse.get_pressed()
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                
+                # self.mouse_pressed = False
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    self.mouse_pressed = True
+                if event.type == pygame.MOUSEBUTTONUP:
+                    self.mouse_pressed = False
 
+                if self.state == 'main':
+                    if event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_LEFT:
+                            self.movement[0] = True
+                        if event.key == pygame.K_RIGHT:
+                            self.movement[1] = True
+                    if event.type == pygame.KEYUP:
+                        if event.key == pygame.K_LEFT:
+                            self.movement[0] = False
+                        if event.key == pygame.K_RIGHT:
+                            self.movement[1] = False
+  
+            print(self.mouse_pressed)
+            self.mouse_pos = pygame.mouse.get_pos()
             self.timer += 1
             self.ratGrowth.update()
 
