@@ -55,14 +55,16 @@ class BreederGame:
         self.mouse_pressed = False
         self.mouse_clicking = False
 
-        #SHOP--------------------------------------
-        self.shop_img = utils.load_image("breeder/07-shop.png")
-        self.shop_img_rect = self.shop_img.get_rect(center = self.screen.get_rect().center)
-        self.text_input = textInput()
-
         #OPTS--------------------------------------
         self.opts_img = utils.load_image("breeder/opts.png")
         self.opts_img_rect = self.opts_img.get_rect(center = self.screen.get_rect().center)
+
+        #SHOP--------------------------------------
+        self.shop_img = utils.load_image("breeder/07-shop.png")
+        self.shop_img_rect = self.shop_img.get_rect(center = self.screen.get_rect().center)
+        self.input_buy_rats = textInput(200, 200, "buy")
+        self.input_sell_rats = textInput(900, 200, "sell")
+        self.storage_button = itemButton(1280/2,200,"buy storage",260,100)
 
         self.items = [
             {"name": "Food", "price": 5, "pos": (320,330), "owned": False, "description": "temporarily satiate rat hunger"},
@@ -107,8 +109,9 @@ class BreederGame:
         if self.close_button.update(self.screen,self.mouse_pos,self.mouse_pressed):
             self.state = 'main'
 
-        self.text_input.update(self.screen, self.mouse_pos, self.mouse_pressed)
-
+        self.input_buy_rats.update(self.screen, self.mouse_pos, self.mouse_pressed)
+        self.input_sell_rats.update(self.screen, self.mouse_pos, self.mouse_pressed)
+        self.storage_button.update(self.screen,self.mouse_pos,self.mouse_pressed,False)
         for i in range(len(self.button_grid)): 
             if self.button_grid[i].update(self.screen,self.mouse_pos,self.mouse_pressed, self.items[i]["owned"]):
                 self.items[i]["owned"] = True
@@ -144,7 +147,8 @@ class BreederGame:
                     self.mouse_pressed = False
 
                 if self.state == 'shop':
-                    self.text_input.input_control(event)
+                    self.input_buy_rats.input_control(event)
+                    self.input_sell_rats.input_control(event)
 
                 if self.state == 'main':
                     if event.type == pygame.KEYDOWN:

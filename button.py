@@ -34,15 +34,15 @@ class Button:
         # return False
 
 class itemButton:
-    def __init__(self, x, y, content):
+    def __init__(self, x, y, content, width=260, height=50):
         """self, x, y, content)"""
         self.font = pygame.font.SysFont(None, 40)
         self.content = content
 
         self.x = x
         self.y = y
-        self.width = 260
-        self.height = 50
+        self.width = width
+        self.height = height
 
         self.activated = False
         if self.activated:
@@ -75,18 +75,20 @@ class itemButton:
         surface.blit(self.image, self.rect)
         if self.rect.collidepoint(pos):
             if pressed:
+                print("bought",self.content)
                 return True
         return False
         #     return False
         # return False
 
 class textInput:
-    def __init__(self):
+    def __init__(self, x, y, name):
+        self.name = name
         # basic font for user typed
         self.base_font = pygame.font.Font(None, 32)
         self.user_text = ''
         # create rectangle
-        self.input_rect = pygame.Rect(200, 200, 140, 32)
+        self.input_rect = pygame.Rect(x, y, 140, 32)
         
         # color_active stores color(lightskyblue3) which
         # gets active when input box is clicked by user
@@ -108,8 +110,8 @@ class textInput:
                     self.user_text = self.user_text[:-1]
                 # Unicode standard is used for string
                 # formation
-                elif event.key == pygame.K_RETURN:
-                    print(self.user_text)
+                elif event.key == pygame.K_RETURN and self.user_text != "":
+                    print(self.name,self.user_text,"rats")
                     self.user_text = ""
                 elif event.key == pygame.K_0 or event.key == pygame.K_1 or event.key == pygame.K_2 or event.key == pygame.K_3 or event.key == pygame.K_4 or event.key == pygame.K_5 or event.key == pygame.K_6 or event.key == pygame.K_7 or event.key == pygame.K_8 or event.key == pygame.K_9:
                     self.user_text += event.unicode
