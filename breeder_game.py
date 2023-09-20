@@ -139,6 +139,7 @@ class BreederGame:
 
     def run(self):
         while not self.done:
+
             pygame.display.set_caption("current FPS: "+str(self.clock.get_fps()))
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -151,6 +152,7 @@ class BreederGame:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_BACKSPACE:
                         self.ratGrowth.rat_count -=1
+                        self.rats.pop()
 
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.mouse_clicking = True
@@ -189,12 +191,13 @@ class BreederGame:
             self.mouse_pos = pygame.mouse.get_pos()
             self.timer += 1
             self.ratGrowth.update()
-            if int(self.ratGrowth.rat_count) < len(self.rats):
-                for x in range(-1*int(self.ratGrowth.rat_count)-len(self.rats)):
-                    self.rats.pop(-1)
-            # elif int(self.ratGrowth.rat_count) < len(self.rats):
-            #     for x in range(int(self.ratGrowth.rat_count)-len(self.rats)):
-            #         self.rats.pop(-1)
+            if int(self.ratGrowth.rat_count) > len(self.rats):
+                for x in range(int(self.ratGrowth.rat_count)-len(self.rats)):
+                    self.rats.append(Rat(self))
+            elif int(self.ratGrowth.rat_count) < len(self.rats):
+                print('for')
+                for x in range(len(self.rats)-int(self.ratGrowth.rat_count)):
+                    self.rats.pop()
 
 
 
@@ -223,6 +226,7 @@ class BreederGame:
 
 
             self.rat_text.render(str(self.timer//60)+' '+str(int(self.ratGrowth.rat_count))+' '+str(int(len(self.rats))), self.screen)
+            print(len(self.rats))
             pygame.display.update()
             self.clock.tick(60)
 

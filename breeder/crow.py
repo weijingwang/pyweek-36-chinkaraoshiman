@@ -16,9 +16,7 @@ class Crow:
         # wait, hover, attack
 
     def mouse_inputs(self, pos, pressed):
-        print(' ')
         if self.rect.collidepoint(pos):
-            print('uyfj')
             if pressed:
                 self.pos = [0,0]
                 self.come = False
