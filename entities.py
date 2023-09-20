@@ -7,17 +7,18 @@ class Mob:
         self.type = etype
         self.pos = list(pos)
         self.size = size
-        self.vel = [0, 0]
-        self.collisions = {'up': False, 'down': False, 'right': False, 'left': False}
+        self.vel = [0,0]
+        self.collisions = {'up': False, 'down': False, 'left': False, 'right': False}
     
     def rect(self):
         return pygame.Rect(self.pos[0], self.pos[1], self.size[0], self.size[1])
-        
-    def update(self, tilemap, movement=(0, 0)):
-        self.collisions = {'up': False, 'down': False, 'right': False, 'left': False}
-        
+
+    def update(self, tilemap, movement=(0,0)):
+        self.collisions = {'up': False, 'down': False, 'left': False, 'right': False}
         movement_tuple = (movement[0] + self.vel[0], movement[1] + self.vel[1])
         
+        # check tiles around for collision
+        # use current position
         self.pos[0] += movement_tuple[0]
         self_rect = self.rect()
         for rect in tilemap.rects_around(self.pos):
@@ -29,7 +30,7 @@ class Mob:
                     self_rect.left = rect.right
                     self.collisions['left'] = True
                 self.pos[0] = self_rect.x
-        
+
         self.pos[1] += movement_tuple[1]
         self_rect = self.rect()
         for rect in tilemap.rects_around(self.pos):
@@ -41,12 +42,11 @@ class Mob:
                     self_rect.top = rect.bottom
                     self.collisions['up'] = True
                 self.pos[1] = self_rect.y
-        
+
         self.vel[1] = min(5, self.vel[1] + 0.1)
-        
+
         if self.collisions['down'] or self.collisions['up']:
             self.vel[1] = 0
-        
-    def render(self, surf):
-        surf.blit(self.game.assets['player'], self.pos)
-        
+
+    def render(self, surface):
+        surface.blit(self.game.assets['player'], self.pos)
