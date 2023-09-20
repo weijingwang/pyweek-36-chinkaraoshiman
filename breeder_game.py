@@ -121,10 +121,11 @@ class BreederGame:
 
         self.input_buy_rats.update(self.mouse_pos)
         self.input_sell_rats.update(self.mouse_pos)
-        self.storage_button.update(self.screen,self.mouse_pos,False)
+        self.storage_button.update(self.mouse_pos)
         for i in range(len(self.button_grid)): 
-            if self.button_grid[i].update(self.screen,self.mouse_pos, self.items[i]["owned"]):
-                self.items[i]["owned"] = True
+            self.button_grid[i].update(self.mouse_pos)#, self.items[i]["owned"]
+                # self.items[i]["owned"] = True
+            print(self.items[i]["name"],self.items[i]["owned"])
 
 
     def options(self):

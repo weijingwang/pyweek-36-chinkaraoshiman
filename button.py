@@ -65,33 +65,25 @@ class itemButton:
         self.text_rect = self.text.get_rect(center=(self.width/2, self.height/2))
         self.image.blit(self.text, self.text_rect)
 
-        self.owned = False
+    def update(self, pos):
+        if self.rect.collidepoint(pos):
+            self.activated = True
 
-    def update(self, surface, pos, owned):
-        self.owned = owned
-        if owned:
+        if self.activated:
             self.fg = "black"
             self.bg = "green"
         else:
             self.fg = "white"
             self.bg = "black"
-        self.image.fill(self.bg)
-        self.text = self.font.render(self.content, False, self.fg) #false antialiasing
-        self.image.blit(self.text, self.text_rect)
-        surface.blit(self.image, self.rect)
-        if self.rect.collidepoint(pos):
-            print("bought",self.content)
-            self.owned = True
-            return True
-        return False
-        #     return False
-        # return False
+
 
     def render(self, surface):
         self.image.fill(self.bg)
         self.text = self.font.render(self.content, False, self.fg) #false antialiasing
         self.image.blit(self.text, self.text_rect)
         surface.blit(self.image, self.rect)
+
+
 
 
 class textInput:
