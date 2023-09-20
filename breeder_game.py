@@ -11,6 +11,7 @@ from button import Button, itemButton, textInput
 
 class BreederGame:
     def __init__(self):
+        self.rat_data = [0,0,0,0,0,0,0,0,0,0]
 
         self.state = 'main'
 
@@ -34,7 +35,7 @@ class BreederGame:
 
         self.crow = Crow(self)
 
-        self.ratGrowth = BreederCalculations()
+        self.ratGrowth = BreederCalculations(self)
         self.rat_text = counterText()
 
         self.rats = []
@@ -51,12 +52,11 @@ class BreederGame:
         self.cursor_img_rect = self.cursor_img.get_rect()
 
         #PLOT--------------------------------------
-        self.plot_img = utils.load_image("breeder/plot.png")
+        self.plot_img = utils.load_image("breeder/rat_data.png")
         self.plot_img_rect = self.plot_img.get_rect(center = self.screen.get_rect().center)
 
         self.mouse_pos = pygame.mouse.get_pos()
-        self.mouse_pressed = False
-        self.mouse_clicking = False
+        self.plot_update = True
 
         #OPTS--------------------------------------
         self.opts_img = utils.load_image("breeder/opts.png")
@@ -90,7 +90,6 @@ class BreederGame:
             self.done = True
             #exit room and go to platformer
 
-        # print(self.ratGrowth.rat_count)
 
         self.screen.fill((34, 30, 80))
         pygame.draw.circle(self.screen, (255,255,0), (1150,80), 50)
@@ -112,63 +111,108 @@ class BreederGame:
         self.player.shadow()
         
         # self.screen.blit(pygame.transform.scale(self.screen, self.screen.get_size()), (0, 0))
-
+    def main_game_events(self):
+        self.crow.mouse_inputs(self.mouse_pos)
     def shop(self):            
         self.screen.blit(self.shop_img, self.shop_img_rect)
-        if self.close_button.update(self.screen,self.mouse_pos,self.mouse_pressed):
+    def shop_events(self):
+        if self.close_button.update(self.screen,self.mouse_pos):
             self.state = 'main'
 
-        self.input_buy_rats.update(self.screen, self.mouse_pos, self.mouse_pressed)
-        self.input_sell_rats.update(self.screen, self.mouse_pos, self.mouse_pressed)
-        self.storage_button.update(self.screen,self.mouse_pos,self.mouse_pressed,False)
+        self.input_buy_rats.update(self.screen, self.mouse_pos)
+        self.input_sell_rats.update(self.screen, self.mouse_pos)
+        self.storage_button.update(self.screen,self.mouse_pos,False)
         for i in range(len(self.button_grid)): 
-            if self.button_grid[i].update(self.screen,self.mouse_pos,self.mouse_pressed, self.items[i]["owned"]):
+            if self.button_grid[i].update(self.screen,self.mouse_pos, self.items[i]["owned"]):
                 self.items[i]["owned"] = True
                 # print(str(i)+" is owned "+str(self.items[i]["owned"])+" ")
         # print(self.items)
 
     def options(self):
         self.screen.blit(self.opts_img, self.opts_img_rect)
-        if self.close_button.update(self.screen,self.mouse_pos,self.mouse_pressed):
+    def options_events(self):
+        if self.close_button.update(self.screen,self.mouse_pos):
             self.state = 'main'
 
     def plot(self):
         self.screen.blit(self.plot_img, self.plot_img_rect)
-        if self.close_button.update(self.screen,self.mouse_pos,self.mouse_pressed):
+    def plot_events(self):
+        if self.close_button.update(self.screen,self.mouse_pos):
             self.state = 'main'
+
+    def run_events(self):
+        #would like toggle button
+        if self.shop_button.update(self.screen,self.mouse_pos):
+            self.state = 'shop'
+        if self.options_button.update(self.screen,self.mouse_pos):
+            self.state = 'options'
+        if self.plot_button.update(self.screen,self.mouse_pos):
+            self.plot_update = True
+            if self.plot_update:
+                self.ratGrowth.plotter()
+                self.plot_img = utils.load_image("breeder/rat_data.png")
+                self.plot_update = False
+            self.state = 'plot'
+
 
     def run(self):
         while not self.done:
 
             pygame.display.set_caption("current FPS: "+str(self.clock.get_fps()))
+
+            self.mouse_pos = pygame.mouse.get_pos()
+            self.timer += 1
+            self.ratGrowth.update()
+            if int(self.ratGrowth.rat_count) > len(self.rats):
+                for x in range(int(self.ratGrowth.rat_count)-len(self.rats)):
+                    self.rats.append(Rat(self))
+            elif int(self.ratGrowth.rat_count) < len(self.rats):
+
+                for x in range(len(self.rats)-int(self.ratGrowth.rat_count)):
+                    self.rats.pop()
+
+
+
+            if self.state == 'main':
+                self.main_game()
+            elif self.state == 'shop':
+                self.shop()
+            elif self.state == 'options':
+                self.options()
+            elif self.state == 'plot':
+                self.plot()
+            
+
+
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-                # self.mouse_pressed = False
-
                 #33:50
-
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_BACKSPACE:
                         self.ratGrowth.rat_count -=1
                         self.rats.pop()
-
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    self.mouse_clicking = True
-                if event.type == pygame.MOUSEBUTTONUP and self.mouse_clicking:
-                    self.mouse_pressed = True
-                    self.mouse_clicking = False
-                    # print('yes')
-                else:
-                    self.mouse_pressed = False
+                    if self.state == 'main':
+                        self.main_game_events()
+                        print(self.state)
+
+                    elif self.state == 'shop':
+                        self.shop_events()
+                    elif self.state == 'options':
+                        self.options_events()
+                    elif self.state == 'plot':
+                        self.plot_events()
+                    self.run_events()
+                    
 
                 if self.state == 'shop':
                     self.input_buy_rats.input_control(event)
                     self.input_sell_rats.input_control(event)
 
                 if self.state == 'main':
-                    self.crow.mouse_inputs(self.mouse_pos, self.mouse_pressed)
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_LEFT:
                             self.movement[0] = True
@@ -185,39 +229,11 @@ class BreederGame:
 
                     pygame.draw.circle(self.screen, (255,255,0), (1150,80), 50)
                     self.screen.blit(self.bg,(0,0))
-                    self.movement = [0,0]
-
-            # print(' ')
-            self.mouse_pos = pygame.mouse.get_pos()
-            self.timer += 1
-            self.ratGrowth.update()
-            if int(self.ratGrowth.rat_count) > len(self.rats):
-                for x in range(int(self.ratGrowth.rat_count)-len(self.rats)):
-                    self.rats.append(Rat(self))
-            elif int(self.ratGrowth.rat_count) < len(self.rats):
-                print('for')
-                for x in range(len(self.rats)-int(self.ratGrowth.rat_count)):
-                    self.rats.pop()
-
-
-
-            if self.state == 'main':
-                self.main_game()
-            elif self.state == 'shop':
-                self.shop()
-            elif self.state == 'options':
-                self.options()
-            elif self.state == 'plot':
-                self.plot()
-
-            #would like toggle button
-            if self.shop_button.update(self.screen,self.mouse_pos,self.mouse_pressed):
-                self.state = 'shop'
-            if self.options_button.update(self.screen,self.mouse_pos,self.mouse_pressed):
-                self.state = 'options'
-            if self.plot_button.update(self.screen,self.mouse_pos,self.mouse_pressed):
-                self.state = 'plot'
+                    self.movement = [0,0]     
             
+            self.shop_button.render(self.screen)
+            self.options_button.render(self.screen)
+            self.plot_button.render(self.screen)
 
             #custom cursor
             self.cursor_img_rect.center = pygame.mouse.get_pos()  # update position 
@@ -226,7 +242,7 @@ class BreederGame:
 
 
             self.rat_text.render(str(self.timer//60)+' '+str(int(self.ratGrowth.rat_count))+' '+str(int(len(self.rats))), self.screen)
-            print(len(self.rats))
+            
             pygame.display.update()
             self.clock.tick(60)
 
