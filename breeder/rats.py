@@ -2,7 +2,10 @@ import utils
 from random import uniform, getrandbits, choice, randrange
 
 class Rat:
-    def __init__(self, game, pos=[randrange(100,700),randrange(300,700)]):
+    def __init__(self, game, pos=[randrange(0,782),randrange(330,600)]):
+
+        self.rat_cage = ((0,782),(330,600))
+
         self.DX_val = 5
         self.DY_val = 5
         self.game = game
@@ -42,6 +45,25 @@ class Rat:
             self.move = getrandbits(1)
         if self.moving:
             if self.timer < self.move_time:
+
+                if self.pos[0] < self.rat_cage[0][0]:
+                    #rat cage left
+                    self.pos[0] = self.rat_cage[0][0]
+                    self.dx *= -1
+                if self.pos[0] > self.rat_cage[0][1]:
+                    #rat cage right
+                    self.pos[0] = self.rat_cage[0][1]
+                    self.dx *= -1        
+                if self.pos[1] < self.rat_cage[1][0]:
+                    #rat cage up
+                    self.pos[1] = self.rat_cage[1][0]
+                    self.dy *= -1
+                if self.pos[1] > self.rat_cage[1][1]:
+                    #rat cage down
+                    self.pos[1] = self.rat_cage[1][1]
+                    self.dy *= -1        
+                    
+
                 self.pos[0] += self.dx
                 self.pos[1] += self.dy
                 self.timer += 1

@@ -7,7 +7,7 @@ class BreederCalculations:
     #real time graphing????
     def __init__(self):
         self.timer = 0
-        self.rat_count = 3
+        self.rat_count = 300
         self.upper_cap = 500
         self.lower_cap = 0
         self.next_increase = 0
