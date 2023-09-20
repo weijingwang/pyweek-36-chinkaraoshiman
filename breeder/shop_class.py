@@ -3,7 +3,9 @@ import utils
 from button import textInput, itemButton
 
 class Shop:
-    def __init__(self, screen):
+    def __init__(self, game, screen):
+        self.STORAGE_PRICE = 10
+        self.game = game
         #SHOP--------------------------------------
         self.screen = screen
         self.shop_img = utils.load_image("breeder/07-shop.png")
@@ -22,9 +24,18 @@ class Shop:
             {"name": "Scarecrow", "price": 5, "pos": (620,470), "owned": False, "description": "decrease crow attack rate", "repurchasable": False},
             {"name": "Crow destroyer", "price": 5, "pos": (620,540), "owned": False, "description": "crows do not kill rats", "repurchasable": False}
         ]
+        
         self.button_grid = []
         for x in self.items:
             self.button_grid.append(itemButton(x["pos"][0], x["pos"][1], x["name"], x["repurchasable"]))
+
+    def transactions(self):
+        if self.storage_button.activated and self.game.money >= self.STORAGE_PRICE:
+            self.game.money -= self.STORAGE_PRICE
+            self.game.ratGrowth.upper_cap += 100
+            print("$ spend: ",self.STORAGE_PRICE,"money left: ",self.game.money,"new upper cap: ",self.game.ratGrowth.upper_cap)
+            self.STORAGE_PRICE *= 2
+
     def render(self):            
         self.screen.blit(self.shop_img, self.shop_img_rect)
         for i in range(len(self.button_grid)): 
@@ -44,8 +55,8 @@ class Shop:
                 
             if self.button_grid[i].activated and not self.items[i]["repurchasable"]:
                 self.items[i]["owned"] = True
-                print(self.items[i]["name"],self.items[i]["owned"],self.items[i]["repurchasable"])
-
+                # print(self.items[i]["name"],self.items[i]["owned"],self.items[i]["repurchasable"])
+        self.transactions()
     def mouse_up_events(self):
         self.storage_button.update_keyup()
         for i in range(len(self.button_grid)): 

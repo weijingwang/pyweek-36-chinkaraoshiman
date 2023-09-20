@@ -13,6 +13,7 @@ from breeder.shop_class import Shop
 
 class BreederGame:
     def __init__(self):
+        self.money = 100
         self.rat_data = [0,0,0,0,0,0,0,0,0,0]
 
         self.state = 'main'
@@ -72,7 +73,7 @@ class BreederGame:
         self.opts_img_rect = self.opts_img.get_rect(center = self.screen.get_rect().center)
 
         #SHOP--------------------------------------
-        self.breeder_shop = Shop(self.screen)
+        self.breeder_shop = Shop(self, self.screen)
 
     def main_game(self):
         if self.player.pos[0] > self.screen.get_width():
@@ -204,6 +205,7 @@ class BreederGame:
             if self.state == 'main':
                 self.main_game()
             elif self.state == 'shop':
+                # self.breeder_shop.transactions()
                 self.breeder_shop.render()
             elif self.state == 'options':
                 self.options()
