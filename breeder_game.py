@@ -159,7 +159,13 @@ class BreederGame:
         while not self.done:
 
             pygame.display.set_caption("current FPS: "+str(self.clock.get_fps()))
+            if self.state != "main":
+                self.screen.fill((34, 30, 80))
+                self.screen.blit(self.wall, (0, 0))
 
+                pygame.draw.circle(self.screen, (255,255,0), (1150,80), 50)
+                self.screen.blit(self.bg,(0,0))
+                self.movement = [0,0]     
             self.mouse_pos = pygame.mouse.get_pos()
             self.timer += 1
             self.ratGrowth.update()
@@ -184,7 +190,7 @@ class BreederGame:
             
 
 
-
+            print(self.state)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -195,9 +201,9 @@ class BreederGame:
                         self.ratGrowth.rat_count -=1
                         self.rats.pop()
                 if event.type == pygame.MOUSEBUTTONDOWN:
+                    
                     if self.state == 'main':
                         self.main_game_events()
-                        print(self.state)
 
                     elif self.state == 'shop':
                         self.shop_events()
@@ -223,13 +229,7 @@ class BreederGame:
                             self.movement[0] = False
                         if event.key == pygame.K_RIGHT:
                             self.movement[1] = False
-                else:
-                    self.screen.fill((34, 30, 80))
-                    self.screen.blit(self.wall, (0, 0))
 
-                    pygame.draw.circle(self.screen, (255,255,0), (1150,80), 50)
-                    self.screen.blit(self.bg,(0,0))
-                    self.movement = [0,0]     
             
             self.shop_button.render(self.screen)
             self.options_button.render(self.screen)
