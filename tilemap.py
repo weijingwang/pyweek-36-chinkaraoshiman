@@ -1,6 +1,6 @@
 import pygame
 
-around_list = [(-1, 0), (-1, -1), (0, -1), (1, -1), (1, 0), (0, 0), (-1, 1), (0, 1), (1, 1)]
+NEIGHBOR_OFFSETS = [(-1, 0), (-1, -1), (0, -1), (1, -1), (1, 0), (0, 0), (-1, 1), (0, 1), (1, 1)]
 PHYSICS_TILES = {'grass', 'stone'}
 
 class Tilemap:
@@ -11,19 +11,19 @@ class Tilemap:
         self.offgrid_tiles = []
 
         for i in range(10):
-            self.tilemap[str(3 + i) + ';10'] = {'type': 'grass', 'variant': 1, 'pos': (3 + i, 10)}
-            self.tilemap['10;' + str(5 + i)] = {'type': 'stone', 'variant': 1, 'pos': (10, 5 + i)}
+            self.tilemap[str(3 + i) + ';10'] = {'type': 'grass', 'pos': (3 + i, 10)}
+            self.tilemap['10;' + str(5 + i)] = {'type': 'stone', 'pos': (10, 5 + i)}
     
     def tiles_around(self, pos):
         tiles = []
-        grid_loc = (int(pos[0] // self.tile_size), int(pos[1] // self.tile_size))
-        for off in around_list:
-            around = str(grid_loc[0] + off[0]) + ';' + str(grid_loc[1] + off[1])
-            if around in self.tilemap:
-                tiles.append(self.tilemap[around])
+        tile_loc = (int(pos[0] // self.tile_size), int(pos[1] // self.tile_size))
+        for offset in NEIGHBOR_OFFSETS:
+            check_loc = str(tile_loc[0] + offset[0]) + ';' + str(tile_loc[1] + offset[1])
+            if check_loc in self.tilemap:
+                tiles.append(self.tilemap[check_loc])
         return tiles
     
-    def physics_rects_around(self, pos):
+    def rects_around(self, pos):
         rects = []
         for tile in self.tiles_around(pos):
             if tile['type'] in PHYSICS_TILES:
@@ -32,8 +32,8 @@ class Tilemap:
 
     def render(self, surf):
         for tile in self.offgrid_tiles:
-            surf.blit(self.game.assets[tile['type']][tile['variant']], tile['pos'])
+            surf.blit(self.game.assets[tile['type']], tile['pos'])
             
         for loc in self.tilemap:
             tile = self.tilemap[loc]
-            surf.blit(self.game.assets[tile['type']][tile['variant']], (tile['pos'][0] * self.tile_size, tile['pos'][1] * self.tile_size))
+            surf.blit(self.game.assets[tile['type']], (tile['pos'][0] * self.tile_size, tile['pos'][1] * self.tile_size))

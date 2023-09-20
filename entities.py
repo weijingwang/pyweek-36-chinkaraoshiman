@@ -20,7 +20,7 @@ class Mob:
         
         self.pos[0] += movement_tuple[0]
         self_rect = self.rect()
-        for rect in tilemap.physics_rects_around(self.pos):
+        for rect in tilemap.rects_around(self.pos):
             if self_rect.colliderect(rect):
                 if movement_tuple[0] > 0:
                     self_rect.right = rect.left
@@ -32,7 +32,7 @@ class Mob:
         
         self.pos[1] += movement_tuple[1]
         self_rect = self.rect()
-        for rect in tilemap.physics_rects_around(self.pos):
+        for rect in tilemap.rects_around(self.pos):
             if self_rect.colliderect(rect):
                 if movement_tuple[1] > 0:
                     self_rect.bottom = rect.top
