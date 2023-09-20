@@ -65,7 +65,10 @@ class itemButton:
         self.text_rect = self.text.get_rect(center=(self.width/2, self.height/2))
         self.image.blit(self.text, self.text_rect)
 
+        self.owned = False
+
     def update(self, surface, pos, owned):
+        self.owned = owned
         if owned:
             self.fg = "black"
             self.bg = "green"
@@ -78,12 +81,16 @@ class itemButton:
         surface.blit(self.image, self.rect)
         if self.rect.collidepoint(pos):
             print("bought",self.content)
+            self.owned = True
             return True
         return False
         #     return False
         # return False
 
     def render(self, surface):
+        self.image.fill(self.bg)
+        self.text = self.font.render(self.content, False, self.fg) #false antialiasing
+        self.image.blit(self.text, self.text_rect)
         surface.blit(self.image, self.rect)
 
 
@@ -123,7 +130,7 @@ class textInput:
                     self.user_text += event.unicode
       
 
-    def update(self, surface, pos):
+    def update(self, pos):
         if self.input_rect.collidepoint(pos):
             self.active = True
         else:
@@ -143,6 +150,8 @@ class textInput:
             
         # draw rectangle and argument passed which should
         # be on screen
+
+    def render(self, surface):
         pygame.draw.rect(surface, self.color, self.input_rect)
     
         self.text_surface = self.base_font.render(self.user_text, True, (255, 255, 255))
@@ -154,5 +163,3 @@ class textInput:
         # outside of user's text input
         self.input_rect.w = max(100, self.text_surface.get_width()+10)
 
-    def render(self, surface):
-        surface.blit(self.image, self.rect)
