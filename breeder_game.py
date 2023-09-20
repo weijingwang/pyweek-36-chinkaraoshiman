@@ -13,6 +13,7 @@ from breeder.shop_class import Shop
 
 class BreederGame:
     def __init__(self):
+        self.FPS = 60
         self.money = 100
         self.rat_data = [0,0,0,0,0,0,0,0,0,0]
 
@@ -26,6 +27,7 @@ class BreederGame:
         self.done = False
         self.clock = pygame.time.Clock()
         self.timer = 0
+        self.one_cycle_counter = 0
         self.close_button = utils.load_image("breeder/close_button.png")
 
         #MAIN-----------------------------
@@ -99,11 +101,6 @@ class BreederGame:
         self.crow.render()
         self.screen.blit(self.cage2, (-50,350))
         self.screen.blit(self.cage3, (-50,350))
-
-
-
-
-
         self.player.shadow()
         
         # self.screen.blit(pygame.transform.scale(self.screen, self.screen.get_size()), (0, 0))
@@ -113,15 +110,9 @@ class BreederGame:
 
     def options(self):
         self.screen.blit(self.opts_img, self.opts_img_rect)
-    def options_events(self):
-        if self.close_button.update(self.screen,self.mouse_pos):
-            self.state = 'main'
 
     def plot(self):
         self.screen.blit(self.plot_img, self.plot_img_rect)
-    def plot_events(self):
-        if self.close_button.update(self.screen,self.mouse_pos):
-            self.state = 'main'
 
     def run_events(self):
         #would like toggle button
@@ -144,51 +135,41 @@ class BreederGame:
             pygame.display.set_caption("current FPS: "+str(self.clock.get_fps()))
             self.mouse_pos = pygame.mouse.get_pos()
             self.timer += 1
-            self.ratGrowth.update()
+            self.one_cycle_counter += 1
+            if self.one_cycle_counter >= self.FPS:
+                print(self.timer)
+                self.ratGrowth.update()
+                self.one_cycle_counter = 0
             #rat math
             if int(self.ratGrowth.rat_count) > len(self.rats):
                 for x in range(int(self.ratGrowth.rat_count)-len(self.rats)):
                     self.rats.append(Rat(self))
             elif int(self.ratGrowth.rat_count) < len(self.rats):
                 for x in range(len(self.rats)-int(self.ratGrowth.rat_count)):
-                    self.rats.pop()
-
-            #draw static background if not main
-            if self.state != "main":
-                self.screen.fill((34, 30, 80))
-                self.screen.blit(self.wall, (0, 0))
-                pygame.draw.circle(self.screen, (255,255,0), (1150,80), 50)
-                self.screen.blit(self.bg,(0,0))
-                self.movement = [0,0]     
+                    self.rats.pop()   
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
                 #33:50
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_BACKSPACE:
-                        self.ratGrowth.rat_count -=1
-                        self.rats.pop()
+                # if event.type == pygame.KEYDOWN:
+                #     if event.key == pygame.K_BACKSPACE:
+                #         self.ratGrowth.rat_count -=1
+                #         self.rats.pop()
                 if event.type == pygame.MOUSEBUTTONDOWN:     
                     if self.state == 'main':
                         self.main_game_events()
                     elif self.state == 'shop':
+                        self.breeder_shop.mouse_down_events(self.mouse_pos)
+                    if self.state != 'main':
                         if self.close_button.update(self.screen,self.mouse_pos):
                             self.state = 'main'
-                        self.breeder_shop.mouse_down_events(self.mouse_pos)
-                    elif self.state == 'options':
-                        self.options_events()
-                    elif self.state == 'plot':
-                        self.plot_events()
                     self.run_events()
                 elif event.type == pygame.MOUSEBUTTONUP:
                     # if self.state == 'shop':
                     self.breeder_shop.mouse_up_events()
-
-                if self.state == 'shop':
-                    self.breeder_shop.state_events(event)
-
+                #other events like typing
                 if self.state == 'main':
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_LEFT:
@@ -200,7 +181,17 @@ class BreederGame:
                             self.movement[0] = False
                         if event.key == pygame.K_RIGHT:
                             self.movement[1] = False
+                if self.state == 'shop':
+                    self.breeder_shop.state_events(event)
 
+
+            #draw static background if not main
+            if self.state != "main":
+                self.screen.fill((34, 30, 80))
+                self.screen.blit(self.wall, (0, 0))
+                pygame.draw.circle(self.screen, (255,255,0), (1150,80), 50)
+                self.screen.blit(self.bg,(0,0))
+                self.movement = [0,0]  
 
             if self.state == 'main':
                 self.main_game()
@@ -212,22 +203,23 @@ class BreederGame:
             elif self.state == 'plot':
                 self.plot()
 
+            #draw menu buttons (always visible)
             self.shop_button.render(self.screen)
             self.options_button.render(self.screen)
             self.plot_button.render(self.screen)
 
-
+            #draw exit button (needs to be drawn on top of everything else)
             if self.state != "main":
                 self.close_button.render(self.screen)
+
             #custom cursor
             self.cursor_img_rect.center = pygame.mouse.get_pos()  # update position 
             self.screen.blit(self.cursor_img, self.cursor_img_rect) # draw the cursor
 
-
-
-            self.rat_text.render(str(self.timer//60)+' '+str(int(self.ratGrowth.rat_count))+' '+str(int(len(self.rats))), self.screen)
+            #currents stats
+            self.rat_text.render(str(self.timer//self.FPS)+' '+str(int(self.ratGrowth.rat_count))+' '+str(int(len(self.rats))), self.screen)
             
             pygame.display.update()
-            self.clock.tick(60)
+            self.clock.tick(self.FPS)
 
 BreederGame().run()

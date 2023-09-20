@@ -6,7 +6,6 @@ class BreederCalculations:
     #real time graphing????
     def __init__(self, game):
         self.game = game
-        self.timer = 0
         self.rat_count = 100
         self.upper_cap = 100
         self.lower_cap = 0
@@ -32,22 +31,20 @@ class BreederCalculations:
                 self.next_increase = self.upper_cap - self.rat_count
 
     def update(self):
-        if self.timer == 60:
-            # print(int(self.rat_count), self.next_increase,)
-            
-            self.next_increase = 0
-            if self.rat_count > 1:
-                self.crow_eat_rat()
-                self.calculate_next_change()
-            elif self.rat_count == 1:
-                self.crow_eat_rat()
-            elif self.rat_count < self.lower_cap:
-                self.rat_count = 0
-            self.rat_count += self.next_increase
-            self.timer = 0
-            self.manage_rat_data(self.game.rat_data, self.rat_count)
-        self.timer += 1
+        # if self.timer == 60:
+        # print(int(self.rat_count), self.next_increase,)
         
+        self.next_increase = 0
+        if self.rat_count > 1:
+            self.crow_eat_rat()
+            self.calculate_next_change()
+        elif self.rat_count == 1:
+            self.crow_eat_rat()
+        elif self.rat_count < self.lower_cap:
+            self.rat_count = 0
+        self.rat_count += self.next_increase
+        self.manage_rat_data(self.game.rat_data, self.rat_count)
+    
     def manage_rat_data(self, data_list, x):
         if len(data_list) < 10:
             data_list.append(x)
