@@ -67,21 +67,21 @@ class BreederGame:
         self.shop_img_rect = self.shop_img.get_rect(center = self.screen.get_rect().center)
         self.input_buy_rats = textInput(200, 200, "buy")
         self.input_sell_rats = textInput(900, 200, "sell")
-        self.storage_button = itemButton(1280/2,200,"buy storage",260,100)
 
+        self.storage_button = itemButton(1280/2,200,"buy storage", True, 260,100)
         self.items = [
-            {"name": "Food", "price": 5, "pos": (320,330), "owned": False, "description": "temporarily satiate rat hunger"},
-            {"name": "Auto-feeder", "price": 5, "pos": (320,400), "owned": False, "description": "rats never go hungry"},
-            {"name": "Medicine", "price": 5, "pos": (320,470), "owned": False, "description": "cure rats"},
-            {"name": "Doctor", "price": 5, "pos": (320,540), "owned": False, "description": "rats never sick"},
-            {"name": "Tempting hand", "price": 5, "pos": (620,330), "owned": False, "description": "slightly increase rat breeding chance when clicking on them"},
-            {"name": "Skillful hand", "price": 5, "pos": (620,400), "owned": False, "description": "greatly increase rat breeding chance when clicking on them"},
-            {"name": "Scarecrow", "price": 5, "pos": (620,470), "owned": False, "description": "decrease crow attack rate"},
-            {"name": "Crow destroyer", "price": 5, "pos": (620,540), "owned": False, "description": "crows do not kill rats"}
+            {"name": "Food", "price": 5, "pos": (320,330), "owned": False, "description": "temporarily satiate rat hunger", "repurchasable": True},
+            {"name": "Auto-feeder", "price": 5, "pos": (320,400), "owned": False, "description": "rats never go hungry", "repurchasable": False},
+            {"name": "Medicine", "price": 5, "pos": (320,470), "owned": False, "description": "cure rats", "repurchasable": True},
+            {"name": "Doctor", "price": 5, "pos": (320,540), "owned": False, "description": "rats never sick", "repurchasable": False},
+            {"name": "Tempting hand", "price": 5, "pos": (620,330), "owned": False, "description": "slightly increase rat breeding chance when clicking on them", "repurchasable": False},
+            {"name": "Skillful hand", "price": 5, "pos": (620,400), "owned": False, "description": "greatly increase rat breeding chance when clicking on them", "repurchasable": False},
+            {"name": "Scarecrow", "price": 5, "pos": (620,470), "owned": False, "description": "decrease crow attack rate", "repurchasable": False},
+            {"name": "Crow destroyer", "price": 5, "pos": (620,540), "owned": False, "description": "crows do not kill rats", "repurchasable": False}
         ]
         self.button_grid = []
         for x in self.items:
-            self.button_grid.append(itemButton(x["pos"][0], x["pos"][1], x["name"]))
+            self.button_grid.append(itemButton(x["pos"][0], x["pos"][1], x["name"], x["repurchasable"]))
 
     def main_game(self):
         if self.player.pos[0] > self.screen.get_width():

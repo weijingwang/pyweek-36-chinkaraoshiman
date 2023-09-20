@@ -37,11 +37,12 @@ class Button:
 
 
 class itemButton:
-    def __init__(self, x, y, content, width=260, height=50):
-        """self, x, y, content)"""
+    def __init__(self, x, y, content, repurchasable, width=260, height=50):
+        """self, x, y, content, repurchase)"""
         self.font = pygame.font.SysFont(None, 40)
         self.content = content
 
+        self.repurchasable = repurchasable
         self.x = x
         self.y = y
         self.width = width
@@ -68,6 +69,8 @@ class itemButton:
     def update(self, pos):
         if self.rect.collidepoint(pos):
             self.activated = True
+        elif self.repurchasable:
+            self.activated = False
 
         if self.activated:
             self.fg = "black"
