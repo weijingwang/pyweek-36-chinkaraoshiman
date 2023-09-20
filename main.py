@@ -9,28 +9,28 @@ class Game:
     def __init__(self):
         pygame.init()
 
-        pygame.display.set_caption('ninja game')
+        pygame.display.set_caption('platformer')
         self.screen = pygame.display.set_mode((640, 480))
-        self.display = pygame.Surface((320, 240))
+        self.display = pygame.Surface((320*2, 240*2))
 
         self.clock = pygame.time.Clock()
         
         self.movement = [False, False]
         
         self.assets = {
-            'player': pygame.transform.scale(load_img('player.png'), (15,20)),
+            'player': pygame.transform.scale(load_img('player.png'), (16,30)),
             'stone': pygame.transform.scale(load_img('shadow.png'), (32,32)),
             'grass': pygame.transform.scale(load_img('shadow.png'), (32,32)),
 
         }
         
-        self.player = Mob(self, 'player', (50, 50), (8, 15))
+        self.player = Mob(self, 'player', (100, 100), (16, 30))
         
-        self.tilemap = Tilemap(self, tile_size=16)
+        self.tilemap = Tilemap(self, tile_size=32)
         
     def run(self):
         while True:
-            self.display.fill((14, 219, 248))
+            self.display.fill((156, 153, 78))
             
             self.tilemap.render(self.display)
             
