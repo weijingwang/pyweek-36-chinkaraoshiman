@@ -6,7 +6,7 @@ class BreederCalculations:
     #real time graphing????
     def __init__(self, game):
         self.game = game
-        self.rat_count = 50
+        self.rat_count = 10
         self.upper_cap = 100
         self.lower_cap = 0
         self.next_increase = 0
@@ -18,15 +18,18 @@ class BreederCalculations:
 
     def crow_eat_rat(self):
         #do once every rat spawn cylce only
-        if getrandbits(1):
-            if self.rat_count//3 < 1:
-                self.next_increase -= 1
-            else:
-                self.next_increase -= self.rat_count/3
+        if self.game.crow.state == 'attack':
+            if True:
+                if self.rat_count//3 < 1:
+                    self.next_increase -= 1
+                else:
+                    self.next_increase -= self.rat_count/3
+                    print('yujkm,')
+
 
     def calculate_next_change(self):
         if self.rat_count > 1:
-            self.next_increase += self.rat_count / 3
+            self.next_increase += self.rat_count / 4
             if (self.next_increase+self.rat_count) > self.upper_cap:
                 self.next_increase = self.upper_cap - self.rat_count
 
@@ -41,7 +44,6 @@ class BreederCalculations:
             self.calculate_next_change()
         elif self.rat_count == 1:
             self.crow_eat_rat()
-            pass
         elif self.rat_count < self.lower_cap:
             self.rat_count = 0
         self.rat_count += self.next_increase
