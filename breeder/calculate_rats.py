@@ -26,7 +26,6 @@ class BreederCalculations:
 
     def calculate_next_change(self):
         if self.rat_count > 1:
-            print('calc', self.rat_count)
             self.next_increase += self.rat_count / 3
             if (self.next_increase+self.rat_count) > self.upper_cap:
                 self.next_increase = self.upper_cap - self.rat_count
