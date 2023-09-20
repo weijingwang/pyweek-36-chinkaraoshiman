@@ -45,11 +45,12 @@ class Shop:
             print("current balance: ", self.game.money)
 
         if self.input_buy_rats.active and self.input_buy_rats.user_text != '' and self.game.money >= self.RAT_PRICE:
-            print(self.input_buy_rats.user_text)
-            self.game.ratGrowth.rat_count += int(self.input_buy_rats.user_text)
-            self.game.money -= int(self.RAT_PRICE)
-            print("bought", self.input_buy_rats.user_text,"rats for $"+str(int(self.RAT_PRICE)))
-            print("current balance: ", self.game.money)
+            if (int(self.input_buy_rats.user_text)+self.game.ratGrowth.rat_count) <= self.game.ratGrowth.upper_cap:
+                print(self.input_buy_rats.user_text)
+                self.game.ratGrowth.rat_count += int(self.input_buy_rats.user_text)
+                self.game.money -= int(self.RAT_PRICE)
+                print("bought", self.input_buy_rats.user_text,"rats for $"+str(int(self.RAT_PRICE)))
+                print("current balance: ", self.game.money)
 
 
     def render(self):
