@@ -28,11 +28,11 @@ class Crow:
                 self.come = True
         if self.come == True:
             
-            if self.pos[0] <= 200:
+            if self.pos[0] <= 300:
                 self.pos[0]+=self.SPEED
-            if self.pos[1] <= 300:
+            if self.pos[1] <= 450:
                 self.pos[1]+=self.SPEED
-            if self.pos[0] >= 200 and self.pos[1] >= 300:
+            if self.pos[0] >= 300 and self.pos[1] >= 450:
                 self.come = False
             
             self.rect.x = self.pos[0]

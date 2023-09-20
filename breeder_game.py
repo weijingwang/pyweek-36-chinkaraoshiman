@@ -110,11 +110,12 @@ class BreederGame:
         for rat in range(len(self.rats)):
             self.rats[rat].update()
             self.rats[rat].render()
+        self.crow.update()
+        self.crow.render()
         self.screen.blit(self.cage2, (-50,350))
         self.screen.blit(self.cage3, (-50,350))
 
-        self.crow.update()
-        self.crow.render()
+
 
 
 
