@@ -124,7 +124,9 @@ class BreederGame:
         self.storage_button.update(self.mouse_pos)
         for i in range(len(self.button_grid)): 
             self.button_grid[i].update(self.mouse_pos)#, self.items[i]["owned"]
-                # self.items[i]["owned"] = True
+                
+            if self.button_grid[i].activated:
+                self.items[i]["owned"] = True
             print(self.items[i]["name"],self.items[i]["owned"])
 
 
