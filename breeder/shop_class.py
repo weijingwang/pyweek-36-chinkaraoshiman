@@ -5,6 +5,7 @@ from button import textInput, itemButton
 class Shop:
     def __init__(self, game, screen):
         self.STORAGE_PRICE = 10
+        self.RAT_PRICE = 1
         self.game = game
         #SHOP--------------------------------------
         self.screen = screen
@@ -35,6 +36,12 @@ class Shop:
             self.game.ratGrowth.upper_cap += 100
             print("$ spend: ",self.STORAGE_PRICE,"money left: ",self.game.money,"new upper cap: ",self.game.ratGrowth.upper_cap)
             self.STORAGE_PRICE *= 2
+        elif self.input_sell_rats.execute_order and self.game.ratGrowth.rat_count >= int(self.input_sell_rats.user_text):
+            self.ratGrowth.rat_count -= int(self.input_sell_rats.user_text)
+            self.game.money += int(self.RAT_PRICE * 0.7)
+            print("trade executed of", self.input_sell_rats.user_text,"sold for $",int(self.RAT_PRICE * 0.7))
+            print("current balance: ", self.game.money)
+
 
     def render(self):            
         self.screen.blit(self.shop_img, self.shop_img_rect)
