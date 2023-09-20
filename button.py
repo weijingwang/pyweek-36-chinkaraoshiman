@@ -69,8 +69,6 @@ class itemButton:
     def update(self, pos):
         if self.rect.collidepoint(pos):
             self.activated = True
-        elif self.repurchasable:
-            self.activated = False
 
         if self.activated:
             self.fg = "black"
@@ -79,8 +77,18 @@ class itemButton:
             self.fg = "white"
             self.bg = "black"
 
-
+    def update_keyup(self):
+        if self.repurchasable:
+            self.activated = False
+            if self.activated:
+                self.fg = "black"
+                self.bg = "green"
+            else:
+                self.fg = "white"
+                self.bg = "black"
+                
     def render(self, surface):
+
         self.image.fill(self.bg)
         self.text = self.font.render(self.content, False, self.fg) #false antialiasing
         self.image.blit(self.text, self.text_rect)

@@ -199,7 +199,11 @@ class BreederGame:
                     elif self.state == 'plot':
                         self.plot_events()
                     self.run_events()
-                    
+                elif event.type == pygame.MOUSEBUTTONUP:
+                    self.storage_button.update_keyup()
+                    for i in range(len(self.button_grid)): 
+                        self.button_grid[i].update_keyup()#, self.items[i]["owned"]
+                            
                 if self.state == 'shop':
                     self.input_buy_rats.input_control(event)
                     self.input_sell_rats.input_control(event)
