@@ -1,59 +1,57 @@
+import sys
+
+from util import load_img
+from entities import Object
+from tilemap import Tilemap
 import pygame
-from player import Player
 
+class Game:
+    def __init__(self):
+        pygame.init()
 
-#main game is platformer
-#player jumps and stands on walls
-#player can shoot gun really fast
-#enemies will attack player when in range, otherwise, walk around
-#bullets
-#player can talk to npcs
-#player moves to room/change level by going though a door
+        pygame.display.set_caption('platformer')
+        self.screen = pygame.display.set_mode((640, 480))
 
-pygame.init()
-
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = int(SCREEN_WIDTH * 0.8)
-
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-pygame.display.set_caption("platformer")
-
-clock = pygame.time.Clock()
-FPS = 60
-
-
-RED = (255, 0, 0)
-
-def draw_bg():
-	screen.fill((0,66,66))
-	#pygame.draw.line(screen, RED, (0, 300), (SCREEN_WIDTH, 300))
-
-player = Player(200, 200, 1)
-
-def player_updates():
-    screen.blit(player.image, player.rect)
-    player.movement()
-
-
-run = True
-while run:
-
-    clock.tick(FPS)
-
-    draw_bg()
-    
-    player_updates()
-
-    for event in pygame.event.get():
+        self.clock = pygame.time.Clock()
         
-        if event.type == pygame.QUIT:
-            run = False
+        self.movement = [False, False]
+        
+        self.assets = {
+            'player': load_img('player.png'),
+            'stone': pygame.transform.scale(load_img('shadow.png'), (32,32))
+        }
+        
+        self.player = Object(self, 'player', (50, 50), (8, 15))
+        
+        self.tilemap = Tilemap(self, tile_size=16)
+        
+    def run(self):
+        while True:
+            self.screen.fill((156, 153, 78))
+            
+            self.tilemap.render(self.screen)
+            
+            self.player.update((self.movement[1] - self.movement[0], 0))
+            self.player.render(self.screen)
+            
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_LEFT:
+                        self.movement[0] = True
+                    if event.key == pygame.K_RIGHT:
+                        self.movement[1] = True
+                    if event.key == pygame.K_UP:
+                        self.player.vel[1] = -5
+                if event.type == pygame.KEYUP:
+                    if event.key == pygame.K_LEFT:
+                        self.movement[0] = False
+                    if event.key == pygame.K_RIGHT:
+                        self.movement[1] = False
+            
+            pygame.display.update()
+            self.clock.tick(60)
 
-        #if event.type == pygame.KEYDOWN:
-        #    if event.key == pygame.K_a:
-
-    
-
-    pygame.display.update()
-
-pygame.quit()
+Game().run()
