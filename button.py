@@ -24,21 +24,25 @@ class Button:
         self.text_rect = self.text.get_rect(center=(self.width/2, self.height/2))
         self.image.blit(self.text, self.text_rect)
 
-    def update(self, surface, pos, pressed):
+    def update(self, surface, pos):
         surface.blit(self.image, self.rect)
         if self.rect.collidepoint(pos):
-            if pressed:
-                return True
+            return True
         return False
         #     return False
         # return False
+    
+    def render(self, surface):
+        surface.blit(self.image, self.rect)
+
 
 class itemButton:
-    def __init__(self, x, y, content, width=260, height=50):
-        """self, x, y, content)"""
+    def __init__(self, x, y, content, repurchasable, width=260, height=50):
+        """self, x, y, content, repurchase)"""
         self.font = pygame.font.SysFont(None, 40)
         self.content = content
 
+        self.repurchasable = repurchasable
         self.x = x
         self.y = y
         self.width = width
@@ -62,24 +66,36 @@ class itemButton:
         self.text_rect = self.text.get_rect(center=(self.width/2, self.height/2))
         self.image.blit(self.text, self.text_rect)
 
-    def update(self, surface, pos, pressed, owned):
-        if owned:
+    def update(self, pos):
+        if self.rect.collidepoint(pos):
+            self.activated = True
+
+        if self.activated:
             self.fg = "black"
             self.bg = "green"
         else:
             self.fg = "white"
             self.bg = "black"
+
+    def update_keyup(self):
+        if self.repurchasable:
+            self.activated = False
+            if self.activated:
+                self.fg = "black"
+                self.bg = "green"
+            else:
+                self.fg = "white"
+                self.bg = "black"
+                
+    def render(self, surface):
+
         self.image.fill(self.bg)
         self.text = self.font.render(self.content, False, self.fg) #false antialiasing
         self.image.blit(self.text, self.text_rect)
         surface.blit(self.image, self.rect)
-        if self.rect.collidepoint(pos):
-            if pressed:
-                print("bought",self.content)
-                return True
-        return False
-        #     return False
-        # return False
+
+
+
 
 class textInput:
     def __init__(self, x, y, name):
@@ -117,12 +133,11 @@ class textInput:
                     self.user_text += event.unicode
       
 
-    def update(self, surface, pos, pressed):
-        if pressed:
-            if self.input_rect.collidepoint(pos):
-                self.active = True
-            else:
-                self.active = False
+    def update(self, pos):
+        if self.input_rect.collidepoint(pos):
+            self.active = True
+        else:
+            self.active = False
             # else:
             #     self.active = False
         # if event.type == pygame.MOUSEBUTTONDOWN:
@@ -138,6 +153,8 @@ class textInput:
             
         # draw rectangle and argument passed which should
         # be on screen
+
+    def render(self, surface):
         pygame.draw.rect(surface, self.color, self.input_rect)
     
         self.text_surface = self.base_font.render(self.user_text, True, (255, 255, 255))
@@ -148,3 +165,4 @@ class textInput:
         # set width of textfield so that text cannot get
         # outside of user's text input
         self.input_rect.w = max(100, self.text_surface.get_width()+10)
+

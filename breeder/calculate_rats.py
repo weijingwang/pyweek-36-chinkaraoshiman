@@ -1,11 +1,11 @@
 from random import getrandbits
-import numpy as np
 import matplotlib.pyplot as plt
 
 class BreederCalculations:
     #every second the rat status will update according to this code
     #real time graphing????
-    def __init__(self):
+    def __init__(self, game):
+        self.game = game
         self.timer = 0
         self.rat_count = 2
         self.upper_cap = 500
@@ -33,6 +33,7 @@ class BreederCalculations:
     def update(self):
         if self.timer == 60:
             # print(int(self.rat_count), self.next_increase,)
+            
             self.next_increase = 0
             if self.rat_count > 1:
                 self.crow_eat_rat()
@@ -43,8 +44,25 @@ class BreederCalculations:
                 self.rat_count = 0
             self.rat_count += self.next_increase
             self.timer = 0
+            self.manage_rat_data(self.game.rat_data, self.rat_count)
         self.timer += 1
         
+    def manage_rat_data(self, data_list, x):
+        if len(data_list) < 10:
+            data_list.append(x)
+        else:
+            data_list.pop(0)
+            data_list.append(x)
+        # print(self.game.rat_data)
+
+    def plotter(self):
+        print('plotted')
+        plt.clf()
+        plt.plot([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], self.game.rat_data)
+        plt.xlabel('iterations')
+        plt.ylabel('rat count')
+        plt.title('rat growth affected by crows eating them over time')
+        plt.savefig('./data/images/breeder/rat_data.png')
 
         # if self.rat_count >= self.upper_cap:
         #     #don't increase

@@ -15,11 +15,11 @@ class Crow:
         self.state = 'wait'
         # wait, hover, attack
 
-    def mouse_inputs(self, pos, pressed):
+    def mouse_inputs(self, pos):
         if self.rect.collidepoint(pos):
-            if pressed:
-                self.pos = [0,0]
-                self.come = False
+
+            self.pos = [0,0]
+            self.come = False
 
     def update(self):
         #spawn crow?
