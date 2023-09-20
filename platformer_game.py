@@ -11,8 +11,8 @@ class Game:
         pygame.init()
 
         pygame.display.set_caption('platformer')
-        self.screen = pygame.display.set_mode((640, 480))
-        self.display = pygame.Surface((320*2, 240*2))
+        self.screen = pygame.display.set_mode((1280, 720))
+        self.display = pygame.Surface((1280/3, 720/3))
 
         self.clock = pygame.time.Clock()
         

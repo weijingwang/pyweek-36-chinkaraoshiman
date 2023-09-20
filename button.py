@@ -117,6 +117,8 @@ class textInput:
   
         self.active = False
 
+        self.execute_order = False
+
     def input_control(self, event):
         if self.active:
             if event.type == pygame.KEYDOWN:
@@ -126,33 +128,29 @@ class textInput:
                     self.user_text = self.user_text[:-1]
                 # Unicode standard is used for string
                 # formation
-                elif event.key == pygame.K_RETURN and self.user_text != "":
-                    print(self.name,self.user_text,"rats")
-                    self.user_text = ""
                 elif event.key == pygame.K_0 or event.key == pygame.K_1 or event.key == pygame.K_2 or event.key == pygame.K_3 or event.key == pygame.K_4 or event.key == pygame.K_5 or event.key == pygame.K_6 or event.key == pygame.K_7 or event.key == pygame.K_8 or event.key == pygame.K_9:
                     self.user_text += event.unicode
-      
+                self.execute_order = False
 
     def update(self, pos):
         if self.input_rect.collidepoint(pos):
             self.active = True
         else:
             self.active = False
-            # else:
-            #     self.active = False
-        # if event.type == pygame.MOUSEBUTTONDOWN:
-        #     if input_rect.collidepoint(event.pos):
-        #         active = True
-        #     else:
-        #         active = False
-  
+
         if self.active:
             self.color = self.color_active
         else:
             self.color = self.color_passive
-            
-        # draw rectangle and argument passed which should
-        # be on screen
+
+    def update_keyup(self):
+        # print('asdfsd')
+        if self.user_text != "":
+            self.active = False
+            self.execute_order = True
+            # print(self.name,self.user_text,"rats",self.execute_order)
+
+            self.user_text = ""
 
     def render(self, surface):
         pygame.draw.rect(surface, self.color, self.input_rect)

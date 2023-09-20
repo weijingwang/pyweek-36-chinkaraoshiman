@@ -9,7 +9,9 @@ class Tilemap:
 
         # define level here
         for i in range(50):
-            self.tilemap[str(3+i) + ',10'] = {'type': 'stone', 'pos': (3+ i, 10)}
+            #lower second value is higher on map
+            #lower first value is more to the left
+            self.tilemap[str(1+i) + ',5'] = {'type': 'stone', 'pos': (1+ i, 5)}
 
     def tiles_around(self, pos):
         tiles = []

@@ -6,8 +6,7 @@ class BreederCalculations:
     #real time graphing????
     def __init__(self, game):
         self.game = game
-        self.timer = 0
-        self.rat_count = 100
+        self.rat_count = 10
         self.upper_cap = 100
         self.lower_cap = 0
         self.next_increase = 0
@@ -19,35 +18,37 @@ class BreederCalculations:
 
     def crow_eat_rat(self):
         #do once every rat spawn cylce only
-        if getrandbits(1):
-            if self.rat_count//3 < 1:
-                self.next_increase -= 1
-            else:
-                self.next_increase -= self.rat_count/3
+        if self.game.crow.state == 'attack':
+            if True:
+                if self.rat_count//3 < 1:
+                    self.next_increase -= 1
+                else:
+                    self.next_increase -= self.rat_count/3
+                    print('yujkm,')
+
 
     def calculate_next_change(self):
-        if self.rat_count <= 1:
-            self.next_increase += self.rat_count / 3
+        if self.rat_count > 1:
+            self.next_increase += self.rat_count / 4
             if (self.next_increase+self.rat_count) > self.upper_cap:
                 self.next_increase = self.upper_cap - self.rat_count
 
     def update(self):
-        if self.timer == 60:
-            # print(int(self.rat_count), self.next_increase,)
-            
-            self.next_increase = 0
-            if self.rat_count > 1:
-                self.crow_eat_rat()
-                self.calculate_next_change()
-            elif self.rat_count == 1:
-                self.crow_eat_rat()
-            elif self.rat_count < self.lower_cap:
-                self.rat_count = 0
-            self.rat_count += self.next_increase
-            self.timer = 0
-            self.manage_rat_data(self.game.rat_data, self.rat_count)
-        self.timer += 1
+
+        # if self.timer == 60:
+        # print(int(self.rat_count), self.next_increase,)
         
+        self.next_increase = 0
+        if self.rat_count > 1:
+            self.crow_eat_rat()
+            self.calculate_next_change()
+        elif self.rat_count == 1:
+            self.crow_eat_rat()
+        elif self.rat_count < self.lower_cap:
+            self.rat_count = 0
+        self.rat_count += self.next_increase
+        self.manage_rat_data(self.game.rat_data, self.rat_count)
+    
     def manage_rat_data(self, data_list, x):
         if len(data_list) < 10:
             data_list.append(x)
