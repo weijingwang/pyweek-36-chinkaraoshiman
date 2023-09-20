@@ -1,5 +1,5 @@
 import pygame
-from tilemap import Tilemap
+from platformer.tilemap import Tilemap
 
 class Mob:
     def __init__(self, game, etype, pos, size):

@@ -1,4 +1,4 @@
-from entities import Mob
+from platformer.entities import Mob
 import pygame
 
 #player can jump and is affected by gravity

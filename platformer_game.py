@@ -1,8 +1,9 @@
 import sys
 
-from util import load_img
-from entities import Mob
-from tilemap import Tilemap
+from platformer.entities import Mob
+from platformer.tilemap import Tilemap
+from platformer.util import load_img
+
 import pygame
 
 class Game:
@@ -18,9 +19,9 @@ class Game:
         self.movement = [False, False]
         
         self.assets = {
-            'player': pygame.transform.scale(load_img('player.png'), (16,30)),
-            'stone': pygame.transform.scale(load_img('shadow.png'), (32,32)),
-            'grass': pygame.transform.scale(load_img('shadow.png'), (32,32)),
+            'player': pygame.transform.scale(load_img('platformer/player.png'), (16,30)),
+            'stone': pygame.transform.scale(load_img('platformer/shadow.png'), (32,32)),
+            'grass': pygame.transform.scale(load_img('platformer/shadow.png'), (32,32)),
 
         }
         
