@@ -100,7 +100,7 @@ class BreederGame:
         for rat in range(len(self.rats)):
             self.rats[rat].update()
             self.rats[rat].render()
-        self.crow.update()
+
         self.crow.render()
         self.screen.blit(self.cage2, (-50,350))
         self.screen.blit(self.cage4, (-50,350))
@@ -144,6 +144,8 @@ class BreederGame:
                 self.ratGrowth.update()
                 self.crow.update_states()
                 self.one_cycle_counter = 0
+            self.crow.update()
+
             #rat math
             if int(self.ratGrowth.rat_count) > len(self.rats):
                 for x in range(int(self.ratGrowth.rat_count)-len(self.rats)):
