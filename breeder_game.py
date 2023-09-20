@@ -29,7 +29,7 @@ class BreederGame:
         self.timer = 0
         self.one_cycle_counter = 0
         self.close_button = utils.load_image("breeder/close_button.png")
-
+        self.overlay = utils.load_image("breeder/overlay.png")
         #MAIN-----------------------------
         self.movement = [False, False]
         self.wall = utils.load_image("breeder/wall.png")
@@ -218,13 +218,15 @@ class BreederGame:
             if self.state != "main":
                 self.close_button.render(self.screen)
 
+            self.screen.blit(self.overlay, (0,0))
             #custom cursor
             self.cursor_img_rect.center = pygame.mouse.get_pos()  # update position 
             self.screen.blit(self.cursor_img, self.cursor_img_rect) # draw the cursor
 
             #currents stats
-            self.rat_text.render(str(self.timer//self.FPS)+' '+str(int(self.ratGrowth.rat_count))+' '+str(int(len(self.rats))), self.screen)
-            
+            self.rat_text.render("time_now: "+str(self.timer//self.FPS), self.screen, 1240, 630)
+            self.rat_text.render("my_rats: "+str(int(self.ratGrowth.rat_count)), self.screen, 1240, 700)
+
             pygame.display.update()
             self.clock.tick(self.FPS)
 
