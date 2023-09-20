@@ -7,8 +7,9 @@ class BreederCalculations:
     #real time graphing????
     def __init__(self):
         self.timer = 0
-        self.rat_count = 3
-        self.upper_cap = 100
+        self.rat_count = 2
+        self.upper_cap = 500
+        self.lower_cap = 0
         self.next_increase = 0
 
         self.spawn_crow = False
@@ -38,6 +39,8 @@ class BreederCalculations:
                 self.calculate_next_change()
             elif self.rat_count == 1:
                 self.crow_eat_rat()
+            elif self.rat_count < self.lower_cap:
+                self.rat_count = 0
             self.rat_count += self.next_increase
             self.timer = 0
         self.timer += 1
