@@ -37,10 +37,18 @@ class Shop:
 
             print("$ spend: ",self.STORAGE_PRICE,"money left: ",self.game.money,"new upper cap: ",self.game.ratGrowth.upper_cap)
             self.STORAGE_PRICE *= 2
+
         if self.input_sell_rats.active and self.input_sell_rats.user_text != '' and self.game.ratGrowth.rat_count >= int(self.input_sell_rats.user_text): #self.input_sell_rats.execute_order and 
             self.game.ratGrowth.rat_count -= int(self.input_sell_rats.user_text)
             self.game.money += int(self.RAT_PRICE * 0.7)
-            print("trade executed of", self.input_sell_rats.user_text,"sold for $",int(self.RAT_PRICE * 0.7))
+            print("sold", self.input_sell_rats.user_text,"rats for $"+str(int(self.RAT_PRICE * 0.7)))
+            print("current balance: ", self.game.money)
+
+        if self.input_buy_rats.active and self.input_buy_rats.user_text != '' and self.game.money >= self.RAT_PRICE:
+            print(self.input_buy_rats.user_text)
+            self.game.ratGrowth.rat_count += int(self.input_buy_rats.user_text)
+            self.game.money -= int(self.RAT_PRICE)
+            print("bought", self.input_buy_rats.user_text,"rats for $"+str(int(self.RAT_PRICE)))
             print("current balance: ", self.game.money)
 
 
