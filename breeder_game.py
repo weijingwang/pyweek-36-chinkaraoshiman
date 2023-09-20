@@ -37,10 +37,11 @@ class BreederGame:
         self.cage1 = utils.load_image("breeder/cage-1.png")
         self.cage2 = utils.load_image("breeder/cage-2.png")
         self.cage3 = utils.load_image("breeder/cage-3.png")
+        self.cage4 = utils.load_image("breeder/cage-4.png")
         self.cage1 = pygame.transform.scale(self.cage1, (1000,400))
         self.cage2 = pygame.transform.scale(self.cage2, (1000,400))
         self.cage3 = pygame.transform.scale(self.cage3, (1000,400))
-
+        self.cage4 = pygame.transform.scale(self.cage4, (1000,400))
         self.bg = utils.load_image("breeder/02-breeding-room.png")
 
         self.player = Wolf(self)
@@ -94,13 +95,15 @@ class BreederGame:
         self.screen.blit(self.bg, (0, 0))
 
         self.screen.blit(self.cage1, (-50,350))
+        self.screen.blit(self.cage3, (-50,350))
+
         for rat in range(len(self.rats)):
             self.rats[rat].update()
             self.rats[rat].render()
         self.crow.update()
         self.crow.render()
         self.screen.blit(self.cage2, (-50,350))
-        self.screen.blit(self.cage3, (-50,350))
+        self.screen.blit(self.cage4, (-50,350))
         self.player.shadow()
         
         # self.screen.blit(pygame.transform.scale(self.screen, self.screen.get_size()), (0, 0))
