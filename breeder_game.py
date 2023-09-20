@@ -136,7 +136,7 @@ class BreederGame:
         for i in range(len(self.button_grid)): 
             self.button_grid[i].update(self.mouse_pos)#, self.items[i]["owned"]
                 
-            if self.button_grid[i].activated:
+            if self.button_grid[i].activated and not self.items[i]["repurchasable"]:
                 self.items[i]["owned"] = True
             print(self.items[i]["name"],self.items[i]["owned"])
 
