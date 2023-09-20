@@ -137,7 +137,7 @@ class BreederGame:
             self.timer += 1
             self.one_cycle_counter += 1
             if self.one_cycle_counter >= self.FPS:
-                print(self.timer)
+                # print(self.timer)
                 self.ratGrowth.update()
                 self.one_cycle_counter = 0
             #rat math
