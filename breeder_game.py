@@ -8,6 +8,8 @@ from breeder.rats import Rat
 from breeder.calculate_rats import BreederCalculations
 from displayText import counterText
 from button import Button, itemButton, textInput
+from breeder.shop_class import Shop
+
 
 class BreederGame:
     def __init__(self):
@@ -70,25 +72,7 @@ class BreederGame:
         self.opts_img_rect = self.opts_img.get_rect(center = self.screen.get_rect().center)
 
         #SHOP--------------------------------------
-        self.shop_img = utils.load_image("breeder/07-shop.png")
-        self.shop_img_rect = self.shop_img.get_rect(center = self.screen.get_rect().center)
-        self.input_buy_rats = textInput(200, 200, "buy")
-        self.input_sell_rats = textInput(900, 200, "sell")
-
-        self.storage_button = itemButton(1280/2,200,"buy storage", True, 260,100)
-        self.items = [
-            {"name": "Food", "price": 5, "pos": (320,330), "owned": False, "description": "temporarily satiate rat hunger", "repurchasable": True},
-            {"name": "Auto-feeder", "price": 5, "pos": (320,400), "owned": False, "description": "rats never go hungry", "repurchasable": False},
-            {"name": "Medicine", "price": 5, "pos": (320,470), "owned": False, "description": "cure rats", "repurchasable": True},
-            {"name": "Doctor", "price": 5, "pos": (320,540), "owned": False, "description": "rats never sick", "repurchasable": False},
-            {"name": "Tempting hand", "price": 5, "pos": (620,330), "owned": False, "description": "slightly increase rat breeding chance when clicking on them", "repurchasable": False},
-            {"name": "Skillful hand", "price": 5, "pos": (620,400), "owned": False, "description": "greatly increase rat breeding chance when clicking on them", "repurchasable": False},
-            {"name": "Scarecrow", "price": 5, "pos": (620,470), "owned": False, "description": "decrease crow attack rate", "repurchasable": False},
-            {"name": "Crow destroyer", "price": 5, "pos": (620,540), "owned": False, "description": "crows do not kill rats", "repurchasable": False}
-        ]
-        self.button_grid = []
-        for x in self.items:
-            self.button_grid.append(itemButton(x["pos"][0], x["pos"][1], x["name"], x["repurchasable"]))
+        self.breeder_shop = Shop(self.screen)
 
     def main_game(self):
         if self.player.pos[0] > self.screen.get_width():
@@ -124,21 +108,6 @@ class BreederGame:
         # self.screen.blit(pygame.transform.scale(self.screen, self.screen.get_size()), (0, 0))
     def main_game_events(self):
         self.crow.mouse_inputs(self.mouse_pos)
-    def shop(self):            
-        self.screen.blit(self.shop_img, self.shop_img_rect)
-    def shop_events(self):
-        if self.close_button.update(self.screen,self.mouse_pos):
-            self.state = 'main'
-
-        self.input_buy_rats.update(self.mouse_pos)
-        self.input_sell_rats.update(self.mouse_pos)
-        self.storage_button.update(self.mouse_pos)
-        for i in range(len(self.button_grid)): 
-            self.button_grid[i].update(self.mouse_pos)#, self.items[i]["owned"]
-                
-            if self.button_grid[i].activated and not self.items[i]["repurchasable"]:
-                self.items[i]["owned"] = True
-            print(self.items[i]["name"],self.items[i]["owned"])
 
 
     def options(self):
@@ -204,20 +173,20 @@ class BreederGame:
                     if self.state == 'main':
                         self.main_game_events()
                     elif self.state == 'shop':
-                        self.shop_events()
+                        if self.close_button.update(self.screen,self.mouse_pos):
+                            self.state = 'main'
+                        self.breeder_shop.mouse_down_events(self.mouse_pos)
                     elif self.state == 'options':
                         self.options_events()
                     elif self.state == 'plot':
                         self.plot_events()
                     self.run_events()
                 elif event.type == pygame.MOUSEBUTTONUP:
-                    self.storage_button.update_keyup()
-                    for i in range(len(self.button_grid)): 
-                        self.button_grid[i].update_keyup()#, self.items[i]["owned"]
-                            
+                    # if self.state == 'shop':
+                    self.breeder_shop.mouse_up_events()
+
                 if self.state == 'shop':
-                    self.input_buy_rats.input_control(event)
-                    self.input_sell_rats.input_control(event)
+                    self.breeder_shop.state_events(event)
 
                 if self.state == 'main':
                     if event.type == pygame.KEYDOWN:
@@ -235,19 +204,11 @@ class BreederGame:
             if self.state == 'main':
                 self.main_game()
             elif self.state == 'shop':
-                self.shop()
+                self.breeder_shop.render()
             elif self.state == 'options':
                 self.options()
             elif self.state == 'plot':
                 self.plot()
-
-            if self.state == "shop":
-                for i in range(len(self.button_grid)): 
-                    self.button_grid[i].render(self.screen)
-            if self.state == "shop":
-                self.input_buy_rats.render(self.screen)
-                self.input_sell_rats.render(self.screen)
-                self.storage_button.render(self.screen)
 
             self.shop_button.render(self.screen)
             self.options_button.render(self.screen)
