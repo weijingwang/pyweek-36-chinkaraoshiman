@@ -1,10 +1,9 @@
 import sys
 
-import pygame
-
-from util import load_img, load_imgs
+from util import load_img
 from entities import Mob
 from tilemap import Tilemap
+import pygame
 
 class Game:
     def __init__(self):
