@@ -1,7 +1,7 @@
 import os
 import pygame
 
-BASE_PATH = "assets/images/"
+BASE_PATH = "data/images/"
 
 def load_img(path):
     img = pygame.image.load(BASE_PATH + path).convert()

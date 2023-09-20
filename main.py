@@ -19,11 +19,9 @@ class Game:
         self.movement = [False, False]
         
         self.assets = {
-            'decor': load_imgs('tiles/decor'),
-            'grass': load_imgs('tiles/grass'),
-            'large_decor': load_imgs('tiles/large_decor'),
-            'stone': load_imgs('tiles/stone'),
-            'player': load_img('entities/player.png')
+            'grass': load_img('shadow.png'),
+            'stone': load_img('shadow.png'),
+            'player': load_img('player.png')
         }
         
         self.player = Mob(self, 'player', (50, 50), (8, 15))
