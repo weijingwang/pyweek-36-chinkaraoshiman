@@ -7,8 +7,8 @@ class BreederCalculations:
     def __init__(self, game):
         self.game = game
         self.timer = 0
-        self.rat_count = 2
-        self.upper_cap = 500
+        self.rat_count = 100
+        self.upper_cap = 100
         self.lower_cap = 0
         self.next_increase = 0
 

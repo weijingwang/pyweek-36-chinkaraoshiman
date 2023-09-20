@@ -2,15 +2,15 @@ import utils
 from random import uniform, getrandbits, choice, randrange
 
 class Rat:
-    def __init__(self, game, pos=[randrange(0,782),randrange(330,600)]):
+    def __init__(self, game, pos=[randrange(10,770),randrange(550,650)]):
 
-        self.rat_cage = ((0,782),(330,600))
+        self.rat_cage = ((10,770),(550,650))
 
         self.DX_val = 5
         self.DY_val = 5
         self.game = game
         self.pos = pos
-        self.pos=[randrange(0,782),randrange(330,600)]
+        self.pos=[randrange(10,770),randrange(550,650)]
         self.image = utils.load_image("breeder/mouse.png")
         self.timer = 0
         # print(self.pos)

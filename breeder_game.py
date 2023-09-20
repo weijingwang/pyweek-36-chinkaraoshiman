@@ -28,6 +28,13 @@ class BreederGame:
         #MAIN-----------------------------
         self.movement = [False, False]
         self.wall = utils.load_image("breeder/wall.png")
+# (0,782),(330,600)
+        self.cage1 = utils.load_image("breeder/cage-1.png")
+        self.cage2 = utils.load_image("breeder/cage-2.png")
+        self.cage3 = utils.load_image("breeder/cage-3.png")
+        self.cage1 = pygame.transform.scale(self.cage1, (1000,400))
+        self.cage2 = pygame.transform.scale(self.cage2, (1000,400))
+        self.cage3 = pygame.transform.scale(self.cage3, (1000,400))
 
         self.bg = utils.load_image("breeder/02-breeding-room.png")
 
@@ -99,9 +106,12 @@ class BreederGame:
         self.player.render()
         self.screen.blit(self.bg, (0, 0))
 
+        self.screen.blit(self.cage1, (-50,350))
         for rat in range(len(self.rats)):
             self.rats[rat].update()
             self.rats[rat].render()
+        self.screen.blit(self.cage2, (-50,350))
+        self.screen.blit(self.cage3, (-50,350))
 
         self.crow.update()
         self.crow.render()
