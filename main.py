@@ -19,9 +19,10 @@ class Game:
         self.movement = [False, False]
         
         self.assets = {
-            'grass': load_img('shadow.png'),
-            'stone': load_img('shadow.png'),
-            'player': load_img('player.png')
+            'player': pygame.transform.scale(load_img('player.png'), (15,20)),
+            'stone': pygame.transform.scale(load_img('shadow.png'), (32,32)),
+            'grass': pygame.transform.scale(load_img('shadow.png'), (32,32)),
+
         }
         
         self.player = Mob(self, 'player', (50, 50), (8, 15))
