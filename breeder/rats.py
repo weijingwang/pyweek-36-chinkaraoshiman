@@ -10,7 +10,7 @@ class Rat:
         self.DY_val = 5
         self.game = game
         self.pos = pos
-        self.pos=[randrange(100,700),randrange(300,700)]
+        self.pos=[randrange(0,782),randrange(330,600)]
         self.image = utils.load_image("breeder/mouse.png")
         self.timer = 0
         # print(self.pos)
