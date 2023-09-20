@@ -11,8 +11,14 @@ class Game:
         pygame.init()
 
         pygame.display.set_caption('platformer')
-        self.screen = pygame.display.set_mode((640, 480))
-        self.display = pygame.Surface((320*2, 240*2))
+        
+        self.screen = pygame.display.set_mode((1280, 720))
+        #i think this is a good resolution 3:1 ratio
+        self.display = pygame.Surface((1280/3, 720/3))
+        #or maybe this one
+        #can change this for testing code
+        self.display = pygame.Surface((1280/2, 720/2))
+        
 
         self.clock = pygame.time.Clock()
         
