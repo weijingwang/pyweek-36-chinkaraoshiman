@@ -46,7 +46,7 @@ class Crow:
         if self.rect.collidepoint(pos):
             print('kill')
             self.state = "wait"
-            self.pos = [0,0]
+            self.pos = [-100, -100]
             self.moving= False
 
     def update_states(self):
@@ -81,7 +81,8 @@ class Crow:
     
 
     def render(self):
-
+        self.rect.x = self.pos[0]
+        self.rect.y = self.pos[1]
         self.game.screen.blit(self.image, self.pos)
 
     # def eat_rat(self,rat_count):
