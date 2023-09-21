@@ -1,7 +1,7 @@
 import pygame
 
 # things that can block the player
-ENV_BLOCKS = ['stone', 'grass']
+ENV_BLOCKS = ['stone', 'grass', 'checkpoint', 'brick1', 'brick2', 'brick3', 'brick4', 'brick5']
 
 class Tilemap:
     def __init__(self, game, tile_size=16):
@@ -11,12 +11,15 @@ class Tilemap:
         #self.offgrid_tiles = []
 
         # define level here
-        for i in range(50):
+
+        # this is a test checkpoint
+        self.tilemap['0,6'] = {'type': 'checkpoint', 'pos': (0,6) }
+        for i in range(30):
             # decrease first number to move tiles left
             # decrease second number to move tiles up
             # the index should be a string, and the info stored should be a dictionary
-            self.tilemap[str(0+i) + ',6'] = {'type': 'stone', 'pos': (0+ i, 6)}
-            self.tilemap['6,' + str(3+i)] = {'type': 'stone', 'pos': (6, 3+i)}
+            self.tilemap[str(1+i) + ',6'] = {'type': 'brick1', 'pos': (1+ i, 6)}
+            self.tilemap['6,' + str(3+i)] = {'type': 'brick2', 'pos': (6, 3+i)}
 
     def tiles_around(self, pos):
         """

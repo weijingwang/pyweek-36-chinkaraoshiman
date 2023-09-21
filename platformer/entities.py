@@ -49,4 +49,19 @@ class Object:
             self.vel[1] = 0
 
     def render(self, surface, offset):
-        surface.blit(self.game.assets['player'], (self.pos[0] - offset[0], self.pos[1] - offset[1]))
+        surface.blit(self.game.assets[self.type], (self.pos[0] - offset[0], self.pos[1] - offset[1]))
+
+
+class Player(Object):
+    def __init__(self, game, etype, pos, size):
+        super().__init__(game, etype, pos, size)
+    
+    def touching_checkpoint(self):
+        tilemap = self.game.tilemap
+        tile_size = tilemap.tile_size
+        
+        for tile in tilemap.tiles_around(self.pos):
+            if (tile['type'] == 'checkpoint'):
+                if self.rect().colliderect(pygame.Rect(tile['pos'][0] * tile_size - 1, tile['pos'][1] * tile_size - 1, tile_size + 2, tile_size + 2)):
+                    return True
+        return False
