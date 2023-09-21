@@ -17,10 +17,10 @@ def load_images(path):
 
 class Spritesheet:
     def __init__(self, file):
-        self.sheet = pygame.image.load(file).convert_alpha()
+        self.sheet = pygame.image.load(BASE_IMG_PATH+file).convert_alpha()
 
     def get_sprite(self, x, y, width, height):
         sprite = pygame.Surface([width,height])
         sprite.blit(self.sheet, (0,0), (x, y, width, height))
-        # sprite.set_colorkey(BLACK)
+        sprite.set_colorkey('black')
         return sprite

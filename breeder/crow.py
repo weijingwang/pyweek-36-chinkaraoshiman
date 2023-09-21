@@ -7,7 +7,19 @@ class Crow:
 
         self.game = game
         self.pos = pos
-        self.image = utils.load_image("breeder/crow.png")
+        #sprite img
+        self.animation_loop = 0
+        self.sprites = utils.Spritesheet("breeder/crow-fly.png")
+
+        self.animation = (
+            self.sprites.get_sprite(0, 0, 240, 160),
+            self.sprites.get_sprite(240, 0, 240, 160),
+            self.sprites.get_sprite(480, 0, 240, 160),
+            self.sprites.get_sprite(240*3, 0, 240, 160),
+            self.sprites.get_sprite(240*4, 0, 240, 160),
+            self.sprites.get_sprite(240*5, 0, 240, 160)
+        )
+        self.image = self.animation[0]
         self.rect = self.image.get_rect()
         self.timer = 0
         self.moving = False
@@ -23,6 +35,12 @@ class Crow:
         self.dy = uniform(-self.DY_val,self.DY_val) * choice((-1,1))
         self.move_time = uniform(1,10) #0.02 is lowest
         self.move = getrandbits(1)
+
+    def animate_update(self):
+        self.image = self.animation[int(self.animation_loop)]
+        self.animation_loop += 0.1
+        if self.animation_loop > len(self.animation):
+            self.animation_loop = 0
 
     def mouse_inputs(self, pos):
         if self.rect.collidepoint(pos):
