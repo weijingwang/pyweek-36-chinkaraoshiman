@@ -3,6 +3,7 @@ from random import getrandbits, uniform, choice
 
 class Crow:
     def __init__(self, game, pos=[-100, -100]):
+        self.size = (240, 160)
         self.crow_cage = ((10,770),(400,500))
 
         self.game = game
@@ -10,8 +11,8 @@ class Crow:
         #sprite img
         self.animation_loop = 0
         self.sprites = utils.Spritesheet("breeder/crow-fly.png")
-
-        self.animation = (
+        self.sprites_attack = utils.Spritesheet("breeder/crow-attack.png")
+        self.taunt_animation = (
             self.sprites.get_sprite(0, 0, 240, 160),
             self.sprites.get_sprite(240, 0, 240, 160),
             self.sprites.get_sprite(480, 0, 240, 160),
@@ -19,6 +20,15 @@ class Crow:
             self.sprites.get_sprite(240*4, 0, 240, 160),
             self.sprites.get_sprite(240*5, 0, 240, 160)
         )
+        self.attack_animation = (
+            self.sprites_attack.get_sprite(0, 0, *self.size),
+            self.sprites_attack.get_sprite(240, 0, *self.size),
+            self.sprites_attack.get_sprite(480, 0, *self.size),
+            self.sprites_attack.get_sprite(720, 0, *self.size),
+            self.sprites_attack.get_sprite(0, 0, *self.size),
+            self.sprites_attack.get_sprite(240, 0, *self.size)
+        )
+        self.animation = self.taunt_animation
         self.image = self.animation[0]
         self.rect = self.image.get_rect()
         self.timer = 0
@@ -37,10 +47,18 @@ class Crow:
         self.move = getrandbits(1)
 
     def animate_update(self):
-        self.image = self.animation[int(self.animation_loop)]
-        self.animation_loop += 0.1
         if self.animation_loop > len(self.animation):
             self.animation_loop = 0
+
+        if self.state == 'attack':
+            self.animation = self.attack_animation
+        # if self.state == 'taunt':
+        else:
+            self.animation = self.taunt_animation
+
+        self.image = self.animation[int(self.animation_loop)]
+        self.animation_loop += 0.1
+
 
     def mouse_inputs(self, pos):
         if self.rect.collidepoint(pos):
