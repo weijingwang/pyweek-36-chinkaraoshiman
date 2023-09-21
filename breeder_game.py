@@ -185,6 +185,7 @@ class BreederGame:
                         self.breeder_shop.mouse_down_events(self.mouse_pos)
                     if self.state != 'main':
                         if self.close_button.update(self.screen,self.mouse_pos):
+                            self.player.refresh_image()
                             self.state = 'main'
                     self.run_events()
                 elif event.type == pygame.MOUSEBUTTONUP:
