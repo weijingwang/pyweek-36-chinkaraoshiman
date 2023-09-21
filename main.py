@@ -24,26 +24,37 @@ class Game:
         self.one_cycle_counter = 0
         self.mouse_pos = pygame.mouse.get_pos()
 
+        self.state = 'breeder'
+
+        self.breeder = BreederGame()
+
+    def events(self):
+        if self.state == 'breeder':
+            self.breeder.run_events()
+
     def run(self):
         while not self.done:
-            #system stuff
-            pygame.display.set_caption("current FPS: "+str(self.clock.get_fps()))
-            self.mouse_pos = pygame.mouse.get_pos()
-            self.timer += 1
-            self.one_cycle_counter += 1
-            if self.one_cycle_counter >= self.FPS:
-                # print(self.timer)
-                self.ratGrowth.update()
-                self.crow.update_states()
-                self.one_cycle_counter = 0
-            self.crow.update()
+            # #system stuff
+            # pygame.display.set_caption("current FPS: "+str(self.clock.get_fps()))
+            # self.mouse_pos = pygame.mouse.get_pos()
+            # self.timer += 1
+            # self.one_cycle_counter += 1
+            # if self.one_cycle_counter >= self.FPS:
+            #     # print(self.timer)
+            #     self.ratGrowth.update()
+            #     self.crow.update_states()
+            #     self.one_cycle_counter = 0
+            # self.crow.update()
 
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
+            # for event in pygame.event.get():
+            #     if event.type == pygame.QUIT:
+            #         pygame.quit()
+            #         sys.exit()
+            #     self.events()
 
-            pygame.display.update()
-            self.clock.tick(self.FPS)
+            # pygame.display.update()
+            # self.clock.tick(self.FPS)
+            if self.state == 'breeder':
+                self.breeder.run()
 
-BreederGame().run()
+Game().run()
