@@ -62,9 +62,10 @@ class BreederGame:
 
         pygame.mouse.set_visible(False)
         self.cursor_sprites = utils.Spritesheet("breeder/cursor-sprite.png")
+        cursor_size = 50
         self.cursor_imgs = (
-            self.cursor_sprites.get_sprite(0,0,256,256),
-            self.cursor_sprites.get_sprite(256,0,256,256)
+            self.cursor_sprites.get_sprite(0,0,cursor_size,cursor_size),
+            self.cursor_sprites.get_sprite(cursor_size,0,cursor_size,cursor_size)
         )
         self.cursor_img = self.cursor_imgs[0]
         self.cursor_img_rect = self.cursor_img.get_rect()
