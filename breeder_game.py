@@ -20,6 +20,9 @@ class BreederGame:
         self.state = 'main'
 
         pygame.init()
+        pygame.mixer.music.load("data/music/breeder.mp3")
+        pygame.mixer.music.play(-1)
+        self.click = pygame.mixer.Sound("data/sounds/CLICK.ogg")
 
         pygame.display.set_caption("pyweek36")
 
@@ -30,6 +33,9 @@ class BreederGame:
         self.one_cycle_counter = 0
         self.close_button = utils.load_image("breeder/close_button.png")
         self.overlay = utils.load_image("breeder/overlay.png")
+        self.tiger = utils.load_image("breeder/tiger.png")
+        # self.tiger = pygame.transform.scale(self.tiger, (1000,400))
+
         #MAIN-----------------------------
         self.movement = [False, False]
         self.wall = utils.load_image("breeder/wall.png")
@@ -91,7 +97,6 @@ class BreederGame:
             self.done = True
             #exit room and go to platformer
 
-
         self.screen.fill((34, 30, 80))
         pygame.draw.circle(self.screen, (255,255,0), (1150,80), 50)
         self.screen.blit(self.wall, (0, 0))
@@ -99,6 +104,8 @@ class BreederGame:
         self.player.update(self.movement)
         self.player.render()
         self.screen.blit(self.bg, (0, 0))
+
+        self.screen.blit(self.tiger, (0,0))
 
         self.screen.blit(self.cage1, (-50,350))
         self.screen.blit(self.cage3, (-50,350))
@@ -127,8 +134,10 @@ class BreederGame:
         #would like toggle button
         if self.shop_button.update(self.screen,self.mouse_pos):
             self.state = 'shop'
+            self.click.play()
         if self.options_button.update(self.screen,self.mouse_pos):
             self.state = 'options'
+            self.click.play()
         if self.plot_button.update(self.screen,self.mouse_pos):
             self.plot_update = True
             if self.plot_update:
@@ -136,6 +145,7 @@ class BreederGame:
                 self.plot_img = utils.load_image("breeder/rat_data.png")
                 self.plot_update = False
             self.state = 'plot'
+            self.click.play()
 
 
     def run(self):
@@ -186,6 +196,7 @@ class BreederGame:
                     if self.state != 'main':
                         if self.close_button.update(self.screen,self.mouse_pos):
                             self.player.refresh_image()
+                            self.click.play()
                             self.state = 'main'
                     self.run_events()
                 elif event.type == pygame.MOUSEBUTTONUP:
