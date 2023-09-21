@@ -61,7 +61,12 @@ class BreederGame:
         self.close_button = Button(1130, 90, 80, 50, 'white', 'red', 'X')
 
         pygame.mouse.set_visible(False)
-        self.cursor_img = utils.load_image("breeder/cursor.png")
+        self.cursor_sprites = utils.Spritesheet("breeder/cursor-sprite.png")
+        self.cursor_imgs = (
+            self.cursor_sprites.get_sprite(0,0,256,256),
+            self.cursor_sprites.get_sprite(256,0,256,256)
+        )
+        self.cursor_img = self.cursor_imgs[0]
         self.cursor_img_rect = self.cursor_img.get_rect()
 
         #PLOT--------------------------------------
@@ -168,7 +173,8 @@ class BreederGame:
                 #     if event.key == pygame.K_BACKSPACE:
                 #         self.ratGrowth.rat_count -=1
                 #         self.rats.pop()
-                if event.type == pygame.MOUSEBUTTONDOWN:     
+                if event.type == pygame.MOUSEBUTTONDOWN: 
+                    self.cursor_img = self.cursor_imgs[1]    
                     if self.state == 'main':
                         self.main_game_events()
                     elif self.state == 'shop':
@@ -178,6 +184,8 @@ class BreederGame:
                             self.state = 'main'
                     self.run_events()
                 elif event.type == pygame.MOUSEBUTTONUP:
+                    self.cursor_img = self.cursor_imgs[0]    
+
                     # if self.state == 'shop':
                     self.breeder_shop.mouse_up_events()
                 #other events like typing
@@ -194,7 +202,6 @@ class BreederGame:
                             self.movement[1] = False
                 if self.state == 'shop':
                     self.breeder_shop.state_events(event)
-
 
             #draw static background if not main
             if self.state != "main":
