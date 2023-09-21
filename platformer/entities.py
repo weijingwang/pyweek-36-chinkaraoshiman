@@ -1,7 +1,7 @@
 import pygame
 from platformer.tilemap import Tilemap
 
-class Mob:
+class Object:
     def __init__(self, game, etype, pos, size):
         self.game = game
         self.type = etype
@@ -48,5 +48,5 @@ class Mob:
         if self.collisions['down'] or self.collisions['up']:
             self.vel[1] = 0
 
-    def render(self, surface):
-        surface.blit(self.game.assets['player'], self.pos)
+    def render(self, surface, offset):
+        surface.blit(self.game.assets['player'], (self.pos[0] - offset[0], self.pos[1] - offset[1]))
