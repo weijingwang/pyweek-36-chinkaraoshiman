@@ -1,4 +1,5 @@
 import utils
+from pygame import mixer
 # from random import randrange
 MAX_VELOCITY = 10
 MIN_VELOCITY = 0
@@ -7,6 +8,7 @@ ACCELERATION_SCALAR = 0.1
 
 class Wolf:
     def __init__(self, game, pos=[826, 5]):
+        self.crash_sound = mixer.Sound("data/sounds/crash-wolf.ogg")
         self.game = game
         # self.image = utils.load_image("breeder/player_wolf.png")
         # self.image = utils.load_image("breeder/man.png")
@@ -92,6 +94,8 @@ class Wolf:
         self.game.screen.blit(self.image_shadow, (self.pos[0],self.pos[1]+300))
     def refresh_image(self):
         # my_choice = randrange(1,4)
+        if self.image_change_counter!=0:
+            self.crash_sound.play()
         self.image = self.images[self.image_change_counter]
         self.image_shadow = self.image_shadows[self.image_change_counter]
         if self.image_change_counter < (len(self.images)-1): self.image_change_counter += 1
