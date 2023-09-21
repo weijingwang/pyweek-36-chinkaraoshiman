@@ -10,6 +10,9 @@ class Crow:
         self.pos = pos
         #sprite img
         self.animation_loop = 0
+        self.cursor_crow = utils.load_image("breeder/cursor.png")
+        self.cursor_rect = self.cursor_crow.get_rect()
+        
         self.sprites = utils.Spritesheet("breeder/crow-fly.png")
         self.sprites_attack = utils.Spritesheet("breeder/crow-attack.png")
         self.taunt_animation = (
@@ -62,7 +65,7 @@ class Crow:
 
     def mouse_inputs(self, pos):
         if self.rect.collidepoint(pos):
-            print('kill')
+            # print('kill')
             self.state = "wait"
             self.pos = [-100, -100]
             self.moving= False
@@ -102,6 +105,11 @@ class Crow:
         self.rect.x = self.pos[0]
         self.rect.y = self.pos[1]
         self.game.screen.blit(self.image, self.pos)
+
+    def render_cursor(self, pos):
+        if self.rect.collidepoint(pos):
+            self.cursor_rect.center = pos
+            self.game.screen.blit(self.cursor_crow, self.cursor_rect)
 
     # def eat_rat(self,rat_count):
     #     #do once every rat spawn cylce only

@@ -152,6 +152,9 @@ class BreederGame:
                 self.one_cycle_counter = 0
             self.crow.update()
 
+            # #hover over crow change cursor
+            # self.crow.mouse_input_hover(self.mouse_pos)
+
             #ANIMATION
             # if self.one_cycle_counter >= self.FPS:
             self.crow.animate_update()
@@ -233,6 +236,7 @@ class BreederGame:
 
             self.screen.blit(self.overlay, (0,0))
             #custom cursor
+            if self.state == 'main': self.crow.render_cursor(self.mouse_pos)
             self.cursor_img_rect.center = pygame.mouse.get_pos()  # update position 
             self.screen.blit(self.cursor_img, self.cursor_img_rect) # draw the cursor
 
