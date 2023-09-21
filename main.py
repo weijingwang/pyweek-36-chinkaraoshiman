@@ -1,4 +1,5 @@
 from breeder_game import BreederGame
+import platformer_game
 import pygame
 import sys
 
@@ -8,7 +9,7 @@ class Game:
         self.money = 100
         self.rat_data = [0,0,0,0,0,0,0,0,0,0]
 
-        self.state = 'main'
+        self.state = 'platformer'
 
         pygame.init()
         pygame.mixer.music.load("data/music/breeder.mp3")
@@ -24,9 +25,8 @@ class Game:
         self.one_cycle_counter = 0
         self.mouse_pos = pygame.mouse.get_pos()
 
-        self.state = 'breeder'
-
-        self.breeder = BreederGame()
+        self.breeder = BreederGame(self.screen)
+        self.platformer = platformer_game.Game(self.screen)
 
     def events(self):
         if self.state == 'breeder':
@@ -56,5 +56,7 @@ class Game:
             # self.clock.tick(self.FPS)
             if self.state == 'breeder':
                 self.breeder.run()
+            elif self.state == 'platformer':
+                self.platformer.run()
 
 Game().run()

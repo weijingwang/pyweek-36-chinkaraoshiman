@@ -12,7 +12,7 @@ from breeder.shop_class import Shop
 
 
 class BreederGame:
-    def __init__(self):
+    def __init__(self, screen):
         self.FPS = 60
         self.money = 100
         self.rat_data = [0,0,0,0,0,0,0,0,0,0]
@@ -20,13 +20,13 @@ class BreederGame:
         self.state = 'main'
 
         pygame.init()
-        pygame.mixer.music.load("data/music/breeder.mp3")
-        pygame.mixer.music.play(-1)
+        # pygame.mixer.music.load("data/music/breeder.mp3")
+        # pygame.mixer.music.play(-1)
         self.click = pygame.mixer.Sound("data/sounds/CLICK.ogg")
 
         pygame.display.set_caption("pyweek36")
 
-        self.screen = pygame.display.set_mode((1280, 720))
+        self.screen = screen
         self.done = False
         self.clock = pygame.time.Clock()
         self.timer = 0
@@ -258,5 +258,3 @@ class BreederGame:
 
         pygame.display.update()
         self.clock.tick(self.FPS)
-
-BreederGame().run()
