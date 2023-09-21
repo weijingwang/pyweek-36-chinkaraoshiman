@@ -3,11 +3,33 @@ from random import getrandbits, uniform, choice
 
 class Crow:
     def __init__(self, game, pos=[-100, -100]):
+        self.size = (240, 160)
         self.crow_cage = ((10,770),(400,500))
 
         self.game = game
         self.pos = pos
-        self.image = utils.load_image("breeder/crow.png")
+        #sprite img
+        self.animation_loop = 0
+        self.sprites = utils.Spritesheet("breeder/crow-fly.png")
+        self.sprites_attack = utils.Spritesheet("breeder/crow-attack.png")
+        self.taunt_animation = (
+            self.sprites.get_sprite(0, 0, 240, 160),
+            self.sprites.get_sprite(240, 0, 240, 160),
+            self.sprites.get_sprite(480, 0, 240, 160),
+            self.sprites.get_sprite(240*3, 0, 240, 160),
+            self.sprites.get_sprite(240*4, 0, 240, 160),
+            self.sprites.get_sprite(240*5, 0, 240, 160)
+        )
+        self.attack_animation = (
+            self.sprites_attack.get_sprite(0, 0, *self.size),
+            self.sprites_attack.get_sprite(240, 0, *self.size),
+            self.sprites_attack.get_sprite(480, 0, *self.size),
+            self.sprites_attack.get_sprite(720, 0, *self.size),
+            self.sprites_attack.get_sprite(0, 0, *self.size),
+            self.sprites_attack.get_sprite(240, 0, *self.size)
+        )
+        self.animation = self.taunt_animation
+        self.image = self.animation[0]
         self.rect = self.image.get_rect()
         self.timer = 0
         self.moving = False
@@ -24,11 +46,25 @@ class Crow:
         self.move_time = uniform(1,10) #0.02 is lowest
         self.move = getrandbits(1)
 
+    def animate_update(self):
+        if self.animation_loop > len(self.animation):
+            self.animation_loop = 0
+
+        if self.state == 'attack':
+            self.animation = self.attack_animation
+        # if self.state == 'taunt':
+        else:
+            self.animation = self.taunt_animation
+
+        self.image = self.animation[int(self.animation_loop)]
+        self.animation_loop += 0.1
+
+
     def mouse_inputs(self, pos):
         if self.rect.collidepoint(pos):
             print('kill')
             self.state = "wait"
-            self.pos = [0,0]
+            self.pos = [-100, -100]
             self.moving= False
 
     def update_states(self):
@@ -63,7 +99,8 @@ class Crow:
     
 
     def render(self):
-
+        self.rect.x = self.pos[0]
+        self.rect.y = self.pos[1]
         self.game.screen.blit(self.image, self.pos)
 
     # def eat_rat(self,rat_count):
