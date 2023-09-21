@@ -1,9 +1,49 @@
 from breeder_game import BreederGame
-#main game is platformer
-#player jumps and stands on walls
-#player can shoot gun really fast
-#enemies will attack player when in range, otherwise, walk around
-#bullets
-#player can talk to npcs
-#player moves to room/change level by going though a door
+import pygame
+import sys
 
+class Game:
+    def __init__(self):
+        self.FPS = 60
+        self.money = 100
+        self.rat_data = [0,0,0,0,0,0,0,0,0,0]
+
+        self.state = 'main'
+
+        pygame.init()
+        pygame.mixer.music.load("data/music/breeder.mp3")
+        pygame.mixer.music.play(-1)
+        self.click = pygame.mixer.Sound("data/sounds/CLICK.ogg")
+
+        pygame.display.set_caption("pyweek36")
+
+        self.screen = pygame.display.set_mode((1280, 720))
+        self.done = False
+        self.clock = pygame.time.Clock()
+        self.timer = 0
+        self.one_cycle_counter = 0
+        self.mouse_pos = pygame.mouse.get_pos()
+
+    def run(self):
+        while not self.done:
+            #system stuff
+            pygame.display.set_caption("current FPS: "+str(self.clock.get_fps()))
+            self.mouse_pos = pygame.mouse.get_pos()
+            self.timer += 1
+            self.one_cycle_counter += 1
+            if self.one_cycle_counter >= self.FPS:
+                # print(self.timer)
+                self.ratGrowth.update()
+                self.crow.update_states()
+                self.one_cycle_counter = 0
+            self.crow.update()
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+
+            pygame.display.update()
+            self.clock.tick(self.FPS)
+
+BreederGame().run()
