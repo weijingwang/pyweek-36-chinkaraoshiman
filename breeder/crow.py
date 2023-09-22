@@ -66,7 +66,6 @@ class Crow:
         self.image = self.animation[int(self.animation_loop)]
         self.animation_loop += 0.1
 
-
     def mouse_inputs(self, pos):
         if self.rect.collidepoint(pos):
             # print('kill')

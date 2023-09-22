@@ -55,7 +55,6 @@ class BreederGame:
         self.crow = Crow(self)
 
         self.ratGrowth = BreederCalculations(self)
-        self.rat_text = counterText()
 
         self.rats = []
         for x in range(self.ratGrowth.rat_count):
@@ -90,12 +89,13 @@ class BreederGame:
         #SHOP--------------------------------------
         self.breeder_shop = Shop(self, self.screen)
 
-    def main_game(self):
+    def exit(self):
         if self.player.pos[0] > self.screen.get_width():
-            pygame.quit()
-            sys.exit()
+            return True
             self.done = True
             #exit room and go to platformer
+
+    def main_game(self):
 
         self.screen.fill((34, 30, 80))
         pygame.draw.circle(self.screen, (255,255,0), (1150,80), 50)
@@ -147,20 +147,23 @@ class BreederGame:
             self.state = 'plot'
             self.click.play()
 
-
-    def run(self):
-    # while not self.done:
-        #system stuff
-        pygame.display.set_caption("current FPS: "+str(self.clock.get_fps()))
-        self.mouse_pos = pygame.mouse.get_pos()
+    def update(self):
         self.timer += 1
         self.one_cycle_counter += 1
         if self.one_cycle_counter >= self.FPS:
-            # print(self.timer)
+            print(self.timer)
             self.ratGrowth.update()
             self.crow.update_states()
             self.one_cycle_counter = 0
         self.crow.update()
+
+    def run(self):
+        print('breeder main')
+    # while not self.done:
+        #system stuff
+        self.mouse_pos = pygame.mouse.get_pos()
+
+
 
         # #hover over crow change cursor
         # self.crow.mouse_input_hover(self.mouse_pos)
@@ -252,9 +255,4 @@ class BreederGame:
         self.cursor_img_rect.center = pygame.mouse.get_pos()  # update position 
         self.screen.blit(self.cursor_img, self.cursor_img_rect) # draw the cursor
 
-        #currents stats
-        self.rat_text.render("time_now: "+str(self.timer//self.FPS), self.screen, 1240, 630)
-        self.rat_text.render("my_rats: "+str(int(self.ratGrowth.rat_count)), self.screen, 1240, 700)
 
-        pygame.display.update()
-        self.clock.tick(self.FPS)
