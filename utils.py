@@ -23,3 +23,14 @@ class CounterText:
         image = self.font.render(str(text), True, (255, 0, 0)).convert_alpha()
         image_rect = image.get_rect(bottomright = (x,y))#center = surface.get_rect().center)
         surface.blit(image, image_rect)
+
+class Spritesheet:
+    def __init__(self, file):
+        self.sheet = pygame.image.load(BASE_IMG_PATH+file).convert_alpha()
+        self.sheet.set_colorkey('black')
+
+    def get_sprite(self, x, y, width, height):
+        sprite = pygame.Surface([width,height])
+        sprite.blit(self.sheet, (0,0), (x, y, width, height))
+        sprite.set_colorkey('black')
+        return sprite
