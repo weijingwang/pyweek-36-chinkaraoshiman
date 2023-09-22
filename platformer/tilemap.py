@@ -14,8 +14,6 @@ class Tilemap:
 
         # this is a test checkpoint
         self.tilemap['0,6'] = {'type': 'checkpoint', 'pos': (0,6) }
-        self.tilemap['8,2'] = {'type': 'tree2', 'pos': (8,2)}
-        self.tilemap['10,2'] = {'type': 'tree', 'pos': (10,2)}
         for i in range(30):
             # decrease first number to move tiles left
             # decrease second number to move tiles up
