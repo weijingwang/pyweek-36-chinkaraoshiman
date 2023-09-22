@@ -9,7 +9,7 @@ import utils
 class Game:
     def __init__(self):
         pygame.init()
-        pygame.mixer.music.load("data/music/breeder.mp3")
+        pygame.mixer.music.load("data/music/wolfBGM.ogg")
         pygame.mixer.music.play(-1)
         pygame.display.set_caption("pyweek36")
         self.screen = pygame.display.set_mode((1280, 720))

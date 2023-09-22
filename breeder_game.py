@@ -148,14 +148,14 @@ class BreederGame:
         self.timer += 1
         self.one_cycle_counter += 1
         if self.one_cycle_counter >= self.FPS:
-            print(self.timer)
+            # print(self.timer)
             self.ratGrowth.update()
             self.crow.update_states()
             self.one_cycle_counter = 0
         self.crow.update()
 
     def run(self):
-        print('breeder main')
+        # print('breeder main')
     # while not self.done:
         #system stuff
         self.mouse_pos = pygame.mouse.get_pos()
