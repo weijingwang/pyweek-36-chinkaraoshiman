@@ -19,12 +19,9 @@ class BreederGame:
 
         self.state = 'main'
 
-        pygame.init()
         # pygame.mixer.music.load("data/music/breeder.mp3")
         # pygame.mixer.music.play(-1)
         self.click = pygame.mixer.Sound("data/sounds/CLICK.ogg")
-
-        pygame.display.set_caption("pyweek36")
 
         self.screen = screen
         self.done = False
@@ -65,7 +62,7 @@ class BreederGame:
         self.plot_button = Button(50, 440, 80, 80, 'white', 'black', 'PLOT')
         self.close_button = Button(1130, 90, 80, 50, 'white', 'red', 'X')
 
-        pygame.mouse.set_visible(False)
+        #CURSOR
         self.cursor_sprites = utils.Spritesheet("breeder/cursor-sprite.png")
         cursor_size = 50
         self.cursor_imgs = (

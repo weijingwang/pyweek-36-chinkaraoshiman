@@ -1,8 +1,10 @@
 from breeder_game import BreederGame
 import platformer_game
 from displayText import counterText
+from title_class import Title
 import pygame
 import sys
+import utils
 
 class Game:
     def __init__(self):
@@ -14,9 +16,11 @@ class Game:
         self.done = False
         self.clock = pygame.time.Clock()
         self.FPS = 60
+        self.mouse_pos = pygame.mouse.get_pos()
 
-        self.state = 'breeder'
+        self.state = 'title'
 
+        self.my_title = Title(self, self.screen)
         self.breeder = BreederGame(self.screen)
         self.platformer = platformer_game.Game(self.screen)
 
@@ -26,11 +30,22 @@ class Game:
     #     if self.state == 'breeder':
     #         self.breeder.run_events()
 
+    def update_cursor(self):
+        #cursor
+        if self.state == 'breeder' or self.state == 'platformer':
+            pygame.mouse.set_visible(False)
+        else:
+            pygame.mouse.set_visible(True)
+
+
     def run(self):
         while not self.done:
+            self.update_cursor()
             pygame.display.set_caption("current FPS: "+str(self.clock.get_fps()))
 
-            if self.state == 'breeder':
+            if self.state == 'title':
+                self.my_title.run(self.mouse_pos)
+            elif self.state == 'breeder':
                 self.breeder.run()
                 if self.breeder.exit():
                     self.state = 'platformer'
@@ -41,9 +56,10 @@ class Game:
                 #rats and crows update
                 self.breeder.update()
 
-            #currents stats
-            self.rat_text.render("time_now: "+str(self.breeder.timer//self.FPS), self.screen, 1240, 630)
-            self.rat_text.render("my_rats: "+str(int(self.breeder.ratGrowth.rat_count)), self.screen, 1240, 700)
+                #currents stats
+                self.rat_text.render("time_now: "+str(self.breeder.timer//self.FPS), self.screen, 1240, 630)
+                self.rat_text.render("my_rats: "+str(int(self.breeder.ratGrowth.rat_count)), self.screen, 1240, 700)
+
 
             pygame.display.update()
             self.clock.tick(self.FPS)
