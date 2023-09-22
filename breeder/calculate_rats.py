@@ -47,6 +47,9 @@ class BreederCalculations:
                 self.next_increase = self.upper_cap - self.rat_count
 
     def update(self):
+        print(self.game.food, self.game.medicine)
+        self.auto_feeder()
+        self.doctor()
         self.get_hungry()
         self.get_sick()
         self.rat_seller()
@@ -121,3 +124,15 @@ class BreederCalculations:
                 self.game.food -= 1
                 self.hunger_timer = 0
                 self.hunger_time = randrange(self.MIN_HUNGER_TIME,self.MAX_HUNGER_TIME)
+
+    def auto_feeder(self):
+        if self.game.money >= (int(self.game.breeder_shop.items[0]["price"])*3):
+            if self.game.food < 1:
+                self.game.food += 1
+                self.game.money -= int(self.game.breeder_shop.items[0]["price"])*3 #times 3 is hiring price
+
+    def doctor(self):
+        if self.game.money >= (int(self.game.breeder_shop.items[2]["price"])*3):
+            if self.game.medicine < 1:
+                self.game.medicine += 1
+                self.game.money -= int(self.game.breeder_shop.items[2]["price"])*3 #times 3 is hiring price
