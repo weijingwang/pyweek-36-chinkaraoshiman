@@ -79,29 +79,9 @@ class itemButton:
         if self.rect.collidepoint(pos):
             self.activated = True
 
-        if self.activated:
-            self.fg = (185,220,178)
-            self.bg = (94,142,40)
-        else:
-            self.fg = (191, 192, 220)#(132, 136, 169)
-            self.bg = (33,33,33)
-
     def update_keyup(self):
         if self.repurchasable:
             self.activated = False
-            if self.activated:
-                self.fg = (185,220,178)
-                self.bg = (94,142,40)
-            else:
-                self.fg = (191, 192, 220)#(132, 136, 169)
-                self.bg = (33,33,33)
-        if self.activated:
-            self.fg = (185,220,178)
-            self.bg = (94,142,40)
-        else:
-            self.fg = (191, 192, 220)#(132, 136, 169)
-            self.bg = (33,33,33)
-
 
     def change_text(self, new_text):
         self.content = new_text
@@ -110,7 +90,13 @@ class itemButton:
         self.text_rect = self.text.get_rect(center=(self.width/2, self.height/2))
 
     def render(self, surface):
-
+        if self.activated:
+            self.fg = (185,220,178)
+            self.bg = (94,142,40)
+        else:
+            self.fg = (191, 192, 220)#(132, 136, 169)
+            self.bg = (33,33,33)
+            
         self.image.fill(self.bg)
         self.text = self.font.render(self.content, False, self.fg) #false antialiasing
         self.image.blit(self.text, self.text_rect)

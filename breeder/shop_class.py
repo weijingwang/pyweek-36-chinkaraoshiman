@@ -44,7 +44,6 @@ class Shop:
                 print("$ spend: ",self.STORAGE_PRICE,"money left: ",self.game.money,"new upper cap: ",self.game.ratGrowth.upper_cap)
                 self.STORAGE_PRICE *= 2
                 self.storage_button.change_text("buy storage $"+str(self.STORAGE_PRICE))
-        # elif self.storage_button.activated and self.game.money < self.STORAGE_PRICE:
             else: self.error.play()
         if self.input_sell_rats.active:
             # print('')
@@ -69,25 +68,28 @@ class Shop:
                 else: self.error.play()
             else: self.error.play()
 
-        for i in range(len(self.button_grid)): 
+        for i in range(len(self.button_grid)):
+            # if self.items[i]["owned"]:
+            #     self.button_grid[i].activated = True
             self.button_grid[i].update(mouse_pos)#, self.items[i]["owned"]
             if self.button_grid[i].activated:
-                if int(self.items[i]["price"]) <= self.game.money:
+                if int(self.items[i]["price"]) <= self.game.money and not self.items[i]["owned"]:
                     self.game.money -= int(self.items[i]["price"])
                     if not self.items[i]["repurchasable"]:
-                        if not self.items[i]["owned"]:
-                            self.buy.play()
-                            self.items[i]["owned"] = True
+                        self.buy.play()
+                        self.items[i]["owned"] = True
                     else:
                         self.buy.play()
                         if self.items[i]["name"] == 'food':
                             print('+1 food')
                         elif self.items[i]["name"] == 'medicine':
                             print('+1 medicine')
-                else:
+                elif int(self.items[i]["price"]) <= self.game.money:
                     self.error.play()
                     self.button_grid[i].activated = False
                     # self.button_grid[i].update_keyup()
+                elif not self.items[i]["owned"]:
+                    self.error.play()
                 
                 print(self.items[i]["name"],self.items[i]["owned"],self.items[i]["repurchasable"])
 
