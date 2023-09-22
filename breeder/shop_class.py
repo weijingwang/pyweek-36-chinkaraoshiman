@@ -86,6 +86,7 @@ class Shop:
                             print('+1 food')
                         elif self.items[i]["name"] == 'Medicine':
                             print('+1 medicine')
+                            self.game.medicine +=1
                 elif int(self.items[i]["price"]) <= self.game.money and not self.items[i]["owned"]:
                     self.error.play()
                     print('2')

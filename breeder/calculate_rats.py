@@ -9,7 +9,7 @@ class BreederCalculations:
     #real time graphing????
     def __init__(self, game):
         self.game = game
-        self.rat_count = 10
+        self.rat_count = 90
         self.upper_cap = 100
         self.lower_cap = 0
         self.next_increase = 0
@@ -20,6 +20,11 @@ class BreederCalculations:
         self.MAX_HUNGER_TIME = 20
         self.hunger_time = randrange(self.MIN_HUNGER_TIME,self.MAX_HUNGER_TIME)
         self.hunger_timer = 0
+
+        self.MIN_SICK_TIME = 20
+        self.MAX_SICK_TIME = 40
+        self.sick_time = randrange(self.MIN_SICK_TIME,self.MAX_SICK_TIME)
+        self.sick_timer = 0
 
         #every turn, healhy status decreases if no food or bad conditions
         #flucuate randomly
@@ -43,6 +48,7 @@ class BreederCalculations:
 
     def update(self):
         self.get_hungry()
+        self.get_sick()
         self.rat_seller()
         # if self.timer == 60:
         # print(int(self.rat_count), self.next_increase,)
@@ -89,8 +95,20 @@ class BreederCalculations:
 
 
     #these status conditions update every few cycles like crow
-    # def get_sick(self):
-    #     pass
+    def get_sick(self):
+        if self.rat_count >= self.upper_cap * 0.9:
+            self.sick_timer += 1
+        if self.sick_timer >= self.sick_time:
+            print(self.game.medicine)
+            if self.game.medicine < 1:
+                self.rat_count = self.rat_count*0.5
+                print('got sick')
+            else:
+                print('recovered')
+                self.game.medicine -= 1
+            self.sick_timer = 0
+            self.hunger_time = randrange(self.MIN_HUNGER_TIME,self.MAX_HUNGER_TIME)
+
     def get_hungry(self):
         self.hunger_timer += 1
         if self.hunger_timer >= self.hunger_time:
