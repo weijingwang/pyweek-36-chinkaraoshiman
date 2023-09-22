@@ -18,7 +18,7 @@ class Game:
         self.FPS = 60
         self.mouse_pos = pygame.mouse.get_pos()
 
-        self.state = 'breeder'
+        self.state = 'title'
 
         self.my_title = Title(self, self.screen)
         self.breeder = BreederGame(self.screen)

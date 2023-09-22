@@ -13,7 +13,7 @@ from breeder.shop_class import Shop
 
 class BreederGame:
     def __init__(self, screen):
-
+        self.state = "room"
         self.food_text = counterText((40,630),'right, 50')
         self.medicine_text = counterText((40,680),'right, 50')
 
@@ -21,12 +21,10 @@ class BreederGame:
         self.rat_cage_rect = pygame.Rect(10, 550, 760, 100)
 
         self.FPS = 60
-        self.money = 500
+        self.money = 5000000
         self.food = 0
         self.medicine = 0
         self.rat_data = [0,0,0,0,0,0,0,0,0,0]
-
-        self.state = 'shop'
 
         # pygame.mixer.music.load("data/music/breeder.mp3")
         # pygame.mixer.music.play(-1)
@@ -44,9 +42,9 @@ class BreederGame:
         self.autofeeder_img = utils.load_image("breeder/items/Autofeeder.png")
         self.autofeeder_img = pygame.transform.scale(self.autofeeder_img, (500,500))
 
-        self.crow_destroyer_img = utils.load_image("breeder/items/Destroyer.png")
+        self.crow_destroyer_img = utils.load_image("breeder/crow_destroyer.png")
         self.doctor_img = utils.load_image("breeder/items/Doctor_copy.png")
-        self.doctor_img = pygame.transform.scale(self.doctor_img, (100,720))
+        self.doctor_img = pygame.transform.scale(self.doctor_img, (300,720))
         self.seller_img = utils.load_image("breeder/seller.png")
         # self.tiger = pygame.transform.scale(self.tiger, (1000,400))
 
@@ -80,7 +78,7 @@ class BreederGame:
                     self.rats.append(Rat(self))
 
         self.shop_button = Button(50, 200, 80, 80, 'white', 'black', 'SHOP')
-        self.options_button = Button(50, 320, 80, 80, 'white', 'black', 'OPTS')
+        self.room_button = Button(50, 320, 80, 80, 'white', 'black', 'ROOM')
         self.plot_button = Button(50, 440, 80, 80, 'white', 'black', 'PLOT')
         self.close_button = Button(1130, 90, 80, 50, 'white', 'red', 'X')
 
@@ -102,8 +100,8 @@ class BreederGame:
         self.plot_update = True
 
         #OPTS--------------------------------------
-        self.opts_img = utils.load_image("breeder/opts.png")
-        self.opts_img_rect = self.opts_img.get_rect(center = self.screen.get_rect().center)
+        self.opts_img = utils.load_image("breeder/room.png")
+        # self.opts_img_rect = self.opts_img.get_rect(center = self.screen.get_rect().center)
 
         #SHOP--------------------------------------
         self.breeder_shop = Shop(self, self.screen)
@@ -134,8 +132,7 @@ class BreederGame:
 
         if self.breeder_shop.items[6]["owned"]:#scarecrow
             self.screen.blit(self.tiger, (0,0))
-        if self.breeder_shop.items[7]["owned"]:#crow destroyer
-            self.screen.blit(self.crow_destroyer_img, (0,0))
+
         if self.breeder_shop.items[1]["owned"]:#autofeeder
             self.screen.blit(self.autofeeder_img, (250,0))
             
@@ -151,8 +148,7 @@ class BreederGame:
         self.screen.blit(self.cage4, (-50,350))
 
         # self.screen.blit(self.seller_img, (0,0))
-        if self.breeder_shop.items[3]["owned"]:#doctor
-            self.screen.blit(self.doctor_img, (0,0))
+
         self.player.shadow()
         
         # self.screen.blit(pygame.transform.scale(self.screen, self.screen.get_size()), (0, 0))
@@ -165,10 +161,31 @@ class BreederGame:
                 self.click.play()
                 print("rat +1")
 
+    def room(self):
+        self.screen.fill((34, 30, 80))
+        pygame.draw.circle(self.screen, (255,255,0), (1150,80), 50)
+        self.screen.blit(self.wall, (0, 0))
+
+        self.player.update(self.movement)
+        self.player.render()
+        self.screen.blit(self.bg, (0, 0))
+        self.screen.blit(self.opts_img, (0,0))
+
+        if self.breeder_shop.items[7]["owned"]:#crow destroyer
+            self.screen.blit(self.crow_destroyer_img, (600,0))
+        if self.breeder_shop.items[5]["owned"]:#seller
+            self.screen.blit(self.seller_img, (0,0))
+        if self.breeder_shop.items[3]["owned"]:#doctor
+            self.screen.blit(self.doctor_img, (400,50))
+        self.player.shadow()
+        
+        # self.screen.blit(pygame.transform.scale(self.screen, self.screen.get_size()), (0, 0))
 
 
-    def options(self):
-        self.screen.blit(self.opts_img, self.opts_img_rect)
+
+
+    # def options(self):
+    #     self.screen.blit(self.opts_img, self.opts_img_rect)
 
     def plot(self):
         self.screen.blit(self.plot_img, self.plot_img_rect)
@@ -178,8 +195,8 @@ class BreederGame:
         if self.shop_button.update(self.screen,self.mouse_pos):
             self.state = 'shop'
             self.click.play()
-        if self.options_button.update(self.screen,self.mouse_pos):
-            self.state = 'options'
+        if self.room_button.update(self.screen,self.mouse_pos):
+            self.state = 'room'
             self.click.play()
         if self.plot_button.update(self.screen,self.mouse_pos):
             self.plot_update = True
@@ -306,18 +323,20 @@ class BreederGame:
 
         if self.state == 'main':
             self.main_game()
+        elif self.state == 'room':
+            self.room()
 
         elif self.state == 'shop':
             # self.breeder_shop.transactions()
             self.breeder_shop.render()
-        elif self.state == 'options':
-            self.options()
+        elif self.state == 'room':
+            self.room()
         elif self.state == 'plot':
             self.plot()
 
         #draw menu buttons (always visible)
         self.shop_button.render(self.screen)
-        self.options_button.render(self.screen)
+        self.room_button.render(self.screen)
         self.plot_button.render(self.screen)
 
         #draw exit button (needs to be drawn on top of everything else)
@@ -330,12 +349,12 @@ class BreederGame:
         self.cursor_img_rect.center = pygame.mouse.get_pos()  # update position 
         self.screen.blit(self.cursor_img, self.cursor_img_rect) # draw the cursor
         
-        if self.ratGrowth.hungry:
+        if self.ratGrowth.hungry and self.food <= 0:
             self.hungry_text.render(self.screen)
-        if self.ratGrowth.sick:
+        if self.ratGrowth.sick and self.medicine <=0:
             self.OVERLOADED_text.render(self.screen)
-        
+
         self.food_text.render("food: "+str(self.food), self.screen)
         self.medicine_text.render("medicine: "+str(self.medicine), self.screen)
-        print(self.ratGrowth.hungry)
-        print(self.ratGrowth.rat_count, len(self.rats))
+        # print(self.ratGrowth.hungry)
+        # print(self.ratGrowth.rat_count, len(self.rats))
