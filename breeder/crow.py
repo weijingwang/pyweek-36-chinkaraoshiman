@@ -1,8 +1,9 @@
 import utils
 from random import getrandbits, uniform, choice, randrange
-
+import pygame
 class Crow:
     def __init__(self, game):
+        self.cry = pygame.mixer.Sound("data/sounds/crow.ogg")
         self.size = (240, 160)
         self.crow_cage = ((10,770),(400,500))
 
@@ -69,6 +70,7 @@ class Crow:
     def mouse_inputs(self, pos):
         if self.rect.collidepoint(pos):
             # print('kill')
+            self.cry.play()
             self.state = "wait"
             self.pos = [randrange(-200,1280), -200]
             self.destination = [randrange(*self.crow_cage[0]), randrange(*self.crow_cage[1])]
@@ -77,17 +79,23 @@ class Crow:
     def update_states(self):
         #update this every so many cylces
         # print(self.state)
-
-        if not self.moving:
-            if self.state == 'wait' and self.wait_timer < self.wait_time:
-                self.wait_timer += 1
-                if self.wait_timer >= self.wait_time:
-                    self.state = 'taunt'
-                    self.moving = True
-                    self.wait_timer = 0
-                    self.wait_time = randrange(1,self.MAX_WAIT)
-            elif self.state == 'taunt':
-                if getrandbits(1): self.state = 'attack'
+        if self.game.breeder_shop.items[7]["owned"]:
+            self.state == 'wait'
+        else:
+            if self.game.breeder_shop.items[6]["owned"]:
+                self.MAX_WAIT = 10
+            # print(self.MAX_WAIT)
+            if not self.moving:
+                if self.state == 'wait' and self.wait_timer < self.wait_time:
+                    self.wait_timer += 1
+                    if self.wait_timer >= self.wait_time:
+                        self.cry.play()
+                        self.state = 'taunt'
+                        self.moving = True
+                        self.wait_timer = 0
+                        self.wait_time = randrange(1,self.MAX_WAIT)
+                elif self.state == 'taunt':
+                    if getrandbits(1): self.state = 'attack'
 
 
 

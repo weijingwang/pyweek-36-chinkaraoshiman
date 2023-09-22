@@ -1,17 +1,30 @@
 from random import getrandbits
 import matplotlib.pyplot as plt
+from random import getrandbits, uniform, choice, randrange
+
+
 
 class BreederCalculations:
     #every second the rat status will update according to this code
     #real time graphing????
     def __init__(self, game):
         self.game = game
-        self.rat_count = 10
+        self.rat_count = 90
         self.upper_cap = 100
         self.lower_cap = 0
         self.next_increase = 0
 
         self.spawn_crow = False
+
+        self.MIN_HUNGER_TIME = 10
+        self.MAX_HUNGER_TIME = 20
+        self.hunger_time = randrange(self.MIN_HUNGER_TIME,self.MAX_HUNGER_TIME)
+        self.hunger_timer = 0
+
+        self.MIN_SICK_TIME = 20
+        self.MAX_SICK_TIME = 40
+        self.sick_time = randrange(self.MIN_SICK_TIME,self.MAX_SICK_TIME)
+        self.sick_timer = 0
 
         #every turn, healhy status decreases if no food or bad conditions
         #flucuate randomly
@@ -34,7 +47,12 @@ class BreederCalculations:
                 self.next_increase = self.upper_cap - self.rat_count
 
     def update(self):
-
+        print(self.game.food, self.game.medicine)
+        self.auto_feeder()
+        self.doctor()
+        self.get_hungry()
+        self.get_sick()
+        self.rat_seller()
         # if self.timer == 60:
         # print(int(self.rat_count), self.next_increase,)
         
@@ -43,6 +61,7 @@ class BreederCalculations:
             self.crow_eat_rat()
             self.calculate_next_change()
         elif self.rat_count == 1:
+            self.next_increase = 0
             self.crow_eat_rat()
         elif self.rat_count < self.lower_cap:
             self.rat_count = 0
@@ -66,47 +85,54 @@ class BreederCalculations:
         plt.title('rat growth affected by crows eating them over time')
         plt.savefig('./data/images/breeder/rat_data.png')
 
-        # if self.rat_count >= self.upper_cap:
-        #     #don't increase
-        #     self.next_increase = 0
-        #     self.rat_count = self.upper_cap
-        #     #decay rats!!??
-        # else:
-        #     #increase
-        #     #do nothing if rat count is 0
-        #     if self.rat_count == 1:
-        #         #get eaten?
-        #         pass
-        #         #reach uppercap?
-        #         # self.crow_eat_rat()
-        #     elif self.rat_count < 1:
-        #         #get eaten?
-        #         # self.crow_eat_rat()
-        #         #exponential growth
-        #         self.next_increase += 1
-        #         #reach uppercap?
+    def manual_breeding():
+        pass
 
-        # self.rat_count += self.next_increase
+    def rat_seller(self):
+        #every cycle in that timed loop in breeder game
+        #constantly converts 10% of all rats to money
+        # if self.game.breeder_shop.items[6]["owned"]:
+        self.game.money += self.rat_count * 0.1 * self.game.breeder_shop.RAT_PRICE
+        self.rat_count -= self.rat_count * 0.1
+        # print(self.game.money)
 
 
+    #these status conditions update every few cycles like crow
+    def get_sick(self):
+        if self.rat_count >= self.upper_cap * 0.9:
+            self.sick_timer += 1
+        if self.sick_timer >= self.sick_time:
+            print(self.game.medicine)
+            if self.game.medicine < 1:
+                self.rat_count = self.rat_count*0.5
+                print('got sick')
+            else:
+                print('recovered')
+                self.game.medicine -= 1
+            self.sick_timer = 0
+            self.hunger_time = randrange(self.MIN_HUNGER_TIME,self.MAX_HUNGER_TIME)
 
+    def get_hungry(self):
+        self.hunger_timer += 1
+        if self.hunger_timer >= self.hunger_time:
+            print(self.game.food)
+            if self.game.food < 1:
+                self.rat_count = self.rat_count*0.9
+                print('HUNGRY')
+            else:
+                print('ate')
+                self.game.food -= 1
+                self.hunger_timer = 0
+                self.hunger_time = randrange(self.MIN_HUNGER_TIME,self.MAX_HUNGER_TIME)
 
+    def auto_feeder(self):
+        if self.game.money >= (int(self.game.breeder_shop.items[0]["price"])*3):
+            if self.game.food < 1:
+                self.game.food += 1
+                self.game.money -= int(self.game.breeder_shop.items[0]["price"])*3 #times 3 is hiring price
 
-        #if unhealthy guaranteed mice die.
-        # if 0% healthy 50% die
-        # else, die proportional to health
-
-        #crow can eat mice.
-        # chance that crow comes
-        #if 1 crow comes, every second, 1 mice dies
-
-# test = []
-# test_calc = BreederCalculations()
-# for x in range(40):
-#     test_calc.update()
-#     test.append(test_calc.rat_count)
-# plt.plot(test)
-# plt.xlabel('iterations')
-# plt.ylabel('rat count')
-# plt.title('rat growth affected by crows eating them over time')
-# plt.show()
+    def doctor(self):
+        if self.game.money >= (int(self.game.breeder_shop.items[2]["price"])*3):
+            if self.game.medicine < 1:
+                self.game.medicine += 1
+                self.game.money -= int(self.game.breeder_shop.items[2]["price"])*3 #times 3 is hiring price

@@ -19,7 +19,7 @@ class Shop:
         self.input_buy_rats = textInput(200, 200, "buy")
         self.input_sell_rats = textInput(900, 200, "sell")
 
-        self.storage_button = itemButton(1280/2,200,"buy storage", True, "breeder/items/Storage.png",260,100)
+        self.storage_button = itemButton(1280/2,200,"buy storage $"+str(self.STORAGE_PRICE), True, "breeder/items/Storage.png",260,100)
         self.items = [
             {"name": "Food", "price": 5, "pos": (320,330), "owned": False, "description": "temporarily satiate rat hunger", "repurchasable": True},
             {"name": "AutoFeeder", "price": 5000, "pos": (320,400), "owned": False, "description": "rats never go hungry", "repurchasable": False},
@@ -43,15 +43,15 @@ class Shop:
                 self.buy.play()
                 print("$ spend: ",self.STORAGE_PRICE,"money left: ",self.game.money,"new upper cap: ",self.game.ratGrowth.upper_cap)
                 self.STORAGE_PRICE *= 2
-        # elif self.storage_button.activated and self.game.money < self.STORAGE_PRICE:
+                self.storage_button.change_text("buy storage $"+str(self.STORAGE_PRICE))
             else: self.error.play()
         if self.input_sell_rats.active:
-            print('')
+            # print('')
             if self.input_sell_rats.user_text != '':
                 if self.game.ratGrowth.rat_count >= int(self.input_sell_rats.user_text): #self.input_sell_rats.execute_order and 
                     self.game.ratGrowth.rat_count -= int(self.input_sell_rats.user_text)
-                    if int(self.RAT_PRICE * 0.7) == 0: self.game.money += int(self.RAT_PRICE)
-                    else: self.game.money += int(self.RAT_PRICE * 0.7)
+                    if int(self.RAT_PRICE * 0.7) == 0: self.game.money += int(self.RAT_PRICE) * int(self.input_sell_rats.user_text)
+                    else: self.game.money += int(self.RAT_PRICE * 0.7) * int(self.input_sell_rats.user_text)
                     self.sell.play()
                     print("sold", self.input_sell_rats.user_text,"rats for $"+str(int(self.RAT_PRICE * 0.7)))
                     print("current balance: ", self.game.money)
@@ -68,27 +68,37 @@ class Shop:
                 else: self.error.play()
             else: self.error.play()
 
-        for i in range(len(self.button_grid)): 
+        for i in range(len(self.button_grid)):
+            # if self.items[i]["owned"]:
+            #     self.button_grid[i].activated = True
             self.button_grid[i].update(mouse_pos)#, self.items[i]["owned"]
             if self.button_grid[i].activated:
-                if int(self.items[i]["price"]) <= self.game.money:
+                if int(self.items[i]["price"]) <= self.game.money and not self.items[i]["owned"]:
                     self.game.money -= int(self.items[i]["price"])
                     if not self.items[i]["repurchasable"]:
-                        if not self.items[i]["owned"]:
-                            self.buy.play()
-                            self.items[i]["owned"] = True
-                    else:
                         self.buy.play()
-                        if self.items[i]["name"] == 'food':
+                        print("bought",self.items[i]["name"])
+                        self.items[i]["owned"] = True
+                    if self.items[i]["repurchasable"]:
+                        self.buy.play()
+                        if self.items[i]["name"] == 'Food':
+                            self.game.food += 1
                             print('+1 food')
-                        elif self.items[i]["name"] == 'medicine':
+                        elif self.items[i]["name"] == 'Medicine':
                             print('+1 medicine')
-                else:
+                            self.game.medicine +=1
+                elif int(self.items[i]["price"]) <= self.game.money and not self.items[i]["owned"]:
                     self.error.play()
+                    print('2')
                     self.button_grid[i].activated = False
                     # self.button_grid[i].update_keyup()
+                elif self.items[i]["owned"] and not self.items[i]["repurchasable"]:
+                    # self.error.play()
+                    # print('3')
+                    self.button_grid[i].activated = True
+
                 
-                print(self.items[i]["name"],self.items[i]["owned"],self.items[i]["repurchasable"])
+                # print(self.items[i]["name"],self.items[i]["owned"],self.items[i]["repurchasable"])
 
 
     def render(self):

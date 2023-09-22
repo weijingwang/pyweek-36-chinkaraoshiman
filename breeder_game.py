@@ -14,7 +14,9 @@ from breeder.shop_class import Shop
 class BreederGame:
     def __init__(self, screen):
         self.FPS = 60
-        self.money = 100
+        self.money = 100000000
+        self.food = 0
+        self.medicine = 0
         self.rat_data = [0,0,0,0,0,0,0,0,0,0]
 
         self.state = 'shop'
@@ -50,13 +52,17 @@ class BreederGame:
 
         self.player = Wolf(self)
 
+            
         self.crow = Crow(self)
 
         self.ratGrowth = BreederCalculations(self)
 
         self.rats = []
+        self.rat_render_limit = 150
+
         for x in range(self.ratGrowth.rat_count):
-            self.rats.append(Rat(self))
+            if len(self.rats)<=self.rat_render_limit:
+                self.rats.append(Rat(self))
 
         self.shop_button = Button(50, 200, 80, 80, 'white', 'black', 'SHOP')
         self.options_button = Button(50, 320, 80, 80, 'white', 'black', 'OPTS')
@@ -103,7 +109,9 @@ class BreederGame:
         self.player.render()
         self.screen.blit(self.bg, (0, 0))
 
-        self.screen.blit(self.tiger, (0,0))
+
+        if self.breeder_shop.items[6]["owned"]:
+            self.screen.blit(self.tiger, (0,0))
 
         self.screen.blit(self.cage1, (-50,350))
         self.screen.blit(self.cage3, (-50,350))
@@ -146,6 +154,7 @@ class BreederGame:
             self.click.play()
 
     def update(self):
+        #TIMER CYCLE TICKS WHATEVER YOU CALL IT
         self.timer += 1
         self.one_cycle_counter += 1
         if self.one_cycle_counter >= self.FPS:
@@ -172,12 +181,13 @@ class BreederGame:
 
 
         #rat math
-        if int(self.ratGrowth.rat_count) > len(self.rats):
+        if int(self.ratGrowth.rat_count) > len(self.rats) and len(self.rats)<=self.rat_render_limit:
             for x in range(int(self.ratGrowth.rat_count)-len(self.rats)):
                 self.rats.append(Rat(self))
         elif int(self.ratGrowth.rat_count) < len(self.rats):
             for x in range(len(self.rats)-int(self.ratGrowth.rat_count)):
                 self.rats.pop()   
+
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

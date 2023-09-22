@@ -59,7 +59,7 @@ class Game:
 
                 #currents stats
                 # self.rat_text.render("timeNow: "+str(self.breeder.timer//self.FPS), self.screen, 1240, 580)
-                self.rat_text.render("my_rats: "+str(int(self.breeder.ratGrowth.rat_count)), self.screen, 1240, 630)
+                self.rat_text.render("my_rats: "+str(int(self.breeder.ratGrowth.rat_count))+"/"+str(self.breeder.ratGrowth.upper_cap), self.screen, 1240, 630)
                 self.rat_text.render("myMoney: "+str(int(self.breeder.money)), self.screen, 1240, 680)
 
 
