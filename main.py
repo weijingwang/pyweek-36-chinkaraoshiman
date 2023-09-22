@@ -24,7 +24,7 @@ class Game:
         self.breeder = BreederGame(self.screen)
         self.platformer = platformer_game.Game(self.screen)
 
-        self.rat_text = counterText()
+        self.rat_text = counterText(50)
 
     # def events(self):
     #     if self.state == 'breeder':
@@ -32,6 +32,7 @@ class Game:
 
     def update_cursor(self):
         #cursor
+        self.mouse_pos = pygame.mouse.get_pos()
         if self.state == 'breeder' or self.state == 'platformer':
             pygame.mouse.set_visible(False)
         else:
@@ -57,8 +58,9 @@ class Game:
                 self.breeder.update()
 
                 #currents stats
-                self.rat_text.render("time_now: "+str(self.breeder.timer//self.FPS), self.screen, 1240, 630)
-                self.rat_text.render("my_rats: "+str(int(self.breeder.ratGrowth.rat_count)), self.screen, 1240, 700)
+                self.rat_text.render("timeNow: "+str(self.breeder.timer//self.FPS), self.screen, 1240, 580)
+                self.rat_text.render("my_rats: "+str(int(self.breeder.ratGrowth.rat_count)), self.screen, 1240, 630)
+                self.rat_text.render("myMoney: "+str(int(self.breeder.money)), self.screen, 1240, 680)
 
 
             pygame.display.update()

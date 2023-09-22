@@ -1,8 +1,8 @@
 import pygame
 
 class counterText:
-    def __init__(self):
-        self.font = pygame.font.SysFont(None, 80)
+    def __init__(self, size=80):
+        self.font = pygame.font.SysFont(None, size)
 
     def render(self,text,surface, x, y):
         image = self.font.render(str(text), True, (255, 0, 0))#.convert_alpha()

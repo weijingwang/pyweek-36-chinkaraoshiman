@@ -27,6 +27,7 @@ class Button:
 
     def update(self, surface, pos):
         surface.blit(self.image, self.rect)
+        # print(' ')
         if self.rect.collidepoint(pos):
             return True
         return False

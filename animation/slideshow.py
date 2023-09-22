@@ -14,9 +14,9 @@ class Slideshow(object):
         self.stop = False
         self.kill_on_release = False
         #images
-        self.blank_image = pygame.Surface((1280, 720))
+        self.blank_image = pygame.Surface((1067, 600))
         self.blank_image.fill('black')
-        self.bg_image = pygame.Surface((1280, 720))
+        self.bg_image = pygame.Surface((1067, 600))
         self.bg_image.fill('white')
         self.images = images
         self.index = 0
@@ -78,8 +78,7 @@ class Slideshow(object):
         #then, update first image to second image
         #update original second image to next image
         if self.fade_done and self.index < len(self.images)-1: 
-            self.image.set_alpha(0) #first image set to 0
-            self.bg_image.set_alpha(self.max_alph) #make sure the background is ok
+            self.image.set_alpha(self.alph) 
             self.flip = True
             self.index += 1
             # print(self.index)
@@ -105,7 +104,7 @@ class Slideshow(object):
     def draw(self):
         self.screen.fill('black')
         if self.flip:
-            print('me too')
+            # print('me too')
             self.screen.blit(self.image,self.rect)
             self.screen.blit(self.bg_image,self.rect) #GLITCH!!!!!!!!!!!!! 
             self.flip = False
