@@ -31,7 +31,9 @@ class Game:
             'brick4': load_image('platformer/brick4.png'),
             'brick5': load_image('platformer/brick5.png'),
             'dogfood': load_image('platformer/dogfood.png'),
-            'potion': load_image('platformer/potion.png')
+            'potion': load_image('platformer/potion.png'),
+            'tree': pygame.transform.scale(load_image('platformer/tree.png'), (64, 128)),
+            'tree2': pygame.transform.scale(load_image('platformer/tree2.png'), (64, 128))
         }
     
         self.tilemap = Tilemap(self, tile_size=32)
