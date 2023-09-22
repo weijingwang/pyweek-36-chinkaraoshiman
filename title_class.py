@@ -48,14 +48,12 @@ class Title:
                     print('start')
                     # pygame.quit()
                     # quit()  
-                    self.game.state = 'breeder' #CHANGE LATER
+                    self.game.state = 'intro' #CHANGE LATER
 
                 elif self.quit_button.rect.collidepoint(mouse_pos):#(self.screen, mouse_pos):
                     print('quit')
                     pygame.quit()
                     sys.exit()
-
-
         self.quit_button.update(self.screen, mouse_pos)
 
 
@@ -66,3 +64,25 @@ class Title:
         self.start_button.render(self.screen)
         self.quit_button.render(self.screen)
             
+class clickCutscene:
+    def __init__(self, game, image ,screen):
+
+        self.image = image
+        self.screen = screen
+        self.game = game
+
+        self.start_button = Button(1280/2, (720/8)*6, 1280/5, 60, 'white', 'black', 'ok', 60)
+    
+    def run(self, mouse_pos):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+            if event.type == pygame.MOUSEBUTTONDOWN: 
+                if self.start_button.rect.collidepoint(mouse_pos):#self.start_button.update(self.screen, mouse_pos):
+                    print('start')
+                    # pygame.quit()
+                    # quit()  
+                    self.game.state = 'breeder' #CHANGE LATER
+        self.screen.blit(self.image, (0,0))
+        self.start_button.update(self.screen, mouse_pos)

@@ -1,7 +1,7 @@
 from breeder_game import BreederGame
 import platformer_game
 from displayText import counterText
-from title_class import Title
+from title_class import Title, clickCutscene
 import pygame
 import sys
 import utils
@@ -26,6 +26,9 @@ class Game:
 # (self, pos, align='right',size=50):
         self.rat_text = counterText((1240, 630),'right',50)
         self.money_text = counterText((1240, 680),'right',50)
+        
+        self.intro_img = utils.load_image("intro_img.png")
+        self.intro = clickCutscene(self, self.intro_img, self.screen)
 
     # def events(self):
     #     if self.state == 'breeder':
@@ -47,6 +50,8 @@ class Game:
 
             if self.state == 'title':
                 self.my_title.run(self.mouse_pos)
+            elif self.state =='intro':
+                self.intro.run(self.mouse_pos)
             elif self.state == 'breeder':
                 self.breeder.run()
                 if self.breeder.exit():
