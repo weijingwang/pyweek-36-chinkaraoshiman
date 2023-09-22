@@ -29,7 +29,7 @@ class Shop:
             {"name": "Petter", "price": 500, "pos": (620,330), "owned": False, "description": "slightly increase rat breeding chance when clicking on them", "repurchasable": False},
             {"name": "Tempter", "price": 5000, "pos": (620,400), "owned": False, "description": "greatly increase rat breeding chance when clicking on them", "repurchasable": False},
             {"name": "Scarecrow", "price": 500, "pos": (620,470), "owned": False, "description": "maybe scare crows away", "repurchasable": False},
-            {"name": "CrowDestroyer", "price": 5000, "pos": (620,540), "owned": False, "description": "eliminate all crows", "repurchasable": False}
+            {"name": "Destroyer", "price": 5000, "pos": (620,540), "owned": False, "description": "eliminate all crows", "repurchasable": False}
         ]
         
         self.button_grid = []

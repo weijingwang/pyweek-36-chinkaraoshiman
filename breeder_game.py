@@ -37,9 +37,10 @@ class BreederGame:
         self.autofeeder_img = utils.load_image("breeder/items/Autofeeder.png")
         self.autofeeder_img = pygame.transform.scale(self.autofeeder_img, (500,500))
 
-        self.crow_destroyer_img = utils.load_image("breeder/items/CrowDestroyer.png")
+        self.crow_destroyer_img = utils.load_image("breeder/items/Destroyer.png")
         self.doctor_img = utils.load_image("breeder/items/Doctor_copy.png")
-
+        self.doctor_img = pygame.transform.scale(self.doctor_img, (100,720))
+        self.seller_img = utils.load_image("breeder/seller.png")
         # self.tiger = pygame.transform.scale(self.tiger, (1000,400))
 
         #MAIN-----------------------------
@@ -117,8 +118,7 @@ class BreederGame:
 
 
 
-        if self.breeder_shop.items[3]["owned"]:#doctor
-            self.screen.blit(self.doctor_img, (0,0))
+
         if self.breeder_shop.items[6]["owned"]:#scarecrow
             self.screen.blit(self.tiger, (0,0))
         if self.breeder_shop.items[7]["owned"]:#crow destroyer
@@ -136,6 +136,10 @@ class BreederGame:
         self.crow.render()
         self.screen.blit(self.cage2, (-50,350))
         self.screen.blit(self.cage4, (-50,350))
+
+        self.screen.blit(self.seller_img, (0,0))
+        if self.breeder_shop.items[3]["owned"]:#doctor
+            self.screen.blit(self.doctor_img, (0,0))
         self.player.shadow()
         
         # self.screen.blit(pygame.transform.scale(self.screen, self.screen.get_size()), (0, 0))
@@ -209,7 +213,8 @@ class BreederGame:
             #33:50
             # if event.type == pygame.KEYDOWN:
             #     if event.key == pygame.K_BACKSPACE:
-            #         self.ratGrowth.rat_count -=1
+            #         s
+            # elf.ratGrowth.rat_count -=1
             #         self.rats.pop()
             if event.type == pygame.MOUSEBUTTONDOWN: 
                 self.cursor_img = self.cursor_imgs[1]    

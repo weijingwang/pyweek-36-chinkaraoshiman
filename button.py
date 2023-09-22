@@ -39,7 +39,7 @@ class Button:
 
 
 class itemButton:
-    def __init__(self, x, y, content, repurchasable, icon_path = "breeder/items/Food.png", width=260, height=50):
+    def __init__(self, x, y, content, repurchasable, icon_path = "breeder/items/Food.png", width=300, height=50):
         """self, x, y, content, repurchase), icon_path"""
         self.font = pygame.font.SysFont(None, 40)
         self.content = content
