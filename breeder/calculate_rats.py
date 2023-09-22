@@ -8,6 +8,8 @@ class BreederCalculations:
     #every second the rat status will update according to this code
     #real time graphing????
     def __init__(self, game):
+        self.sick = False
+        self.hungry = False
         self.game = game
         self.rat_count = 0
         self.upper_cap = 100
@@ -50,10 +52,12 @@ class BreederCalculations:
                 self.next_increase = self.upper_cap - self.rat_count
 
     def update(self):
-        self.rat_count = int(self.rat_count)
+        self.rat_count = self.rat_count
         # print(self.game.food, self.game.medicine)
-        self.auto_feeder()
-        self.doctor()
+        if self.game.breeder_shop.items[1]["owned"]:
+            self.auto_feeder()
+        if self.game.breeder_shop.items[3]["owned"]:
+            self.doctor()
         self.get_hungry()
         self.get_sick()
         self.rat_seller()
@@ -69,7 +73,7 @@ class BreederCalculations:
             self.crow_eat_rat()
         elif self.rat_count < self.lower_cap:
             self.rat_count = 0
-        self.rat_count += int(self.next_increase)
+        self.rat_count += self.next_increase
         self.manage_rat_data(self.game.rat_data, self.rat_count)
     
     def manage_rat_data(self, data_list, x):
@@ -104,14 +108,17 @@ class BreederCalculations:
     #these status conditions update every few cycles like crow
     def get_sick(self):
         if self.rat_count >= self.upper_cap * 0.9:
+            self.sick = True
             self.sick_timer += 1
         if self.sick_timer >= self.sick_time:
-            print(self.game.medicine)
+            # print(self.game.medicine)
             if self.game.medicine < 1:
                 self.rat_count = self.rat_count*0.5
                 print('got sick')
+                self.sick = False
             else:
                 print('recovered')
+                self.sick = False
                 self.game.medicine -= 1
             self.sick_timer = 0
             self.hunger_time = randrange(self.MIN_HUNGER_TIME,self.MAX_HUNGER_TIME)
@@ -121,9 +128,11 @@ class BreederCalculations:
         if self.hunger_timer >= self.hunger_time:
             print(self.game.food)
             if self.game.food < 1:
-                self.rat_count = self.rat_count*0.9
-                print('HUNGRY')
+                self.rat_count = self.rat_count*0.85
+                # print('HUNGRY')
+                self.hungry = True
             else:
+                self.hungry = False
                 print('ate')
                 self.game.food -= 1
                 self.hunger_timer = 0

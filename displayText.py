@@ -14,6 +14,22 @@ class counterText:
         surface.blit(temp_surface, image_rect)
         surface.blit(image, image_rect)
 
+class normalText:
+    def __init__(self, text, pos, size=50):
+        self.font = pygame.font.SysFont(None, size)
+        self.text = text
+        self.pos = pos
+        self.image = self.font.render(str(self.text), True, (255, 0, 0))#.convert_alpha()
+        self.image_rect = self.image.get_rect(midtop = self.pos)#center = surface.get_rect().center)
+        
+        self.temp_surface = pygame.Surface(self.image.get_size())
+        self.temp_surface.fill('black')
+        self.temp_surface.blit(self.image, self.image_rect)
+    def render(self,surface):
+        surface.blit(self.temp_surface, self.image_rect)
+
+        surface.blit(self.image, self.image_rect)
+
 class shopText:
     def __init__(self, pos, text='eretyh',size=80):
         self.font = pygame.font.SysFont(None, size)

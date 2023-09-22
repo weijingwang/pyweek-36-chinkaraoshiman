@@ -6,7 +6,7 @@ from breeder.wolf import Wolf
 from breeder.crow import Crow
 from breeder.rats import Rat
 from breeder.calculate_rats import BreederCalculations
-from displayText import counterText
+from displayText import normalText
 from button import Button, itemButton, textInput
 from breeder.shop_class import Shop
 
@@ -103,6 +103,12 @@ class BreederGame:
 
         #SHOP--------------------------------------
         self.breeder_shop = Shop(self, self.screen)
+
+
+        #STATUS EFFECT
+        self.hungry_text = normalText("xxHUNGRYxx", (1280/2,50))
+        self.OVERLOADED_text = normalText("OVERLOADED", (1280/2,0))
+
 
     def exit(self):
         if self.player.pos[0] > self.screen.get_width():
@@ -318,5 +324,10 @@ class BreederGame:
         if self.state == 'main': self.crow.render_cursor(self.mouse_pos)
         self.cursor_img_rect.center = pygame.mouse.get_pos()  # update position 
         self.screen.blit(self.cursor_img, self.cursor_img_rect) # draw the cursor
-
+        
+        if self.ratGrowth.hungry:
+            self.hungry_text.render(self.screen)
+        if self.ratGrowth.sick:
+            self.OVERLOADED_text.render(self.screen)
+        # print(self.ratGrowth.hungry)
         print(self.ratGrowth.rat_count, len(self.rats))
