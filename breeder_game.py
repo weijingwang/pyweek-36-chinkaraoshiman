@@ -13,7 +13,7 @@ from breeder.shop_class import Shop
 
 class BreederGame:
     def __init__(self, screen):
-        self.state = "room"
+        self.state = "main"
         self.food_text = counterText((40,630),'right, 50')
         self.medicine_text = counterText((40,680),'right, 50')
 
