@@ -81,7 +81,7 @@ class Crow:
         # print(self.state)
         if self.game.breeder_shop.items[6]["owned"]:
             self.MAX_WAIT = 10
-        print(self.MAX_WAIT)
+        # print(self.MAX_WAIT)
         if not self.moving:
             if self.state == 'wait' and self.wait_timer < self.wait_time:
                 self.wait_timer += 1

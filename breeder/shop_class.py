@@ -19,7 +19,7 @@ class Shop:
         self.input_buy_rats = textInput(200, 200, "buy")
         self.input_sell_rats = textInput(900, 200, "sell")
 
-        self.storage_button = itemButton(1280/2,200,"buy storage", True, "breeder/items/Storage.png",260,100)
+        self.storage_button = itemButton(1280/2,200,"buy storage $"+str(self.STORAGE_PRICE), True, "breeder/items/Storage.png",260,100)
         self.items = [
             {"name": "Food", "price": 5, "pos": (320,330), "owned": False, "description": "temporarily satiate rat hunger", "repurchasable": True},
             {"name": "AutoFeeder", "price": 5000, "pos": (320,400), "owned": False, "description": "rats never go hungry", "repurchasable": False},
@@ -43,10 +43,11 @@ class Shop:
                 self.buy.play()
                 print("$ spend: ",self.STORAGE_PRICE,"money left: ",self.game.money,"new upper cap: ",self.game.ratGrowth.upper_cap)
                 self.STORAGE_PRICE *= 2
+                self.storage_button.change_text("buy storage $"+str(self.STORAGE_PRICE))
         # elif self.storage_button.activated and self.game.money < self.STORAGE_PRICE:
             else: self.error.play()
         if self.input_sell_rats.active:
-            print('')
+            # print('')
             if self.input_sell_rats.user_text != '':
                 if self.game.ratGrowth.rat_count >= int(self.input_sell_rats.user_text): #self.input_sell_rats.execute_order and 
                     self.game.ratGrowth.rat_count -= int(self.input_sell_rats.user_text)

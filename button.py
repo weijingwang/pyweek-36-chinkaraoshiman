@@ -101,6 +101,14 @@ class itemButton:
         else:
             self.fg = (191, 192, 220)#(132, 136, 169)
             self.bg = (33,33,33)
+
+
+    def change_text(self, new_text):
+        self.content = new_text
+        # print(self.content)
+        self.text = self.font.render(new_text, False, self.fg) #false antialiasing
+        self.text_rect = self.text.get_rect(center=(self.width/2, self.height/2))
+
     def render(self, surface):
 
         self.image.fill(self.bg)
