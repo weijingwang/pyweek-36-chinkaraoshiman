@@ -1,15 +1,19 @@
 import utils
-from random import getrandbits, uniform, choice
+from random import getrandbits, uniform, choice, randrange
 
 class Crow:
-    def __init__(self, game, pos=[-100, -100]):
+    def __init__(self, game):
         self.size = (240, 160)
         self.crow_cage = ((10,770),(400,500))
 
         self.game = game
-        self.pos = pos
+        self.pos = [randrange(-200,1280), -200]
+        self.destination = [randrange(*self.crow_cage[0]), randrange(*self.crow_cage[1])]
         #sprite img
         self.animation_loop = 0
+        self.cursor_crow = utils.load_image("breeder/cursor.png")
+        self.cursor_rect = self.cursor_crow.get_rect()
+        
         self.sprites = utils.Spritesheet("breeder/crow-fly.png")
         self.sprites_attack = utils.Spritesheet("breeder/crow-attack.png")
         self.taunt_animation = (
@@ -40,6 +44,9 @@ class Crow:
 
         self.DX_val = 10
         self.DY_val = 5
+        self.wait_timer = 0
+        self.MAX_WAIT = 5
+        self.wait_time = randrange(1, self.MAX_WAIT)
         #set new scalars and directions
         self.dx = uniform(-self.DX_val,self.DX_val) * choice((-1,1))
         self.dy = uniform(-self.DY_val,self.DY_val) * choice((-1,1))
@@ -59,12 +66,12 @@ class Crow:
         self.image = self.animation[int(self.animation_loop)]
         self.animation_loop += 0.1
 
-
     def mouse_inputs(self, pos):
         if self.rect.collidepoint(pos):
-            print('kill')
+            # print('kill')
             self.state = "wait"
-            self.pos = [-100, -100]
+            self.pos = [randrange(-200,1280), -200]
+            self.destination = [randrange(*self.crow_cage[0]), randrange(*self.crow_cage[1])]
             self.moving= False
 
     def update_states(self):
@@ -72,22 +79,29 @@ class Crow:
         # print(self.state)
 
         if not self.moving:
-            if self.state == 'wait':
-                if getrandbits(1):
+            if self.state == 'wait' and self.wait_timer < self.wait_time:
+                self.wait_timer += 1
+                if self.wait_timer >= self.wait_time:
                     self.state = 'taunt'
                     self.moving = True
+                    self.wait_timer = 0
+                    self.wait_time = randrange(1,self.MAX_WAIT)
             elif self.state == 'taunt':
                 if getrandbits(1): self.state = 'attack'
+
+
 
 
     def update(self):
         #spawn crow?
         if self.state == 'taunt' and self.moving:
-            if self.pos[0] <= 300:
+            if self.pos[0] <= self.destination[0]:
                 self.pos[0]+=self.SPEED
-            if self.pos[1] <= 450:
+            if self.pos[0] > self.destination[0]:
+                self.pos[0]-=self.SPEED
+            if self.pos[1] <= self.destination[1]:
                 self.pos[1]+=self.SPEED
-            if self.pos[0] >= 300 and self.pos[1] >= 450:
+            if self.pos[1] >= self.destination[1]:
                 self.moving = False
                 self.state = 'attack'
             self.rect.x = self.pos[0]
@@ -102,6 +116,11 @@ class Crow:
         self.rect.x = self.pos[0]
         self.rect.y = self.pos[1]
         self.game.screen.blit(self.image, self.pos)
+
+    def render_cursor(self, pos):
+        if self.rect.collidepoint(pos):
+            self.cursor_rect.center = pos
+            self.game.screen.blit(self.cursor_crow, self.cursor_rect)
 
     # def eat_rat(self,rat_count):
     #     #do once every rat spawn cylce only

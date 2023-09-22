@@ -24,7 +24,7 @@ class BreederCalculations:
                     self.next_increase -= 1
                 else:
                     self.next_increase -= self.rat_count/3
-                    print('yujkm,')
+                    # print('yujkm,')
 
 
     def calculate_next_change(self):
