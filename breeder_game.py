@@ -6,13 +6,17 @@ from breeder.wolf import Wolf
 from breeder.crow import Crow
 from breeder.rats import Rat
 from breeder.calculate_rats import BreederCalculations
-from displayText import normalText
+from displayText import normalText, counterText
 from button import Button, itemButton, textInput
 from breeder.shop_class import Shop
 
 
 class BreederGame:
     def __init__(self, screen):
+
+        self.food_text = counterText((40,630),'right, 50')
+        self.medicine_text = counterText((40,680),'right, 50')
+
 
         self.rat_cage_rect = pygame.Rect(10, 550, 760, 100)
 
@@ -329,5 +333,8 @@ class BreederGame:
             self.hungry_text.render(self.screen)
         if self.ratGrowth.sick:
             self.OVERLOADED_text.render(self.screen)
+        
+        self.food_text.render("food: "+str(self.food), self.screen)
+        self.medicine_text.render("medicine: "+str(self.medicine), self.screen)
         # print(self.ratGrowth.hungry)
         print(self.ratGrowth.rat_count, len(self.rats))

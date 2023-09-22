@@ -23,8 +23,9 @@ class Game:
         self.my_title = Title(self, self.screen)
         self.breeder = BreederGame(self.screen)
         self.platformer = platformer_game.Game(self.screen)
-
-        self.rat_text = counterText(50)
+# (self, pos, align='right',size=50):
+        self.rat_text = counterText((1240, 630),'right',50)
+        self.money_text = counterText((1240, 680),'right',50)
 
     # def events(self):
     #     if self.state == 'breeder':
@@ -59,8 +60,8 @@ class Game:
 
                 #currents stats
                 # self.rat_text.render("timeNow: "+str(self.breeder.timer//self.FPS), self.screen, 1240, 580)
-                self.rat_text.render("my_rats: "+str(int(self.breeder.ratGrowth.rat_count))+"/"+str(self.breeder.ratGrowth.upper_cap), self.screen, 1240, 630)
-                self.rat_text.render("myMoney: "+str(int(self.breeder.money)), self.screen, 1240, 680)
+                self.rat_text.render("rats: "+str(int(self.breeder.ratGrowth.rat_count))+"/"+str(self.breeder.ratGrowth.upper_cap), self.screen)
+                self.money_text.render("$"+str(int(self.breeder.money)), self.screen)
 
 
             pygame.display.update()

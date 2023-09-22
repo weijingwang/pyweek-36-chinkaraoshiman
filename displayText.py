@@ -1,18 +1,37 @@
 import pygame
 
 class counterText:
-    def __init__(self, size=80):
+    def __init__(self, pos, align='right',size=50):
         self.font = pygame.font.SysFont(None, size)
+        self.align = align
+        self.pos = pos
 
-    def render(self,text,surface, x, y):
-        image = self.font.render(str(text), True, (255, 0, 0))#.convert_alpha()
-        image_rect = image.get_rect(bottomright = (x,y))#center = surface.get_rect().center)
-        
-        temp_surface = pygame.Surface(image.get_size())
-        temp_surface.fill('black')
-        temp_surface.blit(image, image_rect)
-        surface.blit(temp_surface, image_rect)
-        surface.blit(image, image_rect)
+        self.image = self.font.render(str('text'), True, (255, 0, 0))#.convert_alpha()
+        # image_rect = image.get_rect(bottomright = (x,y))#center = surface.get_rect().center)
+        self.image_rect = self.image.get_rect(bottomleft = self.pos)
+        if self.align == 'left':
+            self.image_rect = self.image.get_rect(bottomleft = self.pos)#center = surface.get_rect().center)
+        elif self.align == 'right':
+            self.image_rect = self.image.get_rect(bottomright = self.pos)#center = surface.get_rect().center)
+
+        self.temp_surface = pygame.Surface(self.image.get_size())
+        self.temp_surface.fill('black')
+        self.temp_surface.blit(self.image, self.image_rect)
+    def render(self,text,surface):
+
+        self.image = self.font.render(str(text), True, (255, 0, 0))#.convert_alpha()
+        # image_rect = image.get_rect(bottomright = (x,y))#center = surface.get_rect().center)
+
+        if self.align == 'left':
+            self.image_rect = self.image.get_rect(bottomleft = self.pos)#center = surface.get_rect().center)
+        elif self.align == 'right':
+            self.image_rect = self.image.get_rect(bottomright = self.pos)#center = surface.get_rect().center)
+
+        self.temp_surface = pygame.Surface(self.image.get_size())
+        self.temp_surface.fill('black')
+        self.temp_surface.blit(self.image, self.image_rect)
+        surface.blit(self.temp_surface, self.image_rect)
+        surface.blit(self.image, self.image_rect)
 
 class normalText:
     def __init__(self, text, pos, size=50):
