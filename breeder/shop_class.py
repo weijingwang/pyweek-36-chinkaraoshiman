@@ -133,8 +133,18 @@ class Shop:
         self.input_sell_rats.input_control(event)
 
     def hover_events(self, pos):
-        for i in range(len(self.button_grid)): 
-            if self.button_grid[i].hover_check(pos):
-                if self.description != self.items[i]["description"]:
-                    self.description.update(self.items[i]["description"])
-               
+        if self.storage_button.hover_check(pos):
+            if self.description != "+rat storage":
+                self.description.update("+rat storage")
+        elif self.input_buy_rats.hover_check(pos):
+            if self.description != "click>type>click again":
+                self.description.update("click>type>click again")
+        elif self.input_sell_rats.hover_check(pos):
+            if self.description != "click>type>click again":
+                self.description.update("click>type>click again")
+        else:
+            for i in range(len(self.button_grid)): 
+                if self.button_grid[i].hover_check(pos):
+                    if self.description != self.items[i]["description"]:
+                        self.description.update(self.items[i]["description"])
+                

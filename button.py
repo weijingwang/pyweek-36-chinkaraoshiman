@@ -161,7 +161,11 @@ class textInput:
             self.color = self.color_active
         else:
             self.color = self.color_passive
-
+    def hover_check(self, pos):
+        if self.input_rect.collidepoint(pos):
+            return True
+        else:
+            return False
     def update_keyup(self):
         # print('asdfsd')
         if self.user_text != "":
