@@ -93,7 +93,7 @@ class Shop:
                         elif self.items[i]["name"] == 'Medicine':
                             print('+1 medicine')
                             self.game.medicine +=1
-                elif int(self.items[i]["price"]) <= self.game.money and not self.items[i]["owned"]:
+                elif int(self.items[i]["price"]) > self.game.money and not self.items[i]["owned"]:
                     self.error.play()
                     print('2')
                     self.button_grid[i].activated = False
