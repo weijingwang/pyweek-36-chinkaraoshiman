@@ -21,7 +21,7 @@ class BreederGame:
         self.rat_cage_rect = pygame.Rect(10, 550, 760, 100)
 
         self.FPS = 60
-        self.money = 100
+        self.money = 100000000
         self.food = 0
         self.medicine = 0
         self.rat_data = [0,0,0,0,0,0,0,0,0,0]
@@ -150,7 +150,7 @@ class BreederGame:
         self.screen.blit(self.cage2, (-50,350))
         self.screen.blit(self.cage4, (-50,350))
 
-        self.screen.blit(self.seller_img, (0,0))
+        # self.screen.blit(self.seller_img, (0,0))
         if self.breeder_shop.items[3]["owned"]:#doctor
             self.screen.blit(self.doctor_img, (0,0))
         self.player.shadow()
@@ -161,6 +161,7 @@ class BreederGame:
         if self.breeder_shop.items[4]["owned"]:
             if self.rat_cage_rect.collidepoint(self.mouse_pos) and self.ratGrowth.rat_count>1:
                 self.ratGrowth.rat_count += 1
+                self.money += 1
                 self.click.play()
                 print("rat +1")
 
@@ -336,5 +337,5 @@ class BreederGame:
         
         self.food_text.render("food: "+str(self.food), self.screen)
         self.medicine_text.render("medicine: "+str(self.medicine), self.screen)
-        # print(self.ratGrowth.hungry)
+        print(self.ratGrowth.hungry)
         print(self.ratGrowth.rat_count, len(self.rats))

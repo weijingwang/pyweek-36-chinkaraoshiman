@@ -55,6 +55,7 @@ class BreederCalculations:
         # print(self.game.food, self.game.medicine)
         if self.game.breeder_shop.items[1]["owned"]:
             self.auto_feeder()
+            # print('')
         if self.game.breeder_shop.items[3]["owned"]:
             self.doctor()
         if self.rat_count > 0:
@@ -101,8 +102,9 @@ class BreederCalculations:
         #every cycle in that timed loop in breeder game
         #constantly converts 10% of all rats to money
         # if self.game.breeder_shop.items[6]["owned"]:
-        self.game.money += self.rat_count * 0.1 * self.game.breeder_shop.RAT_PRICE
-        self.rat_count -= self.rat_count * 0.1
+        print('')
+        # self.game.money += self.rat_count * 0.1 * self.game.breeder_shop.RAT_PRICE
+        # self.rat_count -= self.rat_count * 0.1
         # print(self.game.money)
 
 
