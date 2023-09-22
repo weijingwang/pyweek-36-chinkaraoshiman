@@ -9,9 +9,9 @@ import pygame
 
 class Game:
     def __init__(self, screen):
-        pygame.init()
+        # pygame.init()
 
-        pygame.display.set_caption('platformer')
+        # pygame.display.set_caption('platformer')
         
         self.screen = screen
         #i think this is a good resolution 3:1 ratio
@@ -56,29 +56,29 @@ class Game:
         self.scroll[1] += (self.player.rect().centery - self.display.get_height() / 2 - self.scroll[1]) / 20
         camera = (int(self.scroll[0]), int(self.scroll[1]))
 
-            # define map tiles and mobs here
-            # tiles: in Tilemap
-            # rats, npcs, enemies, items: render and update here 
-            self.tilemap.render(self.display, offset=camera)
+        # define map tiles and mobs here
+        # tiles: in Tilemap
+        # rats, npcs, enemies, items: render and update here 
+        self.tilemap.render(self.display, offset=camera)
 
-            for rat in self.rats:
-                rat.update()
-                rat.render(self.display, offset=camera)
-            
-            for item in self.items:
-                item.update()
-                item.render(self.display, offset=camera)
+        for rat in self.rats:
+            rat.update()
+            rat.render(self.display, offset=camera)
+        
+        for item in self.items:
+            item.update()
+            item.render(self.display, offset=camera)
 
 
-            self.player.update(self.tilemap, (self.movement[1] - self.movement[0], 0))
-            self.player.render(self.display, offset=camera)
-            
-            if self.player.touching_checkpoint():
-                # do stuff
-                # save coordinates
-                # go back to rat breeder game
-                print("touch")
-                pass
+        self.player.update(self.tilemap, (self.movement[1] - self.movement[0], 0))
+        self.player.render(self.display, offset=camera)
+        
+        if self.player.touching_checkpoint():
+            # do stuff
+            # save coordinates
+            # go back to rat breeder game
+            print("touch")
+            pass
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
