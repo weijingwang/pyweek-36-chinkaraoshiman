@@ -67,7 +67,9 @@ class BreederCalculations:
         plt.title('rat growth affected by crows eating them over time')
         plt.savefig('./data/images/breeder/rat_data.png')
 
-
+    def manual_breeding():
+        pass
+    
     #these status conditions update every few cycles like crow
     # def get_sick(self):
     #     pass

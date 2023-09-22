@@ -79,11 +79,14 @@ class Crow:
     def update_states(self):
         #update this every so many cylces
         # print(self.state)
-
+        if self.game.breeder_shop.items[6]["owned"]:
+            self.MAX_WAIT = 10
+        print(self.MAX_WAIT)
         if not self.moving:
             if self.state == 'wait' and self.wait_timer < self.wait_time:
                 self.wait_timer += 1
                 if self.wait_timer >= self.wait_time:
+                    self.cry.play()
                     self.state = 'taunt'
                     self.moving = True
                     self.wait_timer = 0
