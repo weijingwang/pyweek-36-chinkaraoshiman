@@ -13,6 +13,9 @@ from breeder.shop_class import Shop
 
 class BreederGame:
     def __init__(self, screen):
+
+        self.rat_cage_rect = pygame.Rect(10, 550, 760, 100)
+
         self.FPS = 60
         self.money = 100000000
         self.food = 0
@@ -107,7 +110,6 @@ class BreederGame:
             #exit room and go to platformer
 
     def main_game(self):
-
         self.screen.fill((34, 30, 80))
         pygame.draw.circle(self.screen, (255,255,0), (1150,80), 50)
         self.screen.blit(self.wall, (0, 0))
@@ -145,6 +147,12 @@ class BreederGame:
         # self.screen.blit(pygame.transform.scale(self.screen, self.screen.get_size()), (0, 0))
     def main_game_events(self):
         self.crow.mouse_inputs(self.mouse_pos)
+        if self.breeder_shop.items[4]["owned"]:
+            if self.rat_cage_rect.collidepoint(self.mouse_pos) and self.ratGrowth.rat_count>1:
+                self.ratGrowth.rat_count += 1
+                self.click.play()
+                print("rat +1")
+
 
 
     def options(self):
@@ -257,8 +265,11 @@ class BreederGame:
             self.screen.blit(self.bg,(0,0))
             self.movement = [0,0]  
 
+
+
         if self.state == 'main':
             self.main_game()
+
         elif self.state == 'shop':
             # self.breeder_shop.transactions()
             self.breeder_shop.render()
@@ -282,4 +293,3 @@ class BreederGame:
         self.cursor_img_rect.center = pygame.mouse.get_pos()  # update position 
         self.screen.blit(self.cursor_img, self.cursor_img_rect) # draw the cursor
 
-        

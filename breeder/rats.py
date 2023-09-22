@@ -28,9 +28,7 @@ class Rat:
             self.moving = True
 
         # print(self.dx, self.dy, self.move_time, self.move)
-    
-
-
+        
     def update(self):
         # print(self.move_time)
         if self.move and not self.moving:

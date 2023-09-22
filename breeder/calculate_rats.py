@@ -9,7 +9,7 @@ class BreederCalculations:
     #real time graphing????
     def __init__(self, game):
         self.game = game
-        self.rat_count = 90
+        self.rat_count = 0
         self.upper_cap = 100
         self.lower_cap = 0
         self.next_increase = 0
@@ -28,6 +28,9 @@ class BreederCalculations:
 
         #every turn, healhy status decreases if no food or bad conditions
         #flucuate randomly
+
+    # def tempt_the_rats(self):
+    #     if
 
     def crow_eat_rat(self):
         #do once every rat spawn cylce only
