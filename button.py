@@ -151,8 +151,8 @@ class textInput:
             self.active = False
             self.execute_order = True
             # print(self.name,self.user_text,"rats",self.execute_order)
-
             self.user_text = ""
+            self.color = self.color_passive
 
     def render(self, surface):
         pygame.draw.rect(surface, self.color, self.input_rect)

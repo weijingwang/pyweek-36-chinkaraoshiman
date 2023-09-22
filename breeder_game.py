@@ -21,7 +21,8 @@ class BreederGame:
 
         # pygame.mixer.music.load("data/music/breeder.mp3")
         # pygame.mixer.music.play(-1)
-        self.click = pygame.mixer.Sound("data/sounds/CLICK.ogg")
+        self.click = pygame.mixer.Sound("data/sounds/click.ogg")
+        self.click.set_volume(0.8)
 
         self.screen = screen
         self.done = False

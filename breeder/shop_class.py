@@ -5,7 +5,10 @@ from button import textInput, itemButton
 class Shop:
     def __init__(self, game, screen):
         self.error = pygame.mixer.Sound("data/sounds/error.ogg")
-        self.error.set_volume(0.1)
+        self.error.set_volume(0.15)
+        self.buy = pygame.mixer.Sound("data/sounds/buy.ogg")
+        self.sell = pygame.mixer.Sound("data/sounds/sell.ogg")
+
         self.STORAGE_PRICE = 10
         self.RAT_PRICE = 1
         self.game = game
@@ -33,29 +36,38 @@ class Shop:
             self.button_grid.append(itemButton(x["pos"][0], x["pos"][1], x["name"], x["repurchasable"]))
 
     def transactions(self):
-        if self.storage_button.activated and self.game.money >= self.STORAGE_PRICE:
-            self.game.money -= self.STORAGE_PRICE
-            self.game.ratGrowth.upper_cap += 100
+        if self.storage_button.activated:
+            if self.game.money >= self.STORAGE_PRICE:
+                self.game.money -= self.STORAGE_PRICE
+                self.game.ratGrowth.upper_cap += 100
+                self.buy.play()
+                print("$ spend: ",self.STORAGE_PRICE,"money left: ",self.game.money,"new upper cap: ",self.game.ratGrowth.upper_cap)
+                self.STORAGE_PRICE *= 2
+        # elif self.storage_button.activated and self.game.money < self.STORAGE_PRICE:
+            else: self.error.play()
 
-            print("$ spend: ",self.STORAGE_PRICE,"money left: ",self.game.money,"new upper cap: ",self.game.ratGrowth.upper_cap)
-            self.STORAGE_PRICE *= 2
-        elif self.storage_button.activated and self.game.money < self.STORAGE_PRICE:
-            self.error.play()
+        if self.input_sell_rats.active:
+            if self.input_sell_rats.user_text != '':
+                if self.game.ratGrowth.rat_count >= int(self.input_sell_rats.user_text): #self.input_sell_rats.execute_order and 
+                    self.game.ratGrowth.rat_count -= int(self.input_sell_rats.user_text)
+                    if int(self.RAT_PRICE * 0.7) == 0: self.game.money += int(self.RAT_PRICE)
+                    else: self.game.money += int(self.RAT_PRICE * 0.7)
+                    self.sell.play()
+                    print("sold", self.input_sell_rats.user_text,"rats for $"+str(int(self.RAT_PRICE * 0.7)))
+                    print("current balance: ", self.game.money)
+                else: self.error.play()
 
-        if self.input_sell_rats.active and self.input_sell_rats.user_text != '' and self.game.ratGrowth.rat_count >= int(self.input_sell_rats.user_text): #self.input_sell_rats.execute_order and 
-            self.game.ratGrowth.rat_count -= int(self.input_sell_rats.user_text)
-            self.game.money += int(self.RAT_PRICE * 0.7)
-            print("sold", self.input_sell_rats.user_text,"rats for $"+str(int(self.RAT_PRICE * 0.7)))
-            print("current balance: ", self.game.money)
-
-        if self.input_buy_rats.active and self.input_buy_rats.user_text != '' and self.game.money >= self.RAT_PRICE:
-            if (int(self.input_buy_rats.user_text)+self.game.ratGrowth.rat_count) <= self.game.ratGrowth.upper_cap:
-                print(self.input_buy_rats.user_text)
-                self.game.ratGrowth.rat_count += int(self.input_buy_rats.user_text)
-                self.game.money -= int(self.RAT_PRICE)
-                print("bought", self.input_buy_rats.user_text,"rats for $"+str(int(self.RAT_PRICE)))
-                print("current balance: ", self.game.money)
-
+        if self.input_buy_rats.active and self.input_buy_rats.user_text != '':
+            if self.game.money >= (self.RAT_PRICE * int(self.input_buy_rats.user_text)):
+                if (int(self.input_buy_rats.user_text)+self.game.ratGrowth.rat_count) <= self.game.ratGrowth.upper_cap:
+                    print(self.input_buy_rats.user_text)
+                    self.game.ratGrowth.rat_count += int(self.input_buy_rats.user_text)
+                    self.game.money -= self.RAT_PRICE * int(self.input_buy_rats.user_text)
+                    self.buy.play()
+                    print("bought", self.input_buy_rats.user_text,"rats for $"+str(int(self.RAT_PRICE)*int(self.input_buy_rats.user_text)))
+                    print("current balance: ", self.game.money)
+                else: self.error.play()
+            else: self.error.play()
 
 
     def render(self):
