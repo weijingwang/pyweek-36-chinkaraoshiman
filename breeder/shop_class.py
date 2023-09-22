@@ -77,13 +77,14 @@ class Shop:
                     self.game.money -= int(self.items[i]["price"])
                     if not self.items[i]["repurchasable"]:
                         self.buy.play()
+                        print("bought",self.items[i]["name"])
                         self.items[i]["owned"] = True
-                    else:
+                    if self.items[i]["repurchasable"]:
                         self.buy.play()
-                        if self.items[i]["name"] == 'food':
+                        if self.items[i]["name"] == 'Food':
                             self.game.food += 1
                             print('+1 food')
-                        elif self.items[i]["name"] == 'medicine':
+                        elif self.items[i]["name"] == 'Medicine':
                             print('+1 medicine')
                 elif int(self.items[i]["price"]) <= self.game.money and not self.items[i]["owned"]:
                     self.error.play()
