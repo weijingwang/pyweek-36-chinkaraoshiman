@@ -1,5 +1,5 @@
 import pygame
-
+import utils
 class Button:
     def __init__(self, x, y, width, height, fg, bg, content, font_size=40):
         """self, x, y, width, height, fg, bg, content)"""
@@ -39,10 +39,11 @@ class Button:
 
 
 class itemButton:
-    def __init__(self, x, y, content, repurchasable, width=260, height=50):
-        """self, x, y, content, repurchase)"""
+    def __init__(self, x, y, content, repurchasable, width=260, height=50, icon_path="breeder/items/food.png"):
+        """self, x, y, content, repurchase), icon_path"""
         self.font = pygame.font.SysFont(None, 40)
         self.content = content
+        self.icon_path = icon_path
 
         self.repurchasable = repurchasable
         self.x = x
@@ -63,6 +64,10 @@ class itemButton:
         self.rect = self.image.get_rect()
 
         self.rect.center = (self.x, self.y)
+
+        self.icon = utils.load_image(self.icon_path)
+        self.icon_rect = self.icon.get_rect(center = (self.width/2, self.height/2))
+
 
         self.text = self.font.render(self.content, False, self.fg) #false antialiasing
         self.text_rect = self.text.get_rect(center=(self.width/2, self.height/2))
@@ -100,7 +105,10 @@ class itemButton:
         self.image.fill(self.bg)
         self.text = self.font.render(self.content, False, self.fg) #false antialiasing
         self.image.blit(self.text, self.text_rect)
+
         surface.blit(self.image, self.rect)
+        surface.blit(self.icon, self.rect)
+
 
 
 
