@@ -50,13 +50,17 @@ class BreederGame:
 
         self.player = Wolf(self)
 
+            
         self.crow = Crow(self)
 
         self.ratGrowth = BreederCalculations(self)
 
         self.rats = []
+        self.rat_render_limit = 150
+
         for x in range(self.ratGrowth.rat_count):
-            self.rats.append(Rat(self))
+            if len(self.rats)<=self.rat_render_limit:
+                self.rats.append(Rat(self))
 
         self.shop_button = Button(50, 200, 80, 80, 'white', 'black', 'SHOP')
         self.options_button = Button(50, 320, 80, 80, 'white', 'black', 'OPTS')
@@ -172,12 +176,13 @@ class BreederGame:
 
 
         #rat math
-        if int(self.ratGrowth.rat_count) > len(self.rats):
+        if int(self.ratGrowth.rat_count) > len(self.rats) and len(self.rats)<=self.rat_render_limit:
             for x in range(int(self.ratGrowth.rat_count)-len(self.rats)):
                 self.rats.append(Rat(self))
         elif int(self.ratGrowth.rat_count) < len(self.rats):
             for x in range(len(self.rats)-int(self.ratGrowth.rat_count)):
                 self.rats.pop()   
+
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

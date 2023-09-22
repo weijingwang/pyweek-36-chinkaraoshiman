@@ -1,8 +1,9 @@
 import utils
 from random import getrandbits, uniform, choice, randrange
-
+import pygame
 class Crow:
     def __init__(self, game):
+        self.cry = pygame.mixer.Sound("data/sounds/crow.ogg")
         self.size = (240, 160)
         self.crow_cage = ((10,770),(400,500))
 
@@ -69,6 +70,7 @@ class Crow:
     def mouse_inputs(self, pos):
         if self.rect.collidepoint(pos):
             # print('kill')
+            self.cry.play()
             self.state = "wait"
             self.pos = [randrange(-200,1280), -200]
             self.destination = [randrange(*self.crow_cage[0]), randrange(*self.crow_cage[1])]

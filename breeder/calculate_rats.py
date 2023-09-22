@@ -66,47 +66,11 @@ class BreederCalculations:
         plt.title('rat growth affected by crows eating them over time')
         plt.savefig('./data/images/breeder/rat_data.png')
 
-        # if self.rat_count >= self.upper_cap:
-        #     #don't increase
-        #     self.next_increase = 0
-        #     self.rat_count = self.upper_cap
-        #     #decay rats!!??
-        # else:
-        #     #increase
-        #     #do nothing if rat count is 0
-        #     if self.rat_count == 1:
-        #         #get eaten?
-        #         pass
-        #         #reach uppercap?
-        #         # self.crow_eat_rat()
-        #     elif self.rat_count < 1:
-        #         #get eaten?
-        #         # self.crow_eat_rat()
-        #         #exponential growth
-        #         self.next_increase += 1
-        #         #reach uppercap?
 
-        # self.rat_count += self.next_increase
-
-
-
-
-
-        #if unhealthy guaranteed mice die.
-        # if 0% healthy 50% die
-        # else, die proportional to health
-
-        #crow can eat mice.
-        # chance that crow comes
-        #if 1 crow comes, every second, 1 mice dies
-
-# test = []
-# test_calc = BreederCalculations()
-# for x in range(40):
-#     test_calc.update()
-#     test.append(test_calc.rat_count)
-# plt.plot(test)
-# plt.xlabel('iterations')
-# plt.ylabel('rat count')
-# plt.title('rat growth affected by crows eating them over time')
-# plt.show()
+    #these status conditions update every few cycles like crow
+    # def get_sick(self):
+    #     pass
+    # def get_hungry(self):
+    #     if self.food:
+            
+    #     pass

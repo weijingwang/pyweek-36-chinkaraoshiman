@@ -50,8 +50,8 @@ class Shop:
             if self.input_sell_rats.user_text != '':
                 if self.game.ratGrowth.rat_count >= int(self.input_sell_rats.user_text): #self.input_sell_rats.execute_order and 
                     self.game.ratGrowth.rat_count -= int(self.input_sell_rats.user_text)
-                    if int(self.RAT_PRICE * 0.7) == 0: self.game.money += int(self.RAT_PRICE)
-                    else: self.game.money += int(self.RAT_PRICE * 0.7)
+                    if int(self.RAT_PRICE * 0.7) == 0: self.game.money += int(self.RAT_PRICE) * int(self.input_sell_rats.user_text)
+                    else: self.game.money += int(self.RAT_PRICE * 0.7) * int(self.input_sell_rats.user_text)
                     self.sell.play()
                     print("sold", self.input_sell_rats.user_text,"rats for $"+str(int(self.RAT_PRICE * 0.7)))
                     print("current balance: ", self.game.money)
