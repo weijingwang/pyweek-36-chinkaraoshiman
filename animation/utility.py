@@ -18,14 +18,15 @@ class Spritesheet:
     def get_sprite(self, x, y, width, height):
         sprite = pygame.Surface([width,height])
         sprite.blit(self.sheet, (0,0), (x, y, width, height))
-        sprite.set_colorkey(BLACK)
+        sprite.set_colorkey('black')
         return sprite
     
 
 class Text:
     def __init__(self,text,pos,size,color,do_bg):
         self.do_bg = do_bg
-        self.myFont = pygame.font.Font(FONT_PATH, size)
+        # self.myFont = pygame.font.Font(FONT_PATH, size)
+        self.myFont = pygame.font.SysFont(None, size)
         self.pos = pos
         self.size = size
         self.text = text
@@ -36,14 +37,14 @@ class Text:
         #background
         if self.do_bg:
             self.bg= pygame.Surface(self.rect.size)
-            self.bg.fill(BLACK)
+            self.bg.fill('black')
     def update(self, text):
         self.label = self.myFont.render(text, self.size, self.color)
         self.rect = self.label.get_rect()
         self.rect.center = self.pos
         self.bg= pygame.Surface(self.rect.size)
         if self.do_bg:
-            self.bg.fill(BLACK)
+            self.bg.fill('black')
     def draw(self,screen):
         if self.do_bg:
             screen.blit(self.bg, self.rect)

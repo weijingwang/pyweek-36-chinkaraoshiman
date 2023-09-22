@@ -1,6 +1,5 @@
 import pygame
-from config import *
-from utility import *
+from animation.utility import *
 
 class Slideshow(object):
     """ for some reason loading in an 
@@ -15,15 +14,15 @@ class Slideshow(object):
         self.stop = False
         self.kill_on_release = False
         #images
-        self.blank_image = pygame.Surface((800, 600))
-        self.blank_image.fill(BLACK)
-        self.bg_image = pygame.Surface((800, 600))
-        self.bg_image.fill(WHITE)
+        self.blank_image = pygame.Surface((1280, 720))
+        self.blank_image.fill('black')
+        self.bg_image = pygame.Surface((1280, 720))
+        self.bg_image.fill('white')
         self.images = images
         self.index = 0
         self.image = self.images[self.index]
         self.rect = self.image.get_rect() #assume all images have same dimensions so same rect
-        self.rect.center = WIN_CENTER
+        self.rect.center = (1280/2,720/2)
 
         #bg image to fix flashing glitch
         self.bg_images = bg_images
@@ -38,7 +37,7 @@ class Slideshow(object):
         # self.most_bottom_image = self.images[self.index+1] #prevent glitchy flashing effect DIDNT WORK
         #crossfade
         self.wait_seconds = 3
-        self.wait_clock_cycles = FPS * self.wait_seconds
+        self.wait_clock_cycles = 60 * self.wait_seconds
         self.clock_cycles = 0
         self.fade_speed = 3
         self.fade_done = False
@@ -49,7 +48,7 @@ class Slideshow(object):
         #for glitch
         self.flip = False
         #text
-        self.currentText = Text(texts[self.index], (self.rect.center[0], self.rect.center[1]+300), 32, WHITE, True)
+        self.currentText = Text(texts[self.index], (self.rect.center[0], self.rect.center[1]+300), 32, 'white', True)
 
     def events(self):
         keys = pygame.key.get_pressed()
@@ -79,7 +78,8 @@ class Slideshow(object):
         #then, update first image to second image
         #update original second image to next image
         if self.fade_done and self.index < len(self.images)-1: 
-            self.image.set_alpha(self.alph) 
+            self.image.set_alpha(0) #first image set to 0
+            self.bg_image.set_alpha(self.max_alph) #make sure the background is ok
             self.flip = True
             self.index += 1
             # print(self.index)
@@ -103,9 +103,9 @@ class Slideshow(object):
 
         # self.screen.blit(self.blank_image,self.rect)
     def draw(self):
-        self.screen.fill(BLACK)
+        self.screen.fill('black')
         if self.flip:
-            # print('me too')
+            print('me too')
             self.screen.blit(self.image,self.rect)
             self.screen.blit(self.bg_image,self.rect) #GLITCH!!!!!!!!!!!!! 
             self.flip = False
