@@ -25,10 +25,10 @@ class Shop:
             {"name": "Auto-feeder", "price": 5000, "pos": (320,400), "owned": False, "description": "rats never go hungry", "repurchasable": False},
             {"name": "Medicine", "price": 5, "pos": (320,470), "owned": False, "description": "cure rats", "repurchasable": True},
             {"name": "Doctor", "price": 5000, "pos": (320,540), "owned": False, "description": "rats never sick", "repurchasable": False},
-            {"name": "Tempting hand", "price": 500, "pos": (620,330), "owned": False, "description": "slightly increase rat breeding chance when clicking on them", "repurchasable": False},
-            {"name": "Skillful hand", "price": 5000, "pos": (620,400), "owned": False, "description": "greatly increase rat breeding chance when clicking on them", "repurchasable": False},
+            {"name": "Tempting-hand", "price": 500, "pos": (620,330), "owned": False, "description": "slightly increase rat breeding chance when clicking on them", "repurchasable": False},
+            {"name": "Skillful-hand", "price": 5000, "pos": (620,400), "owned": False, "description": "greatly increase rat breeding chance when clicking on them", "repurchasable": False},
             {"name": "Scarecrow", "price": 500, "pos": (620,470), "owned": False, "description": "decrease crow attack rate", "repurchasable": False},
-            {"name": "Crow destroyer", "price": 5000, "pos": (620,540), "owned": False, "description": "crows do not kill rats", "repurchasable": False}
+            {"name": "Crow-destroyer", "price": 5000, "pos": (620,540), "owned": False, "description": "crows do not kill rats", "repurchasable": False}
         ]
         
         self.button_grid = []
