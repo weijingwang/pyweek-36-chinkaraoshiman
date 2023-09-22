@@ -76,7 +76,7 @@ class BreederCalculations:
         # if self.game.breeder_shop.items[6]["owned"]:
         self.game.money += self.rat_count * 0.1 * self.game.breeder_shop.RAT_PRICE
         self.rat_count -= self.rat_count * 0.1
-        print(self.game.money)
+        # print(self.game.money)
 
 
     #these status conditions update every few cycles like crow

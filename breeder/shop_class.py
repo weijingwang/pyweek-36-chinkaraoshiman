@@ -84,14 +84,18 @@ class Shop:
                             print('+1 food')
                         elif self.items[i]["name"] == 'medicine':
                             print('+1 medicine')
-                elif int(self.items[i]["price"]) <= self.game.money:
+                elif int(self.items[i]["price"]) <= self.game.money and not self.items[i]["owned"]:
                     self.error.play()
+                    print('2')
                     self.button_grid[i].activated = False
                     # self.button_grid[i].update_keyup()
-                elif not self.items[i]["owned"]:
-                    self.error.play()
+                elif self.items[i]["owned"] and not self.items[i]["repurchasable"]:
+                    # self.error.play()
+                    # print('3')
+                    self.button_grid[i].activated = True
+
                 
-                print(self.items[i]["name"],self.items[i]["owned"],self.items[i]["repurchasable"])
+                # print(self.items[i]["name"],self.items[i]["owned"],self.items[i]["repurchasable"])
 
 
     def render(self):
