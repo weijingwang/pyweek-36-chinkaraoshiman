@@ -47,6 +47,7 @@ class Shop:
             else: self.error.play()
 
         if self.input_sell_rats.active:
+            print('')
             if self.input_sell_rats.user_text != '':
                 if self.game.ratGrowth.rat_count >= int(self.input_sell_rats.user_text): #self.input_sell_rats.execute_order and 
                     self.game.ratGrowth.rat_count -= int(self.input_sell_rats.user_text)

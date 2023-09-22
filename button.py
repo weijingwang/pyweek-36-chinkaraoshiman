@@ -130,7 +130,9 @@ class textInput:
                     self.user_text = self.user_text[:-1]
                 # Unicode standard is used for string
                 # formation
-                elif event.key == pygame.K_0 or event.key == pygame.K_1 or event.key == pygame.K_2 or event.key == pygame.K_3 or event.key == pygame.K_4 or event.key == pygame.K_5 or event.key == pygame.K_6 or event.key == pygame.K_7 or event.key == pygame.K_8 or event.key == pygame.K_9:
+                if event.key == pygame.K_RETURN:
+                    self.update_keyup()
+                if event.key == pygame.K_0 or event.key == pygame.K_1 or event.key == pygame.K_2 or event.key == pygame.K_3 or event.key == pygame.K_4 or event.key == pygame.K_5 or event.key == pygame.K_6 or event.key == pygame.K_7 or event.key == pygame.K_8 or event.key == pygame.K_9:
                     self.user_text += event.unicode
                 self.execute_order = False
 
