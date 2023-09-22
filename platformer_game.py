@@ -3,6 +3,7 @@ import sys
 from platformer.entities import Player, Rat, Item
 from platformer.tilemap import Tilemap
 from utils import load_image
+from utils import CounterText
 
 import pygame
 

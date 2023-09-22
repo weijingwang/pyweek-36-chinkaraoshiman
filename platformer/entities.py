@@ -1,6 +1,7 @@
 import pygame
 import random
 from platformer.tilemap import Tilemap
+from utils import CounterText
 
 class Object:
     def __init__(self, game, etype, pos, size):
@@ -68,10 +69,14 @@ class Player(Object):
         return False
     
     def touching_rat(self):
-        # when touching rat, display textbox message
-        # and add whatever number to rat count
+        tilemap = self.game.tilemap
+        tile_size = tilemap.tile_size
 
-        pass
+        for tile in tilemap.tiles_around(self.pos):
+            if (tile['type'] == 'rat'):
+                if self.rect().colliderect(pygame.Rect(tile['pos'][0] * tile_size - 1, tile['pos'][1] * tile_size - 1, tile_size + 2, tile_size + 2)):
+                    return True
+        return False
         
 
 """
@@ -116,6 +121,11 @@ class Rat(Object):
         super().__init__(game, etype, pos, size)
 
     def update(self):
+        if self.touching_player():
+            self.game.rats.remove(self)
+        textbox = CounterText()
+        textbox.render("rat rat", self.game.display, 100, 100)
+        
         self.collisions = {'up': False, 'down': False, 'left': False, 'right': False}
 
         # only x movement should be random, y should be 0 as it doesn't jump.
@@ -164,3 +174,5 @@ class Rat(Object):
 
         if self.collisions['down'] or self.collisions['up']:
             self.vel[1] = 0
+    def touching_player(self):
+        return self.rect().colliderect(self.game.player.rect())
