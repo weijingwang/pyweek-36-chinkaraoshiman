@@ -74,7 +74,13 @@ class itemButton:
         self.text = self.font.render(self.content, False, self.fg) #false antialiasing
         self.text_rect = self.text.get_rect(center=(self.width/2, self.height/2))
         self.image.blit(self.text, self.text_rect)
+        # self.hover = False
 
+    def hover_check(self, pos):
+        if self.rect.collidepoint(pos):
+            return True
+        else:
+            return False
     def update(self, pos):
         if self.rect.collidepoint(pos):
             self.activated = True

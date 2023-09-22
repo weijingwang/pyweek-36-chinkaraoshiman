@@ -1,6 +1,7 @@
 import pygame
 import utils
 from button import textInput, itemButton
+from displayText import shopText
 
 class Shop:
     def __init__(self, game, screen):
@@ -34,6 +35,10 @@ class Shop:
         self.button_grid = []
         for x in self.items:
             self.button_grid.append(itemButton(x["pos"][0], x["pos"][1], x["name"]+" $"+str(x["price"]), x["repurchasable"], "breeder/items/"+x["name"]+".png"))
+
+        self.text = ''
+        self.description = shopText((1100,300),self.text,30)
+        
 
     def transactions(self, mouse_pos):
         if self.storage_button.activated:
@@ -102,13 +107,13 @@ class Shop:
 
 
     def render(self):
-           
         self.screen.blit(self.shop_img, self.shop_img_rect)
         for i in range(len(self.button_grid)): 
             self.button_grid[i].render(self.screen)
         self.input_buy_rats.render(self.screen)
         self.input_sell_rats.render(self.screen)
         self.storage_button.render(self.screen)
+        self.description.render(self.screen)
 
     def mouse_down_events(self, mouse_pos):
         self.input_buy_rats.update(mouse_pos)
@@ -127,3 +132,9 @@ class Shop:
         self.input_buy_rats.input_control(event)
         self.input_sell_rats.input_control(event)
 
+    def hover_events(self, pos):
+        for i in range(len(self.button_grid)): 
+            if self.button_grid[i].hover_check(pos):
+                if self.description != self.items[i]["description"]:
+                    self.description.update(self.items[i]["description"])
+               

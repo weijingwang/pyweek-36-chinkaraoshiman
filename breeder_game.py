@@ -241,6 +241,7 @@ class BreederGame:
                     if event.key == pygame.K_RIGHT:
                         self.movement[1] = False
             if self.state == 'shop':
+                self.breeder_shop.hover_events(self.mouse_pos)
                 self.breeder_shop.state_events(event)
 
         #draw static background if not main
@@ -276,4 +277,4 @@ class BreederGame:
         self.cursor_img_rect.center = pygame.mouse.get_pos()  # update position 
         self.screen.blit(self.cursor_img, self.cursor_img_rect) # draw the cursor
 
-
+        
