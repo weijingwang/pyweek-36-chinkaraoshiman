@@ -23,13 +23,13 @@ class Shop:
         self.storage_button = itemButton(1280/2,200,"buy storage $"+str(self.STORAGE_PRICE), True, "breeder/items/Storage.png",260,100)
         self.items = [
             {"name": "Food", "price": 5, "pos": (320,330), "owned": False, "description": "temporarily satiate rat hunger", "repurchasable": True},
-            {"name": "AutoFeeder", "price": 5000, "pos": (320,400), "owned": False, "description": "rats never go hungry", "repurchasable": False},
-            {"name": "Medicine", "price": 5, "pos": (320,470), "owned": False, "description": "cure rats", "repurchasable": True},
-            {"name": "Doctor", "price": 5000, "pos": (320,540), "owned": False, "description": "rats never sick", "repurchasable": False},
+            {"name": "AutoFeeder", "price": 5000, "pos": (320,400), "owned": False, "description": "auto food buyer", "repurchasable": False},
+            {"name": "Medicine", "price": 5, "pos": (320,470), "owned": False, "description": "cure rats' sickness", "repurchasable": True},
+            {"name": "Doctor", "price": 5000, "pos": (320,540), "owned": False, "description": "HIRE: auto cure rats", "repurchasable": False},
             {"name": "Petter", "price": 500, "pos": (620,330), "owned": False, "description": "slightly increase rat breeding chance when clicking on them", "repurchasable": False},
             {"name": "Tempter", "price": 5000, "pos": (620,400), "owned": False, "description": "greatly increase rat breeding chance when clicking on them", "repurchasable": False},
-            {"name": "Scarecrow", "price": 500, "pos": (620,470), "owned": False, "description": "decrease crow attack rate", "repurchasable": False},
-            {"name": "CrowDestroyer", "price": 5000, "pos": (620,540), "owned": False, "description": "crows do not kill rats", "repurchasable": False}
+            {"name": "Scarecrow", "price": 500, "pos": (620,470), "owned": False, "description": "maybe scare crows away", "repurchasable": False},
+            {"name": "CrowDestroyer", "price": 5000, "pos": (620,540), "owned": False, "description": "eliminate all crows", "repurchasable": False}
         ]
         
         self.button_grid = []
