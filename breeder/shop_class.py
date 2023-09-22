@@ -4,6 +4,8 @@ from button import textInput, itemButton
 
 class Shop:
     def __init__(self, game, screen):
+        self.error = pygame.mixer.Sound("data/sounds/error.ogg")
+        self.error.set_volume(0.1)
         self.STORAGE_PRICE = 10
         self.RAT_PRICE = 1
         self.game = game
@@ -37,6 +39,8 @@ class Shop:
 
             print("$ spend: ",self.STORAGE_PRICE,"money left: ",self.game.money,"new upper cap: ",self.game.ratGrowth.upper_cap)
             self.STORAGE_PRICE *= 2
+        elif self.storage_button.activated and self.game.money < self.STORAGE_PRICE:
+            self.error.play()
 
         if self.input_sell_rats.active and self.input_sell_rats.user_text != '' and self.game.ratGrowth.rat_count >= int(self.input_sell_rats.user_text): #self.input_sell_rats.execute_order and 
             self.game.ratGrowth.rat_count -= int(self.input_sell_rats.user_text)
@@ -51,6 +55,7 @@ class Shop:
                 self.game.money -= int(self.RAT_PRICE)
                 print("bought", self.input_buy_rats.user_text,"rats for $"+str(int(self.RAT_PRICE)))
                 print("current balance: ", self.game.money)
+
 
 
     def render(self):

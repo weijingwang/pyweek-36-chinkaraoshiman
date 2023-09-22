@@ -17,7 +17,7 @@ class BreederGame:
         self.money = 100
         self.rat_data = [0,0,0,0,0,0,0,0,0,0]
 
-        self.state = 'main'
+        self.state = 'shop'
 
         # pygame.mixer.music.load("data/music/breeder.mp3")
         # pygame.mixer.music.play(-1)
