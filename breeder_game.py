@@ -207,14 +207,37 @@ class BreederGame:
 
 
         #rat math RENDERING!!!!!
-        if len(self.rats)<self.rat_render_limit or (len(self.rats)+self.ratGrowth.next_increase)<self.rat_render_limit:
-            # if len(self.rats)+self.ratGrowth.next_increase <self.rat_render_limit:
-            if int(self.ratGrowth.rat_count) > len(self.rats):
-                for x in range(int(self.ratGrowth.rat_count)-len(self.rats)):
-                    self.rats.append(Rat(self))
-            elif int(self.ratGrowth.rat_count) < len(self.rats):
-                for x in range(len(self.rats)-int(self.ratGrowth.rat_count)+self.rat_render_limit):
-                    self.rats.pop()   
+
+        # if too many rats
+            #dont add
+        # if can add rats
+            #only append up to limit
+        #decrease anyways unless its less than zero
+
+
+        #increase part
+        # print(str(len(self.rats))+"before")
+
+        if int(self.ratGrowth.rat_count) > len(self.rats):
+            #if rat count is greater than rendered rats you wanna increase the rendered rats
+            if len(self.rats) >= self.rat_render_limit: #if reach render limit
+                pass
+                #count is greater than render limit so rats are just render limit
+            if len(self.rats) < self.rat_render_limit:
+                #if can increase
+                for x in range(self.rat_render_limit-len(self.rats)):
+                    self.rats.append(Rat(self)) 
+            # elif self.ratGrowth.rat_count < self.rat_render_limit:
+            #     #count is always less than render limit
+            #     for x in range(self.rat_render_limit-int(self.ratGrowth.rat_count)):
+            #         self.rats.append(Rat(self)) 
+        #decrease part
+        elif int(self.ratGrowth.rat_count) < len(self.rats):
+            #here rat count is less than rat list so you want to remove list items
+            # print(str(len(self.rats))+"after")
+            if len(self.rats) > 0:
+                for x in range(len(self.rats)-int(self.ratGrowth.rat_count)):
+                    self.rats.pop()
 
 
         for event in pygame.event.get():
