@@ -35,7 +35,7 @@ class Shop:
         for x in self.items:
             self.button_grid.append(itemButton(x["pos"][0], x["pos"][1], x["name"], x["repurchasable"]))
 
-    def transactions(self):
+    def transactions(self, mouse_pos):
         if self.storage_button.activated:
             if self.game.money >= self.STORAGE_PRICE:
                 self.game.money -= self.STORAGE_PRICE
@@ -70,6 +70,26 @@ class Shop:
                 else: self.error.play()
             else: self.error.play()
 
+        for i in range(len(self.button_grid)): 
+            self.button_grid[i].update(mouse_pos)#, self.items[i]["owned"]
+            if self.button_grid[i].activated:
+                if int(self.items[i]["price"]) <= self.game.money:
+                    self.game.money -= int(self.items[i]["price"])
+                    if not self.items[i]["repurchasable"]:
+                        if not self.items[i]["owned"]:
+                            self.buy.play()
+                            self.items[i]["owned"] = True
+                    else:
+                        self.buy.play()
+                        if self.items[i]["name"] == 'food':
+                            print('+1 food')
+                        elif self.items[i]["name"] == 'medicine':
+                            print('+1 medicine')
+                else:
+                    self.error.play
+                
+                print(self.items[i]["name"],self.items[i]["owned"],self.items[i]["repurchasable"])
+
 
     def render(self):
            
@@ -84,13 +104,8 @@ class Shop:
         self.input_buy_rats.update(mouse_pos)
         self.input_sell_rats.update(mouse_pos)
         self.storage_button.update(mouse_pos)
-        for i in range(len(self.button_grid)): 
-            self.button_grid[i].update(mouse_pos)#, self.items[i]["owned"]
-                
-            if self.button_grid[i].activated and not self.items[i]["repurchasable"]:
-                self.items[i]["owned"] = True
-                # print(self.items[i]["name"],self.items[i]["owned"],self.items[i]["repurchasable"])
-        self.transactions()
+        self.transactions(mouse_pos)
+
     def mouse_up_events(self):
         self.storage_button.update_keyup()
         self.input_sell_rats.update_keyup()
