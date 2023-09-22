@@ -8,4 +8,4 @@ a = Obj()
 b = Obj()
 c = Obj()
 
-print(a.x, b.x, c.x)
+print(a.x, b.x, c.x) 
