@@ -17,7 +17,7 @@ class BreederGame:
         self.rat_cage_rect = pygame.Rect(10, 550, 760, 100)
 
         self.FPS = 60
-        self.money = 100000000
+        self.money = 10000000000000000000000000
         self.food = 0
         self.medicine = 0
         self.rat_data = [0,0,0,0,0,0,0,0,0,0]
@@ -69,10 +69,11 @@ class BreederGame:
 
         self.rats = []
         self.rat_render_limit = 150
+        if len(self.rats)<=self.rat_render_limit:
+            if len(self.rats)+self.ratGrowth.next_increase <=self.rat_render_limit:
 
-        for x in range(self.ratGrowth.rat_count):
-            if len(self.rats)<=self.rat_render_limit:
-                self.rats.append(Rat(self))
+                for x in range(self.ratGrowth.rat_count):
+                    self.rats.append(Rat(self))
 
         self.shop_button = Button(50, 200, 80, 80, 'white', 'black', 'SHOP')
         self.options_button = Button(50, 320, 80, 80, 'white', 'black', 'OPTS')
@@ -205,13 +206,15 @@ class BreederGame:
         self.crow.animate_update()
 
 
-        #rat math
-        if int(self.ratGrowth.rat_count) > len(self.rats) and len(self.rats)<=self.rat_render_limit:
-            for x in range(int(self.ratGrowth.rat_count)-len(self.rats)):
-                self.rats.append(Rat(self))
-        elif int(self.ratGrowth.rat_count) < len(self.rats):
-            for x in range(len(self.rats)-int(self.ratGrowth.rat_count)):
-                self.rats.pop()   
+        #rat math RENDERING!!!!!
+        if len(self.rats)<self.rat_render_limit or (len(self.rats)+self.ratGrowth.next_increase)<self.rat_render_limit:
+            # if len(self.rats)+self.ratGrowth.next_increase <self.rat_render_limit:
+            if int(self.ratGrowth.rat_count) > len(self.rats):
+                for x in range(int(self.ratGrowth.rat_count)-len(self.rats)):
+                    self.rats.append(Rat(self))
+            elif int(self.ratGrowth.rat_count) < len(self.rats):
+                for x in range(len(self.rats)-int(self.ratGrowth.rat_count)+self.rat_render_limit):
+                    self.rats.pop()   
 
 
         for event in pygame.event.get():
@@ -293,3 +296,4 @@ class BreederGame:
         self.cursor_img_rect.center = pygame.mouse.get_pos()  # update position 
         self.screen.blit(self.cursor_img, self.cursor_img_rect) # draw the cursor
 
+        print(self.ratGrowth.rat_count, len(self.rats))

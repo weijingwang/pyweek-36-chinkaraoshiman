@@ -50,7 +50,8 @@ class BreederCalculations:
                 self.next_increase = self.upper_cap - self.rat_count
 
     def update(self):
-        print(self.game.food, self.game.medicine)
+        self.rat_count = int(self.rat_count)
+        # print(self.game.food, self.game.medicine)
         self.auto_feeder()
         self.doctor()
         self.get_hungry()
@@ -68,7 +69,7 @@ class BreederCalculations:
             self.crow_eat_rat()
         elif self.rat_count < self.lower_cap:
             self.rat_count = 0
-        self.rat_count += self.next_increase
+        self.rat_count += int(self.next_increase)
         self.manage_rat_data(self.game.rat_data, self.rat_count)
     
     def manage_rat_data(self, data_list, x):

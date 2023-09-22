@@ -48,6 +48,7 @@ class Shop:
                 self.buy.play()
                 print("$ spend: ",self.STORAGE_PRICE,"money left: ",self.game.money,"new upper cap: ",self.game.ratGrowth.upper_cap)
                 self.STORAGE_PRICE *= 2
+                self.game.ratGrowth.upper_cap = int(self.game.ratGrowth.upper_cap*1.5)
                 self.storage_button.change_text("buy storage $"+str(self.STORAGE_PRICE))
             else: self.error.play()
         if self.input_sell_rats.active:
