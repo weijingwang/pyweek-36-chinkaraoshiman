@@ -34,6 +34,12 @@ class BreederGame:
         self.close_button = utils.load_image("breeder/close_button.png")
         self.overlay = utils.load_image("breeder/overlay.png")
         self.tiger = utils.load_image("breeder/tiger.png")
+        self.autofeeder_img = utils.load_image("breeder/items/Autofeeder.png")
+        self.autofeeder_img = pygame.transform.scale(self.autofeeder_img, (500,500))
+
+        self.crow_destroyer_img = utils.load_image("breeder/items/CrowDestroyer.png")
+        self.doctor_img = utils.load_image("breeder/items/Doctor_copy.png")
+
         # self.tiger = pygame.transform.scale(self.tiger, (1000,400))
 
         #MAIN-----------------------------
@@ -110,9 +116,16 @@ class BreederGame:
         self.screen.blit(self.bg, (0, 0))
 
 
-        if self.breeder_shop.items[6]["owned"]:
-            self.screen.blit(self.tiger, (0,0))
 
+        if self.breeder_shop.items[3]["owned"]:#doctor
+            self.screen.blit(self.doctor_img, (0,0))
+        if self.breeder_shop.items[6]["owned"]:#scarecrow
+            self.screen.blit(self.tiger, (0,0))
+        if self.breeder_shop.items[7]["owned"]:#crow destroyer
+            self.screen.blit(self.crow_destroyer_img, (0,0))
+        if self.breeder_shop.items[1]["owned"]:#autofeeder
+            self.screen.blit(self.autofeeder_img, (250,0))
+            
         self.screen.blit(self.cage1, (-50,350))
         self.screen.blit(self.cage3, (-50,350))
 
