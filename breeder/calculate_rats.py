@@ -34,7 +34,7 @@ class BreederCalculations:
                 self.next_increase = self.upper_cap - self.rat_count
 
     def update(self):
-
+        self.rat_seller()
         # if self.timer == 60:
         # print(int(self.rat_count), self.next_increase,)
         
@@ -69,7 +69,16 @@ class BreederCalculations:
 
     def manual_breeding():
         pass
-    
+
+    def rat_seller(self):
+        #every cycle in that timed loop in breeder game
+        #constantly converts 10% of all rats to money
+        # if self.game.breeder_shop.items[6]["owned"]:
+        self.game.money += self.rat_count * 0.1 * self.game.breeder_shop.RAT_PRICE
+        self.rat_count -= self.rat_count * 0.1
+        
+
+
     #these status conditions update every few cycles like crow
     # def get_sick(self):
     #     pass

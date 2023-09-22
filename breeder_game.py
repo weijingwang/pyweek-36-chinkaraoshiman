@@ -152,6 +152,7 @@ class BreederGame:
             self.click.play()
 
     def update(self):
+        #TIMER CYCLE TICKS WHATEVER YOU CALL IT
         self.timer += 1
         self.one_cycle_counter += 1
         if self.one_cycle_counter >= self.FPS:
