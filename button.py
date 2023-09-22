@@ -39,7 +39,7 @@ class Button:
 
 
 class itemButton:
-    def __init__(self, x, y, content, repurchasable, width=260, height=50, icon_path = "breeder/items/Food.png"):
+    def __init__(self, x, y, content, repurchasable, icon_path = "breeder/items/Food.png", width=260, height=50):
         """self, x, y, content, repurchase), icon_path"""
         self.font = pygame.font.SysFont(None, 40)
         self.content = content
@@ -51,13 +51,14 @@ class itemButton:
         self.width = width
         self.height = height
 
+
         self.activated = False
         if self.activated:
-            self.fg = "black"
-            self.bg = "green"
+            self.fg = (185,220,178)
+            self.bg = (94,142,40)
         else:
-            self.fg = "white"
-            self.bg = "black"
+            self.fg = (191, 192, 220)#(132, 136, 169)
+            self.bg = (33,33,33)
 
         self.image = pygame.Surface((self.width, self.height)) 
         self.image.fill(self.bg)
@@ -66,6 +67,7 @@ class itemButton:
         self.rect.center = (self.x, self.y)
 
         self.icon = utils.load_image(self.icon_path)
+        self.icon = pygame.transform.scale(self.icon, (50,50))
         self.icon_rect = self.icon.get_rect(center = (self.width/2, self.height/2))
 
 
@@ -78,28 +80,27 @@ class itemButton:
             self.activated = True
 
         if self.activated:
-            self.fg = "black"
-            self.bg = "green"
+            self.fg = (185,220,178)
+            self.bg = (94,142,40)
         else:
-            self.fg = "white"
-            self.bg = "black"
+            self.fg = (191, 192, 220)#(132, 136, 169)
+            self.bg = (33,33,33)
 
     def update_keyup(self):
         if self.repurchasable:
             self.activated = False
             if self.activated:
-                self.fg = "black"
-                self.bg = "green"
+                self.fg = (185,220,178)
+                self.bg = (94,142,40)
             else:
-                self.fg = "white"
-                self.bg = "black"
+                self.fg = (191, 192, 220)#(132, 136, 169)
+                self.bg = (33,33,33)
         if self.activated:
-            self.fg = "black"
-            self.bg = "green"
+            self.fg = (185,220,178)
+            self.bg = (94,142,40)
         else:
-            self.fg = "white"
-            self.bg = "black"
-                
+            self.fg = (191, 192, 220)#(132, 136, 169)
+            self.bg = (33,33,33)
     def render(self, surface):
 
         self.image.fill(self.bg)
