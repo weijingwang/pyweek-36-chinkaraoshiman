@@ -79,23 +79,24 @@ class Crow:
     def update_states(self):
         #update this every so many cylces
         # print(self.state)
-        if self.game.breeder_shop.items[7]["owned"]:
-            self.state == 'wait'
-        else:
-            if self.game.breeder_shop.items[6]["owned"]:
-                self.MAX_WAIT = 10
-            # print(self.MAX_WAIT)
-            if not self.moving:
-                if self.state == 'wait' and self.wait_timer < self.wait_time:
-                    self.wait_timer += 1
-                    if self.wait_timer >= self.wait_time:
-                        self.cry.play()
-                        self.state = 'taunt'
-                        self.moving = True
-                        self.wait_timer = 0
-                        self.wait_time = randrange(1,self.MAX_WAIT)
-                elif self.state == 'taunt':
-                    if getrandbits(1): self.state = 'attack'
+        if self.game.ratGrowth.rat_count >0:
+            if self.game.breeder_shop.items[7]["owned"]:
+                self.state == 'wait'
+            else:
+                if self.game.breeder_shop.items[6]["owned"]:
+                    self.MAX_WAIT = 10
+                # print(self.MAX_WAIT)
+                if not self.moving:
+                    if self.state == 'wait' and self.wait_timer < self.wait_time:
+                        self.wait_timer += 1
+                        if self.wait_timer >= self.wait_time:
+                            self.cry.play()
+                            self.state = 'taunt'
+                            self.moving = True
+                            self.wait_timer = 0
+                            self.wait_time = randrange(1,self.MAX_WAIT)
+                    elif self.state == 'taunt':
+                        if getrandbits(1): self.state = 'attack'
 
 
 

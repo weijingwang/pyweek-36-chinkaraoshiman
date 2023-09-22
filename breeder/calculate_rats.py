@@ -52,15 +52,15 @@ class BreederCalculations:
                 self.next_increase = self.upper_cap - self.rat_count
 
     def update(self):
-        self.rat_count = self.rat_count
         # print(self.game.food, self.game.medicine)
         if self.game.breeder_shop.items[1]["owned"]:
             self.auto_feeder()
         if self.game.breeder_shop.items[3]["owned"]:
             self.doctor()
-        self.get_hungry()
-        self.get_sick()
-        self.rat_seller()
+        if self.rat_count > 0:
+            self.get_hungry()
+            self.get_sick()
+            self.rat_seller()
         # if self.timer == 60:
         # print(int(self.rat_count), self.next_increase,)
         
@@ -75,6 +75,7 @@ class BreederCalculations:
             self.rat_count = 0
         self.rat_count += self.next_increase
         self.manage_rat_data(self.game.rat_data, self.rat_count)
+        self.rat_count = int(self.rat_count)
     
     def manage_rat_data(self, data_list, x):
         if len(data_list) < 10:
