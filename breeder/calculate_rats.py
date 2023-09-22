@@ -43,6 +43,7 @@ class BreederCalculations:
             self.crow_eat_rat()
             self.calculate_next_change()
         elif self.rat_count == 1:
+            self.next_increase = 0
             self.crow_eat_rat()
         elif self.rat_count < self.lower_cap:
             self.rat_count = 0

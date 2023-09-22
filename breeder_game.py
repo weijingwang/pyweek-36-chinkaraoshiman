@@ -107,7 +107,9 @@ class BreederGame:
         self.player.render()
         self.screen.blit(self.bg, (0, 0))
 
-        self.screen.blit(self.tiger, (0,0))
+
+        if self.breeder_shop.items[6]["owned"]:
+            self.screen.blit(self.tiger, (0,0))
 
         self.screen.blit(self.cage1, (-50,350))
         self.screen.blit(self.cage3, (-50,350))
