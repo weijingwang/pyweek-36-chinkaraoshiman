@@ -15,6 +15,7 @@ class BreederGame:
     def __init__(self, screen):
         self.FPS = 60
         self.money = 100000000
+        self.food = 0
         self.rat_data = [0,0,0,0,0,0,0,0,0,0]
 
         self.state = 'shop'

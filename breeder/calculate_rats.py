@@ -1,5 +1,8 @@
 from random import getrandbits
 import matplotlib.pyplot as plt
+from random import getrandbits, uniform, choice, randrange
+
+
 
 class BreederCalculations:
     #every second the rat status will update according to this code
@@ -12,6 +15,11 @@ class BreederCalculations:
         self.next_increase = 0
 
         self.spawn_crow = False
+
+        self.MIN_HUNGER_TIME = 10
+        self.MAX_HUNGER_TIME = 20
+        self.hunger_time = randrange(self.MIN_HUNGER_TIME,self.MAX_HUNGER_TIME)
+        self.hunger_timer = 0
 
         #every turn, healhy status decreases if no food or bad conditions
         #flucuate randomly
@@ -34,6 +42,7 @@ class BreederCalculations:
                 self.next_increase = self.upper_cap - self.rat_count
 
     def update(self):
+        self.get_hungry()
         self.rat_seller()
         # if self.timer == 60:
         # print(int(self.rat_count), self.next_increase,)
@@ -82,7 +91,15 @@ class BreederCalculations:
     #these status conditions update every few cycles like crow
     # def get_sick(self):
     #     pass
-    # def get_hungry(self):
-    #     if self.food:
-            
-    #     pass
+    def get_hungry(self):
+        self.hunger_timer += 1
+        if self.hunger_timer >= self.hunger_time:
+            print(self.game.food)
+            if self.game.food < 1:
+                self.rat_count = self.rat_count*0.9
+                print('HUNGRY')
+            else:
+                print('ate')
+                self.game.food -= 1
+                self.hunger_timer = 0
+                self.hunger_time = randrange(self.MIN_HUNGER_TIME,self.MAX_HUNGER_TIME)
