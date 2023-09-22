@@ -22,13 +22,13 @@ class Shop:
         self.storage_button = itemButton(1280/2,200,"buy storage", True, 260,100)
         self.items = [
             {"name": "Food", "price": 5, "pos": (320,330), "owned": False, "description": "temporarily satiate rat hunger", "repurchasable": True},
-            {"name": "Auto-feeder", "price": 5, "pos": (320,400), "owned": False, "description": "rats never go hungry", "repurchasable": False},
+            {"name": "Auto-feeder", "price": 5000, "pos": (320,400), "owned": False, "description": "rats never go hungry", "repurchasable": False},
             {"name": "Medicine", "price": 5, "pos": (320,470), "owned": False, "description": "cure rats", "repurchasable": True},
-            {"name": "Doctor", "price": 5, "pos": (320,540), "owned": False, "description": "rats never sick", "repurchasable": False},
-            {"name": "Tempting hand", "price": 5, "pos": (620,330), "owned": False, "description": "slightly increase rat breeding chance when clicking on them", "repurchasable": False},
-            {"name": "Skillful hand", "price": 5, "pos": (620,400), "owned": False, "description": "greatly increase rat breeding chance when clicking on them", "repurchasable": False},
-            {"name": "Scarecrow", "price": 5, "pos": (620,470), "owned": False, "description": "decrease crow attack rate", "repurchasable": False},
-            {"name": "Crow destroyer", "price": 5, "pos": (620,540), "owned": False, "description": "crows do not kill rats", "repurchasable": False}
+            {"name": "Doctor", "price": 5000, "pos": (320,540), "owned": False, "description": "rats never sick", "repurchasable": False},
+            {"name": "Tempting hand", "price": 500, "pos": (620,330), "owned": False, "description": "slightly increase rat breeding chance when clicking on them", "repurchasable": False},
+            {"name": "Skillful hand", "price": 5000, "pos": (620,400), "owned": False, "description": "greatly increase rat breeding chance when clicking on them", "repurchasable": False},
+            {"name": "Scarecrow", "price": 500, "pos": (620,470), "owned": False, "description": "decrease crow attack rate", "repurchasable": False},
+            {"name": "Crow destroyer", "price": 5000, "pos": (620,540), "owned": False, "description": "crows do not kill rats", "repurchasable": False}
         ]
         
         self.button_grid = []
@@ -45,7 +45,6 @@ class Shop:
                 self.STORAGE_PRICE *= 2
         # elif self.storage_button.activated and self.game.money < self.STORAGE_PRICE:
             else: self.error.play()
-
         if self.input_sell_rats.active:
             print('')
             if self.input_sell_rats.user_text != '':
@@ -57,7 +56,6 @@ class Shop:
                     print("sold", self.input_sell_rats.user_text,"rats for $"+str(int(self.RAT_PRICE * 0.7)))
                     print("current balance: ", self.game.money)
                 else: self.error.play()
-
         if self.input_buy_rats.active and self.input_buy_rats.user_text != '':
             if self.game.money >= (self.RAT_PRICE * int(self.input_buy_rats.user_text)):
                 if (int(self.input_buy_rats.user_text)+self.game.ratGrowth.rat_count) <= self.game.ratGrowth.upper_cap:
@@ -86,7 +84,9 @@ class Shop:
                         elif self.items[i]["name"] == 'medicine':
                             print('+1 medicine')
                 else:
-                    self.error.play
+                    self.error.play()
+                    self.button_grid[i].activated = False
+                    # self.button_grid[i].update_keyup()
                 
                 print(self.items[i]["name"],self.items[i]["owned"],self.items[i]["repurchasable"])
 

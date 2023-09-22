@@ -88,6 +88,12 @@ class itemButton:
             else:
                 self.fg = "white"
                 self.bg = "black"
+        if self.activated:
+            self.fg = "black"
+            self.bg = "green"
+        else:
+            self.fg = "white"
+            self.bg = "black"
                 
     def render(self, surface):
 
