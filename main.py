@@ -10,7 +10,7 @@ from ending_cutscene import endAnime
 class Game:
     def __init__(self):
         pygame.init()
-        self.state = 'title'
+        self.state = 'platformer'
         pygame.mixer.stop()
         pygame.mixer.music.load("data/music/wolfBGM.ogg")
         pygame.mixer.music.play(-1)
@@ -21,7 +21,6 @@ class Game:
         self.FPS = 60
         self.mouse_pos = pygame.mouse.get_pos()
 
-        self.state = 'platformer'
 
 
         self.my_title = Title(self, self.screen)
