@@ -18,6 +18,20 @@ class Game:
         self.clock = pygame.time.Clock()
         
         self.assets = {
+            'player': pygame.transform.scale(load_image('platformer/player.png'), (16,30)),
+            'checkpoint': pygame.transform.scale(load_image('platformer/checkpoint.png', (0,0,1)), (32,32)),
+            'rat': load_image('platformer/rat.png'),
+            'brick1': load_image('platformer/brick1.png'),
+            'brick2': load_image('platformer/brick2.png'),
+            'brick3': load_image('platformer/brick3.png'),
+            'brick4': load_image('platformer/brick4.png'),
+            'brick5': load_image('platformer/brick5.png'),
+            'dogfood': load_image('platformer/dogfood.png'),
+            'potion': load_image('platformer/potion.png'),
+            'tree': pygame.transform.scale(load_image('platformer/tree.png'), (64, 128)),
+            'tree2': pygame.transform.scale(load_image('platformer/tree2.png'), (64, 128)),
+            'house': load_image('platformer/house.png'),
+            'fence': load_image('platformer/fence.png')
             'player': pygame.transform.scale(load_image_platformer('platformer/player.png'), (16,30)),
             'checkpoint': pygame.transform.scale(load_image_platformer('platformer/checkpoint.png', (0,0,1)), (32,32)),
             'rat': load_image_platformer('platformer/rat.png'),
@@ -65,13 +79,14 @@ class Game:
         continue_text = pygame.font.SysFont('Consolas', 32).render('Press F to continue.', True, pygame.color.Color('White'))
         pickup_item_text1 = pygame.font.SysFont('Consolas', 32).render('You picked up an item!', True, pygame.color.Color('White'))
 
-        while not (self.pickup_rat ^ self.pickup_item):
-            self.display.blit(self.bg, (0, 0))
-            #self.display.blit("dark filter", (0,0))
-            
-            self.scroll[0] += (self.player.rect().centerx - self.display.get_width() / 2 - self.scroll[0]) / 20
-            self.scroll[1] += (self.player.rect().centery - self.display.get_height() / 2 - self.scroll[1]) / 20
-            camera = (int(self.scroll[0]), int(self.scroll[1]))
+        while True:
+            while not (self.pickup_rat ^ self.pickup_item):
+                self.display.blit(self.bg, (0, 0))
+                self.display.blit(self.black_filter, (0,0))
+                
+                self.scroll[0] += (self.player.rect().centerx - self.display.get_width() / 2 - self.scroll[0]) / 20
+                self.scroll[1] += (self.player.rect().centery - self.display.get_height() / 2 - self.scroll[1]) / 20
+                camera = (int(self.scroll[0]), int(self.scroll[1]))
 
             # define map tiles and mobs here
             # tiles: in Tilemap
