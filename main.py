@@ -10,7 +10,8 @@ from ending_cutscene import endAnime
 class Game:
     def __init__(self):
         pygame.init()
-        # pygame.mixer.music.load("data/music/world-end.ogg")        
+        self.state = 'title'
+        pygame.mixer.stop()
         pygame.mixer.music.load("data/music/wolfBGM.ogg")
         pygame.mixer.music.play(-1)
         pygame.display.set_caption("pyweek36")
@@ -20,7 +21,7 @@ class Game:
         self.FPS = 60
         self.mouse_pos = pygame.mouse.get_pos()
 
-        self.state = 'title'
+
 
         self.my_title = Title(self, self.screen)
         self.breeder = BreederGame(self.screen)
@@ -36,14 +37,14 @@ class Game:
         self.ending_text = ('','','','','')
         self.ending_imgs = (
             utils.load_image("ending/DarkMatter1.jpg"),
-            utils.load_image("ending/DarkMatter2.png"),
+            utils.load_image("ending/DarkMatter2.jpg"),
             utils.load_image("ending/DarkMatter3.png"),
             utils.load_image("ending/DarkMatter2.png"),
             utils.load_image("ending/DarkMatter1.jpg")
         )
         self.ending_imgs2 = (
             utils.load_image("ending/DarkMatter1.jpg"),
-            utils.load_image("ending/DarkMatter2.png"),
+            utils.load_image("ending/DarkMatter2.jpg"),
             utils.load_image("ending/DarkMatter3.png"),
             utils.load_image("ending/DarkMatter2.png"),
             utils.load_image("ending/DarkMatter1.jpg")
