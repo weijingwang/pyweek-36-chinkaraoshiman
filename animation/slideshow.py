@@ -36,7 +36,7 @@ class Slideshow(object):
             # print('normal one')
         # self.most_bottom_image = self.images[self.index+1] #prevent glitchy flashing effect DIDNT WORK
         #crossfade
-        self.wait_seconds = 1
+        self.wait_seconds = 2
         self.wait_clock_cycles = 60 * self.wait_seconds
         self.clock_cycles = 0
         self.fade_speed = 3
