@@ -33,7 +33,9 @@ class Tilemap:
             self.tilemap[str(7+i) + ',6'] = {'type': 'brick4', 'pos': (7+i, 6)}
         self.tilemap['0,10'] = {'type': 'checkpoint', 'pos': (0,10)} 
 
-        self.tilemap['10,4'] = {'type': 'house', 'pos': (10,4)} 
+        self.tilemap['10,4'] = {'type': 'house', 'pos': (10,4)}
+        self.tilemap['12,5'] = {'type': 'fence', 'pos': (12,5)} 
+        self.tilemap['13,5'] = {'type': 'fence', 'pos': (13,5)} 
 
         for i in range(-30, 5):
             self.tilemap[str(i) + ',6'] = {'type': 'brick4', 'pos': (i, 6)}

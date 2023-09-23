@@ -32,7 +32,8 @@ class Game:
             'potion': load_image('platformer/potion.png'),
             'tree': pygame.transform.scale(load_image('platformer/tree.png'), (64, 128)),
             'tree2': pygame.transform.scale(load_image('platformer/tree2.png'), (64, 128)),
-            'house': load_image('platformer/house.png', (0,0,1))
+            'house': load_image('platformer/house.png'),
+            'fence': load_image('platformer/fence.png')
         }
 
         self.black_filter = load_image('black_filter.png')
@@ -65,7 +66,7 @@ class Game:
         while True:
             while not (self.pickup_rat ^ self.pickup_item):
                 self.display.blit(self.bg, (0, 0))
-                #self.display.blit("dark filter", (0,0))
+                self.display.blit(self.black_filter, (0,0))
                 
                 self.scroll[0] += (self.player.rect().centerx - self.display.get_width() / 2 - self.scroll[0]) / 20
                 self.scroll[1] += (self.player.rect().centery - self.display.get_height() / 2 - self.scroll[1]) / 20
