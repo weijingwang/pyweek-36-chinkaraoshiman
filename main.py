@@ -9,7 +9,7 @@ from ending_cutscene import endAnime, Animation, stillImage
 
 class Game:
     def __init__(self):
-        self.rat_count_to_win = 500
+        self.rat_count_to_win = 8000000000
         pygame.init()
         self.state = 'title'
         pygame.mixer.stop()
