@@ -34,6 +34,8 @@ class Game:
             'tree2': pygame.transform.scale(load_image('platformer/tree2.png'), (64, 128)),
             'house': load_image('platformer/house.png', (0,0,1))
         }
+
+        self.black_filter = load_image('black_filter.png')
     
         self.tilemap = Tilemap(self, tile_size=32)
         
