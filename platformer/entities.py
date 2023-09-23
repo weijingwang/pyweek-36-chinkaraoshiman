@@ -67,16 +67,6 @@ class Player(Object):
                 if self.rect().colliderect(pygame.Rect(tile['pos'][0] * tile_size - 1, tile['pos'][1] * tile_size - 1, tile_size + 2, tile_size + 2)):
                     return True
         return False
-    
-    def touching_rat(self):
-        tilemap = self.game.tilemap
-        tile_size = tilemap.tile_size
-
-        for tile in tilemap.tiles_around(self.pos):
-            if (tile['type'] == 'rat'):
-                if self.rect().colliderect(pygame.Rect(tile['pos'][0] * tile_size - 1, tile['pos'][1] * tile_size - 1, tile_size + 2, tile_size + 2)):
-                    return True
-        return False
         
 
 """
@@ -90,10 +80,12 @@ class Item(Object):
         super().__init__(game, item_type, pos, size)
 
     def update(self):
+        if self.touching_player():
+            self.game.items.remove(self)
+        
         if not self.on_ground:
             self.ground_collision = False
 
-            # only x movement should be random, y should be 0 as it doesn't jump.
             gravity = self.vel[1]
             
             tilemap = self.game.tilemap
@@ -112,6 +104,9 @@ class Item(Object):
                 self.vel[1] = 0
                 self.on_ground = True
 
+    def touching_player(self):
+        return self.rect().colliderect(self.game.player.rect())
+
     
 
 class Rat(Object):
@@ -123,8 +118,6 @@ class Rat(Object):
     def update(self):
         if self.touching_player():
             self.game.rats.remove(self)
-        textbox = CounterText()
-        textbox.render("rat rat", self.game.display, 100, 100)
         
         self.collisions = {'up': False, 'down': False, 'left': False, 'right': False}
 
