@@ -36,7 +36,7 @@ class Slideshow(object):
             # print('normal one')
         # self.most_bottom_image = self.images[self.index+1] #prevent glitchy flashing effect DIDNT WORK
         #crossfade
-        self.wait_seconds = 0.000000003
+        self.wait_seconds = 1
         self.wait_clock_cycles = 60 * self.wait_seconds
         self.clock_cycles = 0
         self.fade_speed = 3
@@ -56,6 +56,7 @@ class Slideshow(object):
             self.kill_on_release = True
         elif self.kill_on_release == True and not keys[pygame.K_SPACE]:
             self.stop = True
+            pygame.quit()
 
     def crossfade(self):
         # print(self.clock_cycles)
@@ -77,28 +78,33 @@ class Slideshow(object):
         #so only second image show
         #then, update first image to second image
         #update original second image to next image
-        if self.fade_done and self.index < len(self.images)-1: 
-            self.image.set_alpha(self.alph) 
-            self.flip = True
-            self.index += 1
-            # print(self.index)
-            self.image = self.images[self.index]
-            self.bg_image = self.bg_images[self.index]
-            #if at last image, the second image in this case will be a blank
-            if self.index == len(self.images)-1: self.bottom_image = self.blank_image
-            else: self.bottom_image = self.images[self.index+1]
-            self.currentText.update(self.texts[self.index])#CHANGE THE TEXT
-            self.fade_done = False
+        if self.fade_done:
+            if self.index < len(self.images)-1: 
+                self.image.set_alpha(self.alph) 
+                self.flip = True
+                self.index += 1
+                # print(self.index)
+                self.image = self.images[self.index]
+                self.bg_image = self.bg_images[self.index]
+                #if at last image, the second image in this case will be a blank
+                if self.index == len(self.images)-1: self.bottom_image = self.blank_image
+                else: self.bottom_image = self.images[self.index+1]
+                self.currentText.update(self.texts[self.index])#CHANGE THE TEXT
+                self.fade_done = False
         
         #after the last image, the slideshow ends
-        if self.index == len(self.images)-1 and self.fade_done: self.stop = True
-        # print(self.stop)
+            else: 
+                self.image.set_alpha(self.alph)
+                self.stop = True
+                # self.game.state = 'ending2'
+            
         self.image.set_alpha(self.alph)  
 
     def update(self):
         # self.events()
         self.crossfade()
         self.draw()
+        # print(self.stop)
 
         # self.screen.blit(self.blank_image,self.rect)
     def draw(self):

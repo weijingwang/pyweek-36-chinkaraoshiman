@@ -23,9 +23,12 @@ class endAnime:
             self.first_iteration = False
         self.events()
         self.cutscene.update()
-        if self.cutscene.stop: return True
-        else: return False
-
+        if self.cutscene.stop: 
+            # print('stop')
+            return True
+        else:
+            # print('')
+            return False
 class stillImage:
     def __init__(self, screen, image):
         self.image = image
@@ -48,7 +51,7 @@ class Animation():
         self.index = 0
         self.image = self.images[self.index]
         self.rect = self.image.get_rect()
-        self.speed = 0.02
+        self.speed = 0.05
         self.finished= False
     def update(self):
         print(self.index)
@@ -68,7 +71,7 @@ class Animation():
                 self.index+=self.speed
         self.image = self.images[int(self.index)]
     def render(self,screen):
-        screen.blit(self.image)
+        screen.blit(self.image,(0,0))
     def isFinished(self):
         return self.finished
       

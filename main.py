@@ -60,6 +60,9 @@ class Game:
             utils.load_image("ending/DarkMatter5.8.jpg"),
             utils.load_image("ending/DarkMatter5.9.jpg"),
             utils.load_image("ending/DarkMatter5.9.jpg"),
+            utils.load_image("ending/DarkMatter5.9.jpg"),
+            utils.load_image("ending/DarkMatter5.9.jpg"),
+            utils.load_image("ending/DarkMatter5.9.jpg"),
             utils.load_image("ending/DarkMatter5.9.jpg")
         )
 
@@ -102,10 +105,13 @@ class Game:
                 self.platformer.run()
             elif self.state == 'ending':
                 # pygame.mixer.music.load("data/music/world-end.ogg")
-                if self.ending.end_anime():
-                    self.state = 'ending2'
-                    # print(self.state+"asdfas")
-            elif self.state == 'ending2':
+                print(self.ending.cutscene.stop)
+                self.ending.end_anime()
+                if self.ending.cutscene.stop == True:
+                    print('')
+                    self.state = 'ending222ee'
+                    print(self.state+"asdfas")
+            if self.state == 'ending222ee':
                 print(self.state)
 
                 self.endingAnimation.events()
@@ -113,9 +119,9 @@ class Game:
                 self.endingAnimation.render(self.screen)
                 if self.endingAnimation.isFinished():
                     self.state = 'ending3'
-                    self.endingAnimation.kill()
-            elif self.state == 'ending3':
-                pygame.mixer.music.fadeout(5000)
+                    # self.endingAnimation.kill()
+            if self.state == 'ending3':
+                # pygame.mixer.music.fadeout(5000)
                 self.ending_card.run()
 
             
