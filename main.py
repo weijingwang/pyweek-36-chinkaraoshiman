@@ -9,6 +9,7 @@ from ending_cutscene import endAnime
 
 class Game:
     def __init__(self):
+        self.rat_count_to_win = 500
         pygame.init()
         self.state = 'breeder'
         pygame.mixer.stop()
@@ -68,6 +69,10 @@ class Game:
         while not self.done:
             self.update_cursor()
             pygame.display.set_caption("current FPS: "+str(self.clock.get_fps()))
+
+            if self.breeder.ratGrowth.rat_count >= self.rat_count_to_win:
+                self.state = 'ending'
+
 
             if self.state == 'title':
                 self.my_title.run(self.mouse_pos)

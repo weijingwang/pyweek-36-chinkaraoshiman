@@ -96,7 +96,7 @@ class Slideshow(object):
         self.image.set_alpha(self.alph)  
 
     def update(self):
-        self.events()
+        # self.events()
         self.crossfade()
         self.draw()
 

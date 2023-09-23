@@ -15,7 +15,7 @@ class BreederGame:
     def __init__(self, screen):
         self.can_play_music = False
 
-        self.money = 500#ftyugweirtiyfjopkghcf9x0ud8eoihwujknl3terydjhgusfe8aowiuh3jk4tQ!!!!!!
+        self.money = 5000000#ftyugweirtiyfjopkghcf9x0ud8eoihwujknl3terydjhgusfe8aowiuh3jk4tQ!!!!!!
 
         self.state = "main"
         self.food_text = counterText((40,630),'right, 50')
