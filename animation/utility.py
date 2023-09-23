@@ -1,5 +1,4 @@
 import pygame
-from config import *
 # import math
 
 # def distance(x1, y1, x2, y2):
