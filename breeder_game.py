@@ -21,7 +21,7 @@ class BreederGame:
         self.rat_cage_rect = pygame.Rect(10, 550, 760, 100)
 
         self.FPS = 60
-        self.money = 5000000
+        self.money = 500
         self.food = 0
         self.medicine = 0
         self.rat_data = [0,0,0,0,0,0,0,0,0,0]
