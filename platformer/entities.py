@@ -127,29 +127,6 @@ class Rat(Object):
         
         tilemap = self.game.tilemap
 
-        """# rat should move in a specified range, but never out that range
-        # range is how many pixels it can move in left and right direction from original pos 
-        # |---(range# of pxs)----(rat)----(range# of pxs)---|
-        # example: range is 5, if moved 4 to the left, can only move left 1 or max 5 to the right.
-        if self.last_move <= 0:
-            self.pos[0] += random.choice(range(-5, 0))
-        self.pos[0] += self.range """
-
-
-        """# check tiles around for collision
-        # use current position
-        self.pos[0] += movement_tuple[0]
-        self_rect = self.rect()
-        for rect in tilemap.rects_around(self.pos):
-            if self_rect.colliderect(rect):
-                if movement_tuple[0] > 0:
-                    self_rect.right = rect.left
-                    self.collisions['right'] = True
-                if movement_tuple[0] < 0:
-                    self_rect.left = rect.right
-                    self.collisions['left'] = True
-                self.pos[0] = self_rect.x"""
-
         # y code is still here for gravity.
         self.pos[1] += self.vel[1]
         self_rect = self.rect()
