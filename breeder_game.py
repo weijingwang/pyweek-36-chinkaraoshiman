@@ -13,6 +13,10 @@ from breeder.shop_class import Shop
 
 class BreederGame:
     def __init__(self, screen):
+        self.can_play_music = False
+
+        self.money = 500#ftyugweirtiyfjopkghcf9x0ud8eoihwujknl3terydjhgusfe8aowiuh3jk4tQ!!!!!!
+
         self.state = "main"
         self.food_text = counterText((40,630),'right, 50')
         self.medicine_text = counterText((40,680),'right, 50')
@@ -21,7 +25,6 @@ class BreederGame:
         self.rat_cage_rect = pygame.Rect(10, 550, 760, 100)
 
         self.FPS = 60
-        self.money = 5000000
         self.food = 0
         self.medicine = 0
         self.rat_data = [0,0,0,0,0,0,0,0,0,0]
@@ -219,6 +222,11 @@ class BreederGame:
         self.crow.update()
 
     def run(self):
+        if self.can_play_music:
+            pygame.mixer.stop()
+            pygame.mixer.music.load("data/music/wolfBGM.ogg")
+            pygame.mixer.music.play(-1)
+            self.can_play_music = False
         # print('breeder main')
     # while not self.done:
         #system stuff

@@ -34,20 +34,28 @@ class counterText:
         surface.blit(self.image, self.image_rect)
 
 class normalText:
-    def __init__(self, text, pos, size=50):
+    def __init__(self, text, pos, isTitle=False,size=50):
         self.font = pygame.font.SysFont(None, size)
         self.text = text
+        self.isTitle = isTitle
         self.pos = pos
-        self.image = self.font.render(str(self.text), True, (255, 0, 0))#.convert_alpha()
+        if self.isTitle: color = 'white'
+        else: color = 'red'
+        self.image = self.font.render(str(self.text), True, color)#.convert_alpha()
         self.image_rect = self.image.get_rect(midtop = self.pos)#center = surface.get_rect().center)
         
-        self.temp_surface = pygame.Surface(self.image.get_size())
-        self.temp_surface.fill('black')
-        self.temp_surface.blit(self.image, self.image_rect)
+        
+        if not self.isTitle:
+            self.temp_surface = pygame.Surface(self.image.get_size())
+            self.temp_surface.fill('black')
+            self.temp_surface.blit(self.image, self.image_rect)
     def render(self,surface):
-        surface.blit(self.temp_surface, self.image_rect)
+        if not self.isTitle:
+            surface.blit(self.temp_surface, self.image_rect)
 
-        surface.blit(self.image, self.image_rect)
+            surface.blit(self.image, self.image_rect)
+        else:
+            surface.blit(self.image, self.image_rect)
 
 class shopText:
     def __init__(self, pos, text='eretyh',size=80):

@@ -3,11 +3,12 @@ from button import Button
 from utils import load_image
 from animation.slideshow import Slideshow
 import sys
+from displayText import normalText
 class Title:
     def __init__(self, game, screen):
         self.images = (
             load_image('intro/1.0.png'),
-            load_image('intro/1.0.png'),
+            load_image('intro/1.1.png'),
             load_image('intro/2.png'),
             load_image('intro/3.png'),
             load_image('intro/4.png'),
@@ -15,7 +16,7 @@ class Title:
         )
         self.imagesbg = (
             load_image('intro/1.0.png'),
-            load_image('intro/1.0.png'),
+            load_image('intro/1.1.png'),
             load_image('intro/2.png'),
             load_image('intro/3.png'),
             load_image('intro/4.png'),
@@ -33,6 +34,8 @@ class Title:
         self.image = self.images[0]
         self.screen = screen
         self.game = game
+
+        self.title_text = normalText('Apocalypse of darkness rats',(1280/2,100),True,120)
 
         self.bg = Slideshow(self.texts, self.images, self.imagesbg, self.screen)
 
@@ -63,6 +66,7 @@ class Title:
         self.bg.update()
         self.start_button.render(self.screen)
         self.quit_button.render(self.screen)
+        self.title_text.render(self.screen)
             
 class clickCutscene:
     def __init__(self, game, image ,screen):
