@@ -4,12 +4,17 @@ import pygame
 
 BASE_IMG_PATH = './data/images/'
 
-def load_image(path, colorkey = (0,0,0)):
+def load_image_platformer(path, colorkey = (0,0,0)):
     img = pygame.image.load(BASE_IMG_PATH + path).convert_alpha()
     if "brick" in path:
-        # img.set_colorkey((0, 0, 1))
+        img.set_colorkey((0, 0, 1))
     else:
         img.set_colorkey(colorkey)
+    return img
+
+def load_image(path):
+    img = pygame.image.load(BASE_IMG_PATH + path).convert_alpha()
+    # img.set_colorkey((0, 0, 0))
     return img
 
 def load_images(path):
