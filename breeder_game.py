@@ -13,6 +13,9 @@ from breeder.shop_class import Shop
 
 class BreederGame:
     def __init__(self, screen):
+
+        self.money = 500#ftyugweirtiyfjopkghcf9x0ud8eoihwujknl3terydjhgusfe8aowiuh3jk4tQ!!!!!!
+
         self.state = "main"
         self.food_text = counterText((40,630),'right, 50')
         self.medicine_text = counterText((40,680),'right, 50')
@@ -21,7 +24,6 @@ class BreederGame:
         self.rat_cage_rect = pygame.Rect(10, 550, 760, 100)
 
         self.FPS = 60
-        self.money = 500
         self.food = 0
         self.medicine = 0
         self.rat_data = [0,0,0,0,0,0,0,0,0,0]
