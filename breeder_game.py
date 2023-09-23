@@ -29,8 +29,7 @@ class BreederGame:
         self.medicine = 0
         self.rat_data = [0,0,0,0,0,0,0,0,0,0]
 
-        # pygame.mixer.music.load("data/music/breeder.mp3")
-        # pygame.mixer.music.play(-1)
+
         self.click = pygame.mixer.Sound("data/sounds/click.ogg")
         self.click.set_volume(0.8)
 

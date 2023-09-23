@@ -9,7 +9,8 @@ from utils import CounterText
 import pygame
 
 class Game:
-    def __init__(self, screen):
+    def __init__(self, game, screen):
+        self.game = game
         self.can_play_music = False
 
         self.screen = screen
@@ -113,7 +114,14 @@ class Game:
                 # save coordinates
                 # go back to rat breeder game
                 print("touch")
-                pass
+
+                self.game.breeder.player.pos[0] = 826 #set it so that u dont constantly teleport back between breeder and platformer
+                self.game.breeder.movement = [False, False]
+                pygame.mixer.stop()
+                pygame.mixer.music.load("data/music/breeder.mp3")
+                pygame.mixer.music.play(-1)
+                self.game.state = 'breeder'
+                break
             for rat in self.rats:
                 if rat.touching_player():
                     rat.update()

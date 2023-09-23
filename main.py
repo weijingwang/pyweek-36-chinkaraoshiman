@@ -10,7 +10,7 @@ from ending_cutscene import endAnime
 class Game:
     def __init__(self):
         pygame.init()
-        self.state = 'platformer'
+        self.state = 'breeder'
         pygame.mixer.stop()
         pygame.mixer.music.load("data/music/wolfBGM.ogg")
         pygame.mixer.music.play(-1)
@@ -25,7 +25,7 @@ class Game:
 
         self.my_title = Title(self, self.screen)
         self.breeder = BreederGame(self.screen)
-        self.platformer = platformer_game.Game(self.screen)
+        self.platformer = platformer_game.Game(self,self.screen)
 # (self, pos, align='right',size=50):
         self.rat_text = counterText((1240, 630),'right',50)
         self.money_text = counterText((1240, 680),'right',50)
