@@ -120,6 +120,8 @@ class Game:
                 pygame.mixer.stop()
                 pygame.mixer.music.load("data/music/breeder.mp3")
                 pygame.mixer.music.play(-1)
+                self.player.pos[0]+=100
+                self.movement = [0,0]
                 self.game.state = 'breeder'
                 break
             for rat in self.rats:
