@@ -46,62 +46,62 @@ class Game:
         self.player = Player(self, 'player', (100, 100), (16, 30))
 
         self.ALL_ITEMS = ['dogfood', 'potion']
-        self.rats = [Rat(self, 'rat', (100, 150), (15, 16))]
+        self.rats = [Rat(self, 'rat', (100, 150), (15, 16)), Rat(self, 'rat', (90, 150), (15, 16))]
         self.items = [Item(self, (110, 150), (32,32)), Item(self, (130, 150), (32,32))]
 
+        self.pickup_rat = False
+        self.pickup_item = False
+        
 
     def run(self):
-        if self.can_play_music:
-            pygame.mixer.stop()
-            pygame.mixer.music.load("data/music/walking.ogg")
-            pygame.mixer.music.play(-1)
-            self.can_play_music = False
-        self.display.fill((156, 153, 78))
-        
-        self.scroll[0] += (self.player.rect().centerx - self.display.get_width() / 2 - self.scroll[0]) / 20
-        self.scroll[1] += (self.player.rect().centery - self.display.get_height() / 2 - self.scroll[1]) / 20
-        camera = (int(self.scroll[0]), int(self.scroll[1]))
+        while True:
+            self.display.fill((156, 153, 78))
+            
+            self.scroll[0] += (self.player.rect().centerx - self.display.get_width() / 2 - self.scroll[0]) / 20
+            self.scroll[1] += (self.player.rect().centery - self.display.get_height() / 2 - self.scroll[1]) / 20
+            camera = (int(self.scroll[0]), int(self.scroll[1]))
 
-        # define map tiles and mobs here
-        # tiles: in Tilemap
-        # rats, npcs, enemies, items: render and update here 
-        self.tilemap.render(self.display, offset=camera)
+            # define map tiles and mobs here
+            # tiles: in Tilemap
+            # rats, npcs, enemies, items: render and update here 
+            self.tilemap.render(self.display, offset=camera)
 
-        for rat in self.rats:
-            rat.update()
-            rat.render(self.display, offset=camera)
-        
-        for item in self.items:
-            item.update()
-            item.render(self.display, offset=camera)
+            for rat in self.rats:
+                rat.update()
+                rat.render(self.display, offset=camera)
+            
+            for item in self.items:
+                item.update()
+                item.render(self.display, offset=camera)
 
 
-        self.player.update(self.tilemap, (self.movement[1] - self.movement[0], 0))
-        self.player.render(self.display, offset=camera)
-        
-        if self.player.touching_checkpoint():
-            # do stuff
-            # save coordinates
-            # go back to rat breeder game
-            print("touch")
-            pass
+            self.player.update(self.tilemap, (self.movement[1] - self.movement[0], 0))
+            self.player.render(self.display, offset=camera)
+            
+            if self.player.touching_checkpoint():
+                # do stuff
+                # save coordinates
+                # go back to rat breeder game
+                print("touch")
+                pass
 
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
-                    self.movement[0] = True
-                if event.key == pygame.K_RIGHT:
-                    self.movement[1] = True
-                if event.key == pygame.K_UP:
-                    self.player.vel[1] = -3
-            if event.type == pygame.KEYUP:
-                if event.key == pygame.K_LEFT:
-                    self.movement[0] = False
-                if event.key == pygame.K_RIGHT:
-                    self.movement[1] = False
-        
-        self.screen.blit(pygame.transform.scale(self.display, self.screen.get_size()), (0, 0))
-
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_LEFT:
+                        self.movement[0] = True
+                    if event.key == pygame.K_RIGHT:
+                        self.movement[1] = True
+                    if event.key == pygame.K_UP:
+                        self.player.vel[1] = -3
+                if event.type == pygame.KEYUP:
+                    if event.key == pygame.K_LEFT:
+                        self.movement[0] = False
+                    if event.key == pygame.K_RIGHT:
+                        self.movement[1] = False
+            
+            self.screen.blit(pygame.transform.scale(self.display, self.screen.get_size()), (0, 0))
+            pygame.display.update()
+            self.clock.tick(60)
