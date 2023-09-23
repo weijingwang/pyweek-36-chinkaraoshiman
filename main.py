@@ -5,13 +5,13 @@ from title_class import Title, clickCutscene
 import pygame
 import sys
 import utils
-from ending_cutscene import endAnime
+from ending_cutscene import endAnime, Animation, stillImage
 
 class Game:
     def __init__(self):
         self.rat_count_to_win = 500
         pygame.init()
-        self.state = 'title'
+        self.state = 'ending2'
         pygame.mixer.stop()
         pygame.mixer.music.load("data/music/wolfBGM.ogg")
         pygame.mixer.music.play(-1)
@@ -35,23 +35,37 @@ class Game:
         self.intro = clickCutscene(self, self.intro_img, self.screen)
 
 
-        self.ending_text = ('','','','','')
+        self.ending_text = ('','','','')
         self.ending_imgs = (
             utils.load_image("ending/DarkMatter1.jpg"),
             utils.load_image("ending/DarkMatter2.jpg"),
-            utils.load_image("ending/DarkMatter3.png"),
-            utils.load_image("ending/DarkMatter2.png"),
-            utils.load_image("ending/DarkMatter1.jpg")
+            utils.load_image("ending/DarkMatter3.jpg"),
+            utils.load_image("ending/DarkMatter4.jpg")
         )
         self.ending_imgs2 = (
             utils.load_image("ending/DarkMatter1.jpg"),
             utils.load_image("ending/DarkMatter2.jpg"),
-            utils.load_image("ending/DarkMatter3.png"),
-            utils.load_image("ending/DarkMatter2.png"),
-            utils.load_image("ending/DarkMatter1.jpg")
+            utils.load_image("ending/DarkMatter3.jpg"),
+            utils.load_image("ending/DarkMatter4.jpg")
         )
-        self.ending = endAnime(self.ending_text, self.ending_imgs, self.ending_imgs2, self.screen)
 
+        self.earth_end_imgs = (
+            utils.load_image("ending/DarkMatter5.1.jpg"),
+            utils.load_image("ending/DarkMatter5.2.jpg"),
+            utils.load_image("ending/DarkMatter5.3.jpg"),
+            utils.load_image("ending/DarkMatter5.4.jpg"),
+            utils.load_image("ending/DarkMatter5.5.jpg"),
+            utils.load_image("ending/DarkMatter5.6.jpg"),
+            utils.load_image("ending/DarkMatter5.7.jpg"),
+            utils.load_image("ending/DarkMatter5.8.jpg"),
+            utils.load_image("ending/DarkMatter5.9.jpg")
+        )
+
+        self.ending = endAnime(self.ending_text, self.ending_imgs, self.ending_imgs2, self.screen)
+        self.endingAnimation = Animation(self.earth_end_imgs, False)
+        self.endingAnimation_group = pygame.sprite.Group()
+        self.endingAnimation_group.add(self.endingAnimation)
+        self.ending_card = stillImage(self.screen, self.earth_end_imgs[8])
     # def events(self):
     #     if self.state == 'breeder':
     #         self.breeder.run_events()
@@ -88,8 +102,18 @@ class Game:
             elif self.state == 'ending':
                 # pygame.mixer.music.load("data/music/world-end.ogg")
                 if self.ending.end_anime():
-                    pygame.quit()
-                    sys.exit()
+                    self.state = 'ending2'
+            elif self.state == 'ending2':
+                self.endingAnimation.events()
+                self.endingAnimation_group.update()
+                self.endingAnimation_group.draw(self.screen)
+                if self.endingAnimation.isFinished():
+                    pygame.mixer.music.fadeout(5000)
+                    self.state = 'ending3'
+            elif self.state == 'ending3':
+                
+                self.ending_card.run()
+
             
             if self.state == 'breeder' or self.state == 'platformer':
                 #rats and crows update
@@ -103,5 +127,6 @@ class Game:
 
             pygame.display.update()
             self.clock.tick(self.FPS)
+            print(self.state)
 
 Game().run()

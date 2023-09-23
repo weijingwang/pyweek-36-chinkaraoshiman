@@ -1,6 +1,7 @@
 from animation.slideshow import Slideshow
 import pygame
 import sys
+
 class endAnime:
     def __init__(self, texts, imgs, imgs_copy, screen):
         self.texts = texts
@@ -26,3 +27,53 @@ class endAnime:
         self.cutscene.update()
         if self.cutscene.stop: return True
         else: return False
+
+class stillImage:
+    def __init__(self, screen, image):
+        self.image = image
+        self.screen = screen
+    
+    def run(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+        self.screen.blit(self.image,(0,0))
+
+
+
+class Animation(pygame.sprite.Sprite):
+    """docstring for Animation"""
+    def __init__(self,images, loop_on):
+        super().__init__()
+        self.images=images
+        self.loop_on = loop_on
+        self.index = 0
+        self.image = self.images[self.index]
+        self.rect = self.image.get_rect()
+        self.speed = 0.05
+        self.finished= False
+    def update(self):
+        # print(self.index)
+        if self.loop_on==True:
+            if self.index>=len(self.images)-1:
+                self.index=0
+            else:
+                self.index+=self.speed
+        elif self.loop_on==False:
+            if self.index>=len(self.images)-1:
+                self.index=0
+                self.speed = 0
+                self.finished= True
+                self.kill()
+            else:
+                self.index+=self.speed
+        self.image = self.images[int(self.index)]
+    def isFinished(self):
+        return self.finished
+      
+    def events(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
