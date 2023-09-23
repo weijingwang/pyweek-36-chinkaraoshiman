@@ -5,11 +5,13 @@ from title_class import Title, clickCutscene
 import pygame
 import sys
 import utils
+from ending_cutscene import endAnime
 
 class Game:
     def __init__(self):
         pygame.init()
-        pygame.mixer.music.load("data/music/wolfBGM.ogg")
+        pygame.mixer.music.load("data/music/world-end.ogg")        
+        # pygame.mixer.music.load("data/music/wolfBGM.ogg")
         pygame.mixer.music.play(-1)
         pygame.display.set_caption("pyweek36")
         self.screen = pygame.display.set_mode((1280, 720))
@@ -18,7 +20,7 @@ class Game:
         self.FPS = 60
         self.mouse_pos = pygame.mouse.get_pos()
 
-        self.state = 'title'
+        self.state = 'ending'
 
         self.my_title = Title(self, self.screen)
         self.breeder = BreederGame(self.screen)
@@ -29,6 +31,24 @@ class Game:
         
         self.intro_img = utils.load_image("intro_img.png")
         self.intro = clickCutscene(self, self.intro_img, self.screen)
+
+
+        self.ending_text = ('','','','','')
+        self.ending_imgs = (
+            utils.load_image("ending/DarkMatter1.jpg"),
+            utils.load_image("ending/DarkMatter2.png"),
+            utils.load_image("ending/DarkMatter3.png"),
+            utils.load_image("ending/DarkMatter2.png"),
+            utils.load_image("ending/DarkMatter1.jpg")
+        )
+        self.ending_imgs2 = (
+            utils.load_image("ending/DarkMatter1.jpg"),
+            utils.load_image("ending/DarkMatter2.png"),
+            utils.load_image("ending/DarkMatter3.png"),
+            utils.load_image("ending/DarkMatter2.png"),
+            utils.load_image("ending/DarkMatter1.jpg")
+        )
+        self.ending = endAnime(self.ending_text, self.ending_imgs, self.ending_imgs2, self.screen)
 
     # def events(self):
     #     if self.state == 'breeder':
@@ -58,6 +78,11 @@ class Game:
                     self.state = 'platformer'
             elif self.state == 'platformer':
                 self.platformer.run()
+            elif self.state == 'ending':
+                # pygame.mixer.music.load("data/music/world-end.ogg")
+                if self.ending.end_anime():
+                    pygame.quit()
+                    sys.exit()
             
             if self.state == 'breeder' or self.state == 'platformer':
                 #rats and crows update
