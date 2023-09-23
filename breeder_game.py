@@ -13,6 +13,7 @@ from breeder.shop_class import Shop
 
 class BreederGame:
     def __init__(self, screen):
+        self.can_play_music = False
 
         self.money = 500#ftyugweirtiyfjopkghcf9x0ud8eoihwujknl3terydjhgusfe8aowiuh3jk4tQ!!!!!!
 
@@ -221,6 +222,11 @@ class BreederGame:
         self.crow.update()
 
     def run(self):
+        if self.can_play_music:
+            pygame.mixer.stop()
+            pygame.mixer.music.load("data/music/wolfBGM.ogg")
+            pygame.mixer.music.play(-1)
+            self.can_play_music = False
         # print('breeder main')
     # while not self.done:
         #system stuff

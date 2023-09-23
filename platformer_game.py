@@ -9,6 +9,7 @@ import pygame
 
 class Game:
     def __init__(self, screen):
+        self.can_play_music = False
         # pygame.init()
 
         # pygame.display.set_caption('platformer')
@@ -50,6 +51,11 @@ class Game:
 
 
     def run(self):
+        if self.can_play_music:
+            pygame.mixer.stop()
+            pygame.mixer.music.load("data/music/walking.ogg")
+            pygame.mixer.music.play(-1)
+            self.can_play_music = False
         self.display.fill((156, 153, 78))
         
         self.scroll[0] += (self.player.rect().centerx - self.display.get_width() / 2 - self.scroll[0]) / 20

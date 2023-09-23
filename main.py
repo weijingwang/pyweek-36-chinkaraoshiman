@@ -76,6 +76,7 @@ class Game:
             elif self.state == 'breeder':
                 self.breeder.run()
                 if self.breeder.exit():
+                    self.platformer.can_play_music = True
                     self.state = 'platformer'
             elif self.state == 'platformer':
                 self.platformer.run()
