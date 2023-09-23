@@ -40,10 +40,9 @@ class stillImage:
 
 
 
-class Animation(pygame.sprite.Sprite):
+class Animation():
     """docstring for Animation"""
     def __init__(self,images, loop_on):
-        super().__init__()
         self.images=images
         self.loop_on = loop_on
         self.index = 0
@@ -52,7 +51,7 @@ class Animation(pygame.sprite.Sprite):
         self.speed = 0.02
         self.finished= False
     def update(self):
-        # print(self.index)
+        print(self.index)
         if self.loop_on==True:
             if self.index>=len(self.images)-1:
                 self.index=0
@@ -63,10 +62,13 @@ class Animation(pygame.sprite.Sprite):
                 self.index=0
                 self.speed = 0
                 self.finished= True
-                self.kill()
+                self.isFinished()
+                # self.kill()
             else:
                 self.index+=self.speed
         self.image = self.images[int(self.index)]
+    def render(self,screen):
+        screen.blit(self.image)
     def isFinished(self):
         return self.finished
       

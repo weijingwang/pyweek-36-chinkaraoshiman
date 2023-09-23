@@ -36,7 +36,7 @@ class Slideshow(object):
             # print('normal one')
         # self.most_bottom_image = self.images[self.index+1] #prevent glitchy flashing effect DIDNT WORK
         #crossfade
-        self.wait_seconds = 3
+        self.wait_seconds = 0.000000003
         self.wait_clock_cycles = 60 * self.wait_seconds
         self.clock_cycles = 0
         self.fade_speed = 3
@@ -92,7 +92,7 @@ class Slideshow(object):
         
         #after the last image, the slideshow ends
         if self.index == len(self.images)-1 and self.fade_done: self.stop = True
-
+        # print(self.stop)
         self.image.set_alpha(self.alph)  
 
     def update(self):

@@ -65,8 +65,7 @@ class Game:
 
         self.ending = endAnime(self.ending_text, self.ending_imgs, self.ending_imgs2, self.screen)
         self.endingAnimation = Animation(self.earth_end_imgs, False)
-        self.endingAnimation_group = pygame.sprite.Group()
-        self.endingAnimation_group.add(self.endingAnimation)
+
         self.ending_card = stillImage(self.screen, utils.load_image("ending/DarkMatter6.jpg"))
     # def events(self):
     #     if self.state == 'breeder':
@@ -105,15 +104,18 @@ class Game:
                 # pygame.mixer.music.load("data/music/world-end.ogg")
                 if self.ending.end_anime():
                     self.state = 'ending2'
+                    # print(self.state+"asdfas")
             elif self.state == 'ending2':
+                print(self.state)
+
                 self.endingAnimation.events()
-                self.endingAnimation_group.update()
-                self.endingAnimation_group.draw(self.screen)
+                self.endingAnimation.update()
+                self.endingAnimation.render(self.screen)
                 if self.endingAnimation.isFinished():
-                    pygame.mixer.music.fadeout(5000)
                     self.state = 'ending3'
+                    self.endingAnimation.kill()
             elif self.state == 'ending3':
-                
+                pygame.mixer.music.fadeout(5000)
                 self.ending_card.run()
 
             
@@ -129,6 +131,5 @@ class Game:
 
             pygame.display.update()
             self.clock.tick(self.FPS)
-            # print(self.state)
 
 Game().run()
