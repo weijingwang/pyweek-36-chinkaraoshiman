@@ -2,7 +2,7 @@ import pygame
 import random
 
 # things that can block the player
-ENV_BLOCKS = ['checkpoint', 'brick1', 'brick2', 'brick3', 'brick4', 'brick5', 'dirt']
+ENV_BLOCKS = ['checkpoint', 'brick1', 'brick2', 'brick3', 'brick4', 'brick5', 'dirt', 'grass']
 
 class Tilemap:
     def __init__(self, game, tile_size=16):
@@ -15,19 +15,70 @@ class Tilemap:
         # decrease second number to move tiles up
         # the index should be a string, and the info stored should be a dictionary
 
-        for i in range(-30,30):
-            self.tilemap[str(1+i) + ',10'] = {'type': 'brick5', 'pos': (1+i, 10)}
-            self.tilemap[str(1+i) + ',11'] = {'type': 'brick5', 'pos': (1+i, 11)}
-            self.tilemap[str(1+i) + ',12'] = {'type': 'brick5', 'pos': (1+i, 12)}
-            #self.tilemap['6,' + str(4+i)] = {'type': 'brick2', 'pos': (6, 4+i)}
+        # starting checkpoint
+        self.tilemap['0,10'] = {'type': 'checkpoint', 'pos': (0,10)} 
+
+
+        # LEFT SIDE terrains
+        self.make_row(-10, 6, 15, 'brick3')
+        self.make_row(-10, 7, 12, 'brick5')
+        self.make_row(-10, 8, 10, 'brick5')
+        self.make_row(-10, 9, 10, 'brick5')
+        self.make_row(-10, 10, 40, 'brick5')
+        self.make_row(-10, 11, 40, 'brick5')
+        self.make_row(-10, 12, 40, 'brick5')
+
+        # make bridge
+        self.make_col(-11, 6, 8, 'brick2')
+        self.make_col(-12, 5, 3, 'brick2')
+        self.make_col(-13, 4, 3, 'brick2')
+        self.make_row(-25, 4, 12, 'brick2')
+        self.make_row(-25, 5, 12, 'brick2')
+        self.make_row(-25, 3, 12, 'fence')
+        self.make_col(-26, 4, 3, 'brick2')
+        self.make_col(-27, 5, 3, 'brick2')
+        self.make_col(-28, 6, 8, 'brick2')
+
+        # make forest ground terrain
+        """self.make_row(-40, 6, 8, 'dirt')
+        self.make_row(-40, 7, 8, 'dirt')
+        self.make_row(-40, 8, 8, 'dirt')"""
+        self.make_row(-32, 6, 4, 'brick3')
+        self.make_row(-32, 7, 4, 'brick4')
+        self.make_row(-32, 8, 4, 'brick4')
+        self.make_row(-32, 9, 4, 'brick4')
+
+        self.make_row(-60, 6, 28, 'grass')
+        self.make_row(-75, 6, 9, 'grass')
+        self.make_row(-75, 7, 43, 'dirt')
+        self.make_row(-75, 8, 43, 'dirt')
+        self.make_row(-75, 9, 43, 'dirt')
+
+        # forest trees
+        self.trees(-60, 6, 26)
+
+        # forest house
+        self.house_unit1(-68, 4)
+        self.tilemap['-66,6'] = {'type': 'checkpoint', 'pos': (-66,6)}
+
+        # castle wall
+        self.make_col(-78, -4, 11, 'brick1')
+        self.make_col(-77, -4, 11, 'brick1')
+        self.make_col(-76, -4, 11, 'brick1')
+        self.make_col(-78, 7, 4, 'dirt')
+        self.make_col(-77, 7, 4, 'dirt')
+        self.make_col(-76, 7, 4, 'dirt')
         
-        for i in range(-30, 5):
-            self.tilemap[str(i) + ',6'] = {'type': 'brick4', 'pos': (i, 6)}
+        self.make_row(-82, 6, 4, 'brick3')
+        self.make_row(-82, 7, 4, 'brick4')
+        self.make_row(-82, 8, 4, 'brick4')
+        self.make_row(-82, 9, 4, 'brick4')
 
         self.right_side()
 
     def right_side(self):
         # RIGHT SIDE OF THE BEGINNING CHECKPOINT
+        # this is the ground terrain
         self.make_row(4, 9, 100, 'brick5')
         self.make_row(5, 8, 101, 'brick5')
         self.make_row(6, 7, 102, 'brick5')
@@ -37,8 +88,7 @@ class Tilemap:
         self.make_row(104, 7, 8, 'dirt')
         self.make_row(104, 6, 8, 'dirt')
 
-        self.tilemap['0,10'] = {'type': 'checkpoint', 'pos': (0,10)} 
-
+        # this is the houses
         self.house_unit1(15, 4)
         self.house_unit2(25, 4)
         self.house_unit1(35, 4)
@@ -48,11 +98,22 @@ class Tilemap:
         self.house_unit1(75, 4)
         self.house_unit2(85, 4)
 
+        # this is the castle wall
         self.make_col(101, -4, 10, 'brick1')
         self.make_col(102, -4, 10, 'brick1')
         self.make_col(103, -4, 10, 'brick1')
 
+        # this is the checkpoint at the house
         self.tilemap['37,6'] = {'type': 'checkpoint', 'pos': (37,6)} 
+
+    """
+    start adding random trees from given position.
+    """
+    def trees(self, x, y, amount):
+        for i in range(amount):
+            if i % 2 == 0:
+                tree_type = random.choice(['tree', 'tree2'])
+                self.tilemap[str(x+i) + "," + str(y-4)] = {'type': tree_type, 'pos': (x+i,y-4)}
 
     """
     make a house unit starting at the given position

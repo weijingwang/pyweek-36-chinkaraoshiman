@@ -34,7 +34,8 @@ class Game:
             'tree2': pygame.transform.scale(load_image_platformer('platformer/tree2.png'), (64, 128)),
             'house': load_image_platformer('platformer/house.png', (0,0,0)),
             'fence': load_image_platformer('platformer/fence.png'),
-            'dirt': pygame.transform.scale(load_image_platformer('platformer/dirt.png'), (32, 32))
+            'dirt': pygame.transform.scale(load_image_platformer('platformer/dirt.png'), (32, 32)),
+            'grass': load_image_platformer('platformer/grass.png')
         }
 
         self.black_filter = load_image_platformer('black_filter.png')
