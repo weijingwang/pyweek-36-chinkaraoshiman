@@ -140,11 +140,11 @@ class Shop:
             if self.description != "+rat storage":
                 self.description.update("+rat storage")
         elif self.input_buy_rats.hover_check(pos):
-            if self.description != "click>type>click again":
-                self.description.update("click>type>click again")
+            if self.description != "click here and type number. then click again to buy":
+                self.description.update("click here and type number. then click again to buy")
         elif self.input_sell_rats.hover_check(pos):
-            if self.description != "click>type>click again":
-                self.description.update("click>type>click again")
+            if self.description != "click here and type number. then click again to sell":
+                self.description.update("click here and type number. then click again to buy sell")
         else:
             for i in range(len(self.button_grid)): 
                 if self.button_grid[i].hover_check(pos):

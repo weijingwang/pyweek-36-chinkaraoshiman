@@ -20,7 +20,7 @@ class BreederGame:
         self.state = "main"
         self.food_text = counterText((40,630),'right, 50')
         self.medicine_text = counterText((40,680),'right, 50')
-
+        
 
         self.rat_cage_rect = pygame.Rect(10, 550, 760, 100)
 
@@ -113,6 +113,9 @@ class BreederGame:
         self.hungry_text = normalText("xxHUNGRYxx", (1280/2,50))
         self.OVERLOADED_text = normalText("OVERLOADED", (1280/2,0))
 
+        self.goal_text = normalText("Goal: get 8000000000 rats (8billion) because", (1280/2,600))
+        self.caption_text = normalText("there are 8 billions people on earth", (1280/2,640))
+
 
     def exit(self):
         if self.player.pos[0] > self.screen.get_width():
@@ -173,6 +176,8 @@ class BreederGame:
         self.screen.blit(self.bg, (0, 0))
         self.screen.blit(self.opts_img, (0,0))
 
+
+
         if self.breeder_shop.items[7]["owned"]:#crow destroyer
             self.screen.blit(self.crow_destroyer_img, (600,0))
         if self.breeder_shop.items[5]["owned"]:#seller
@@ -180,6 +185,9 @@ class BreederGame:
         if self.breeder_shop.items[3]["owned"]:#doctor
             self.screen.blit(self.doctor_img, (400,50))
         self.player.shadow()
+
+        self.goal_text.render(self.screen)
+        self.caption_text.render(self.screen)
         
         # self.screen.blit(pygame.transform.scale(self.screen, self.screen.get_size()), (0, 0))
 
