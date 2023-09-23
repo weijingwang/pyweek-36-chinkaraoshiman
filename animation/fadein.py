@@ -1,5 +1,3 @@
-from config import *
-
 class Fadein():
     def __init__(self, image, pos, speed, screen):
         self.image = image
@@ -19,5 +17,5 @@ class Fadein():
     def draw(self):
         # print(self.alph)
         self.update()
-        self.screen.fill(BLACK)
+        self.screen.fill('black')
         self.screen.blit(self.image, self.rect)
