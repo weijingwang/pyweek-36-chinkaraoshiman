@@ -24,6 +24,9 @@ class Tilemap:
         for i in range(-30, 5):
             self.tilemap[str(i) + ',6'] = {'type': 'brick4', 'pos': (i, 6)}
 
+        self.right_side()
+
+    def right_side(self):
         # RIGHT SIDE OF THE BEGINNING CHECKPOINT
         self.make_row(4, 9, 100, 'brick5')
         self.make_row(5, 8, 101, 'brick5')
@@ -50,7 +53,6 @@ class Tilemap:
         self.make_col(103, -4, 10, 'brick1')
 
         self.tilemap['37,6'] = {'type': 'checkpoint', 'pos': (37,6)} 
-
 
     """
     make a house unit starting at the given position
