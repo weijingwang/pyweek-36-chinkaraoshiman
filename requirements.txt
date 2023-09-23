@@ -1,0 +1,5 @@
+python version is 3.11.5
+
+pygame version is 2.3.0
+
+matplotlib.pyplot
