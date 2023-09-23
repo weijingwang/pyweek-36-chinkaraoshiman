@@ -32,11 +32,11 @@ class Game:
             'potion': load_image_platformer('platformer/potion.png'),
             'tree': pygame.transform.scale(load_image_platformer('platformer/tree.png'), (64, 128)),
             'tree2': pygame.transform.scale(load_image_platformer('platformer/tree2.png'), (64, 128)),
-            'house': load_image_platformer('platformer/house.png', (0,0,1)),
-            'fence': load_image_platformer('platformer/fence.png')
+            'house': load_image_platformer('platformer/house.png', (0,0,0)),
+            'fence': load_image_platformer('platformer/fence.png'),
+            'dirt': pygame.transform.scale(load_image_platformer('platformer/dirt.png'), (32, 32))
         }
 
-        self.black_filter = load_image_platformer('black_filter.png')
         self.black_filter = load_image_platformer('black_filter.png')
     
         self.tilemap = Tilemap(self, tile_size=32)
