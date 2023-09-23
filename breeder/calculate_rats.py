@@ -11,8 +11,8 @@ class BreederCalculations:
         self.sick = False
         self.hungry = False
         self.game = game
-        self.rat_count = 0
-        self.upper_cap = 100
+        self.rat_count = 50
+        self.upper_cap = 10000
         self.lower_cap = 0
         self.next_increase = 0
 
@@ -36,7 +36,10 @@ class BreederCalculations:
 
     def crow_eat_rat(self):
         #do once every rat spawn cylce only
+        # print(self.game.crow.state)
+
         if self.game.crow.state == 'attack':
+            # print('eat')
             if True:
                 if self.rat_count//3 < 1:
                     self.next_increase -= 1
@@ -47,36 +50,39 @@ class BreederCalculations:
 
     def calculate_next_change(self):
         if self.rat_count > 1:
-            self.next_increase += self.upper_cap * 0.005
+            self.next_increase += self.upper_cap * 0.05 + self.rat_count*0.1
             if (self.next_increase+self.rat_count) > self.upper_cap:
                 self.next_increase = self.upper_cap - self.rat_count
 
     def update(self):
-        # print(self.game.food, self.game.medicine)
-        if self.game.breeder_shop.items[1]["owned"]:
-            self.auto_feeder()
-            # print('')
-        if self.game.breeder_shop.items[3]["owned"]:
-            self.doctor()
-        if self.rat_count > 0:
-            self.get_hungry()
-            self.get_sick()
-            self.rat_seller()
-        # if self.timer == 60:
-        # print(int(self.rat_count), self.next_increase,)
-        
-        self.next_increase = 0
-        if self.rat_count > 1:
-            self.crow_eat_rat()
-            self.calculate_next_change()
-        elif self.rat_count == 1:
+        if self.game.state == 'main':
+            # print(self.game.food, self.game.medicine)
+            if self.game.breeder_shop.items[1]["owned"]:
+                self.auto_feeder()
+                # print('')
+            if self.game.breeder_shop.items[3]["owned"]:
+                self.doctor()
+            if self.game.breeder_shop.items[5]["owned"]:
+                self.rat_seller()
+            if self.rat_count > 0:
+                self.get_hungry()
+                self.get_sick()
+                
+            # if self.timer == 60:
+            # print(int(self.rat_count), self.next_increase,)
+            
             self.next_increase = 0
-            self.crow_eat_rat()
-        elif self.rat_count < self.lower_cap:
-            self.rat_count = 0
-        self.rat_count += self.next_increase
-        self.manage_rat_data(self.game.rat_data, self.rat_count)
-        self.rat_count = int(self.rat_count)
+            if self.rat_count > 1:
+                self.crow_eat_rat()
+                self.calculate_next_change()
+            elif self.rat_count == 1:
+                self.next_increase = 0
+                self.crow_eat_rat()
+            elif self.rat_count < self.lower_cap:
+                self.rat_count = 0
+            self.rat_count += self.next_increase
+            self.manage_rat_data(self.game.rat_data, self.rat_count)
+            self.rat_count = int(self.rat_count)
     
     def manage_rat_data(self, data_list, x):
         if len(data_list) < 10:
@@ -132,6 +138,7 @@ class BreederCalculations:
             print(self.game.food)
             if self.game.food < 1:
                 self.rat_count = self.rat_count*0.85
+                print(' hungry')
                 # print('HUNGRY')
                 self.hungry = True
             else:

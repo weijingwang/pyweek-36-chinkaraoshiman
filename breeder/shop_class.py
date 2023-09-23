@@ -24,13 +24,13 @@ class Shop:
 
         self.storage_button = itemButton(1280/2,200,"buy storage $"+str(self.STORAGE_PRICE), True, "breeder/items/Storage.png",260,100)
         self.items = [
-            {"name": "Food", "price": 50, "pos": (320,330), "owned": False, "description": "temporarily satiate rat hunger", "repurchasable": True},
-            {"name": "AutoFeeder", "price": 50000, "pos": (320,400), "owned": False, "description": "auto food buyer", "repurchasable": False},
-            {"name": "Medicine", "price": 50, "pos": (320,470), "owned": False, "description": "cure rats' sickness", "repurchasable": True},
-            {"name": "Doctor", "price": 50000, "pos": (320,540), "owned": False, "description": "HIRE: auto cure rats", "repurchasable": False},
-            {"name": "Petter", "price": 10, "pos": (620,330), "owned": False, "description": "click on rats to breed", "repurchasable": False},
-            {"name": "Seller", "price": 100, "pos": (620,400), "owned": False, "description": "sells rats for you", "repurchasable": False},
-            {"name": "Scarecrow", "price": 50000, "pos": (620,470), "owned": False, "description": "maybe scare crows away", "repurchasable": False},
+            {"name": "Food", "price": 100, "pos": (320,330), "owned": False, "description": "temporarily satiate rat hunger", "repurchasable": True},
+            {"name": "AutoFeeder", "price": 500000, "pos": (320,400), "owned": False, "description": "auto food buyer", "repurchasable": False},
+            {"name": "Medicine", "price": 100, "pos": (320,470), "owned": False, "description": "cure rats' sickness", "repurchasable": True},
+            {"name": "Doctor", "price": 500000, "pos": (320,540), "owned": False, "description": "HIRE: auto cure rats", "repurchasable": False},
+            {"name": "Petter", "price": 80, "pos": (620,330), "owned": False, "description": "click on rats to breed", "repurchasable": False},
+            {"name": "Seller", "price": 1000, "pos": (620,400), "owned": False, "description": "sells rats for you", "repurchasable": False},
+            {"name": "Scarecrow", "price": 2000, "pos": (620,470), "owned": False, "description": "maybe scare crows away", "repurchasable": False},
             {"name": "Destroyer", "price": 50000000, "pos": (620,540), "owned": False, "description": "eliminate all crows", "repurchasable": False}
         ]
         

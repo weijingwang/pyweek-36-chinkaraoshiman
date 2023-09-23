@@ -15,7 +15,7 @@ class BreederGame:
     def __init__(self, screen):
         self.can_play_music = False
 
-        self.money = 120#ftyugweirtiyfjopkghcf9x0ud8eoihwujknl3terydjhgusfe8aowiuh3jk4tQ!!!!!!
+        self.money = 1200#ftyugweirtiyfjopkghcf9x0ud8eoihwujknl3terydjhgusfe8aowiuh3jk4tQ!!!!!!
 
         self.state = "main"
         self.food_text = counterText((40,630),'right, 50')
@@ -161,7 +161,7 @@ class BreederGame:
         self.crow.mouse_inputs(self.mouse_pos)
         if self.breeder_shop.items[4]["owned"]:
             if self.rat_cage_rect.collidepoint(self.mouse_pos) and self.ratGrowth.rat_count>1:
-                self.ratGrowth.rat_count += 1
+                self.ratGrowth.rat_count += self.ratGrowth.upper_cap * 0.01
                 self.money += 1
                 self.click.play()
                 print("rat +1")
