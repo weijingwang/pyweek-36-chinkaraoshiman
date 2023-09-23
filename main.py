@@ -11,7 +11,7 @@ class Game:
     def __init__(self):
         self.rat_count_to_win = 500
         pygame.init()
-        self.state = 'breeder'
+        self.state = 'title'
         pygame.mixer.stop()
         pygame.mixer.music.load("data/music/wolfBGM.ogg")
         pygame.mixer.music.play(-1)
