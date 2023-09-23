@@ -8,20 +8,35 @@ class Tilemap:
         self.game = game
         self.tile_size = tile_size
         self.tilemap = {}
-        #self.offgrid_tiles = []
 
         # define level here
+        # decrease first number to move tiles left
+        # decrease second number to move tiles up
 
-        # this is a test checkpoint
-        self.tilemap['0,6'] = {'type': 'checkpoint', 'pos': (0,6) }
-        self.tilemap['8,2'] = {'type': 'tree2', 'pos': (8,2)}
-        self.tilemap['10,2'] = {'type': 'tree', 'pos': (10,2)}
-        for i in range(30):
-            # decrease first number to move tiles left
-            # decrease second number to move tiles up
+        
+        """self.tilemap['8,2'] = {'type': 'tree2', 'pos': (8,2)}
+        self.tilemap['10,2'] = {'type': 'tree2', 'pos': (10,2)}
+        self.tilemap['12,2'] = {'type': 'tree2', 'pos': (12,2)}
+        self.tilemap['14,2'] = {'type': 'tree2', 'pos': (14,2)}"""
+
+
+        for i in range(-30,30):
             # the index should be a string, and the info stored should be a dictionary
-            self.tilemap[str(1+i) + ',6'] = {'type': 'brick1', 'pos': (1+ i, 6)}
-            self.tilemap['6,' + str(3+i)] = {'type': 'brick2', 'pos': (6, 3+i)}
+            self.tilemap[str(1+i) + ',10'] = {'type': 'brick5', 'pos': (1+i, 10)}
+            self.tilemap[str(1+i) + ',11'] = {'type': 'brick5', 'pos': (1+i, 11)}
+            self.tilemap[str(1+i) + ',12'] = {'type': 'brick5', 'pos': (1+i, 12)}
+            #self.tilemap['6,' + str(4+i)] = {'type': 'brick2', 'pos': (6, 4+i)}
+        for i in range(30):
+            self.tilemap[str(4+i) + ',9'] = {'type': 'brick5', 'pos': (4+i, 9)}
+            self.tilemap[str(5+i) + ',8'] = {'type': 'brick5', 'pos': (5+i, 8)}
+            self.tilemap[str(6+i) + ',7'] = {'type': 'brick5', 'pos': (6+i, 7)}
+            self.tilemap[str(7+i) + ',6'] = {'type': 'brick4', 'pos': (7+i, 6)}
+        self.tilemap['0,10'] = {'type': 'checkpoint', 'pos': (0,10)} 
+
+        self.tilemap['10,4'] = {'type': 'house', 'pos': (10,4)} 
+
+        for i in range(-30, 5):
+            self.tilemap[str(i) + ',6'] = {'type': 'brick4', 'pos': (i, 6)}
 
     def tiles_around(self, pos):
         """
@@ -54,10 +69,7 @@ class Tilemap:
     def render(self, surface, offset):
         """
         Render tiles that are in the camera's view.
-        """
-        #for tile in self.offgrid_tiles:
-        #    surface.blit(self.game.assets[tile['type']], (tile['pos'][0] - offset[0], tile['pos'][1] - offset[1]))
-            
+        """ 
         for x in range(offset[0] // self.tile_size, (offset[0] + surface.get_width()) // self.tile_size + 1):
             for y in range(offset[1] // self.tile_size, (offset[1] + surface.get_height()) // self.tile_size + 1):
                 str_index = str(x) + ',' + str(y)
