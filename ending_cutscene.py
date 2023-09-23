@@ -15,8 +15,6 @@ class endAnime:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-
-
     def end_anime(self):
         if self.first_iteration:
             pygame.mixer.stop()
@@ -51,7 +49,7 @@ class Animation(pygame.sprite.Sprite):
         self.index = 0
         self.image = self.images[self.index]
         self.rect = self.image.get_rect()
-        self.speed = 0.05
+        self.speed = 0.02
         self.finished= False
     def update(self):
         # print(self.index)

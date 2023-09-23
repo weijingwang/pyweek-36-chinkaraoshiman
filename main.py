@@ -11,7 +11,7 @@ class Game:
     def __init__(self):
         self.rat_count_to_win = 500
         pygame.init()
-        self.state = 'ending2'
+        self.state = 'title'
         pygame.mixer.stop()
         pygame.mixer.music.load("data/music/wolfBGM.ogg")
         pygame.mixer.music.play(-1)
@@ -58,6 +58,8 @@ class Game:
             utils.load_image("ending/DarkMatter5.6.jpg"),
             utils.load_image("ending/DarkMatter5.7.jpg"),
             utils.load_image("ending/DarkMatter5.8.jpg"),
+            utils.load_image("ending/DarkMatter5.9.jpg"),
+            utils.load_image("ending/DarkMatter5.9.jpg"),
             utils.load_image("ending/DarkMatter5.9.jpg")
         )
 
@@ -65,7 +67,7 @@ class Game:
         self.endingAnimation = Animation(self.earth_end_imgs, False)
         self.endingAnimation_group = pygame.sprite.Group()
         self.endingAnimation_group.add(self.endingAnimation)
-        self.ending_card = stillImage(self.screen, self.earth_end_imgs[8])
+        self.ending_card = stillImage(self.screen, utils.load_image("ending/DarkMatter6.jpg"))
     # def events(self):
     #     if self.state == 'breeder':
     #         self.breeder.run_events()
@@ -127,6 +129,6 @@ class Game:
 
             pygame.display.update()
             self.clock.tick(self.FPS)
-            print(self.state)
+            # print(self.state)
 
 Game().run()
