@@ -25,7 +25,7 @@ class Shop:
         self.storage_button = itemButton(1280/2,200,"buy storage $"+str(self.STORAGE_PRICE), True, "breeder/items/Storage.png",260,100)
         self.items = [
             {"name": "Food", "price": 100, "pos": (320,330), "owned": False, "description": "temporarily satiate rat hunger", "repurchasable": True},
-            {"name": "AutoFeeder", "price": 500000, "pos": (320,400), "owned": False, "description": "auto food buyer", "repurchasable": False},
+            {"name": "Autofeeder", "price": 500000, "pos": (320,400), "owned": False, "description": "auto food buyer", "repurchasable": False},
             {"name": "Medicine", "price": 100, "pos": (320,470), "owned": False, "description": "cure rats' sickness", "repurchasable": True},
             {"name": "Doctor", "price": 500000, "pos": (320,540), "owned": False, "description": "HIRE: auto cure rats", "repurchasable": False},
             {"name": "Petter", "price": 80, "pos": (620,330), "owned": False, "description": "click on rats to breed", "repurchasable": False},
