@@ -1,4 +1,5 @@
 import sys
+import random
 
 from platformer.entities import Player, Rat, Item
 from platformer.tilemap import Tilemap
@@ -52,6 +53,15 @@ class Game:
         
         self.rats = [] #[Rat(self, 'rat', (100, 150), (15, 16)), Rat(self, 'rat', (90, 150), (15, 16))]
         self.items = [] #[Item(self, (110, 150), (32,32)), Item(self, (130, 150), (32,32)), Item(self, (250, 150), (32,32))]
+
+        #range(-1085, -2350) y: 165
+        for i in range(4):
+            self.rats.append(Rat(self, 'rat', (random.randint(-2350, -1085), 165), (15,16)))
+            self.items.append(Item(self, (random.randint(-2350, -1085), 165), (32,32)))
+
+        for i in range(4):
+            self.rats.append(Rat(self, 'rat', (random.randint(500, 3140), 165), (15,16)))
+            self.items.append(Item(self, (random.randint(500, 3140), 165), (32,32)))
 
         self.pickup_rat = False
         self.pickup_item = False
@@ -171,51 +181,14 @@ class Game:
             self.screen.blit(pygame.transform.scale(self.display, self.screen.get_size()), (0, 0))
             pygame.display.update()
             self.clock.tick(60)
-    
-        while self.pickup_rat:
-            self.screen.blit(pickup_rat_text1, (100, 100))
-            self.screen.blit(continue_text, (100, 140))
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
-                
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_f:
-                        self.pickup_rat = False
-            pygame.display.update()
-            self.clock.tick(60)
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
-                
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_LEFT:
-                        self.movement[0] = True
-                    if event.key == pygame.K_RIGHT:
-                        self.movement[1] = True
-                    if event.key == pygame.K_UP:
-                        self.player.vel[1] = -3
-                if event.type == pygame.KEYUP:
-                    if event.key == pygame.K_LEFT:
-                        self.movement[0] = False
-                    if event.key == pygame.K_RIGHT:
-                        self.movement[1] = False
-                
             
-            self.screen.blit(pygame.transform.scale(self.display, self.screen.get_size()), (0, 0))
-            pygame.display.update()
-            self.clock.tick(60)
-    
         while self.pickup_rat:
-            self.screen.blit(pickup_rat_text1, (100, 100))
-            self.screen.blit(continue_text, (100, 140))
+            self.screen.blit(pickup_rat_text1, (100, 110))
+            self.screen.blit(continue_text, (100, 150))
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-                
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_f:
                         self.pickup_rat = False
@@ -223,8 +196,8 @@ class Game:
             self.clock.tick(60)
 
         while self.pickup_item:
-            self.screen.blit(pickup_item_text1, (100, 100))
-            self.screen.blit(continue_text, (100, 140))
+            self.screen.blit(pickup_item_text1, (100, 110))
+            self.screen.blit(continue_text, (100, 150))
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -233,16 +206,7 @@ class Game:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_f:
                         self.pickup_item = False
-        while self.pickup_item:
-            self.screen.blit(pickup_item_text1, (100, 100))
-            self.screen.blit(continue_text, (100, 140))
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
-                
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_f:
-                        self.pickup_item = False
-
+            pygame.display.update()
+            self.clock.tick(60)
+        
 

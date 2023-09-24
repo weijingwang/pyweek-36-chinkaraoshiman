@@ -18,7 +18,10 @@ class Tilemap:
         # starting checkpoint
         self.tilemap['0,10'] = {'type': 'checkpoint', 'pos': (0,10)} 
 
+        self.left_side()
+        self.right_side()
 
+    def left_side(self):
         # LEFT SIDE terrains
         self.make_row(-10, 6, 15, 'brick3')
         self.make_row(-10, 7, 12, 'brick5')
@@ -74,8 +77,6 @@ class Tilemap:
         self.make_row(-82, 8, 4, 'brick4')
         self.make_row(-82, 9, 4, 'brick4')
 
-        self.right_side()
-
     def right_side(self):
         # RIGHT SIDE OF THE BEGINNING CHECKPOINT
         # this is the ground terrain
@@ -104,7 +105,7 @@ class Tilemap:
         self.make_col(103, -4, 10, 'brick1')
 
         # this is the checkpoint at the house
-        self.tilemap['37,6'] = {'type': 'checkpoint', 'pos': (37,6)} 
+        self.tilemap['57,6'] = {'type': 'checkpoint', 'pos': (57,6)} 
 
     """
     start adding random trees from given position.
