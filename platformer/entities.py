@@ -75,9 +75,9 @@ Spawn items which will drop down to the ground
 """
 class Item(Object):
     def __init__(self, game, pos, size):
-        item_type = random.choice(game.ALL_ITEMS)
+        self.item_type = random.choice(game.ALL_ITEMS)
         self.on_ground = False
-        super().__init__(game, item_type, pos, size)
+        super().__init__(game, self.item_type, pos, size)
 
     def update(self):
         if self.touching_player():

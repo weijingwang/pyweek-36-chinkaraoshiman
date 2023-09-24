@@ -81,7 +81,7 @@ class Game:
         continue_text = pygame.font.SysFont('Consolas', 32).render('Press F to continue.', True, pygame.color.Color('White'))
         pickup_item_text1 = pygame.font.SysFont('Consolas', 32).render('You picked up an item!', True, pygame.color.Color('White'))
 
-        while not (self.pickup_rat ^ self.pickup_item):
+        while not (self.pickup_rat ^ bool(self.pickup_item)):
             self.display.blit(self.bg, (0, 0))
             self.display.blit(self.black_filter, (0,0))
             
@@ -115,7 +115,7 @@ class Game:
             for item in self.items:
                 if item.touching_player():
                     item.update()
-                    self.pickup_item = True
+                    self.pickup_item = item.item_type
                 else:
                     item.update()
                     item.render(self.display, offset=camera)
@@ -191,6 +191,10 @@ class Game:
                     sys.exit()
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_f:
+                        print(self.game.breeder.ratGrowth.rat_count)
+                        self.game.breeder.ratGrowth.rat_count += 1
+                        print(self.game.breeder.ratGrowth.rat_count)
+
                         self.pickup_rat = False
             pygame.display.update()
             self.clock.tick(60)
@@ -205,7 +209,15 @@ class Game:
                 
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_f:
-                        self.pickup_item = False
+                        if self.pickup_item == 'dogfood':
+                            print(self.game.breeder.food)
+                            self.game.breeder.food += 1
+                            print(self.game.breeder.food)
+                        elif self.pickup_item == 'potion':
+                            print(self.game.breeder.medicine)
+                            self.game.breeder.medicine += 1
+                            print(self.game.breeder.medicine)            
+                        self.pickup_item = ''
             pygame.display.update()
             self.clock.tick(60)
         
